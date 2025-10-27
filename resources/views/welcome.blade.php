@@ -444,7 +444,7 @@
             <div
               class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90 2xl:h-90"
             >
-              <img src="{{ asset (images/horsenews.jpg) }}" class="w-full aspect-[16/9] object-cover block" alt="" />
+              <img src="{{ asset ('images/horsenews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
               <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
                 What is the best way to play Billiards?
               </h1>
@@ -457,7 +457,7 @@
             <div
               class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90"
             >
-              <img src="{{ (asset images/motornews.jpg }})" class="w-full aspect-[16/9] object-cover block" alt="" />
+              <img src="{{ asset ('images/motornews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
               <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
                 What is the best way to play Billiards?
               </h1>
