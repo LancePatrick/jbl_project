@@ -10,7 +10,18 @@ Route::get('/', function () {
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('dashboard'); 
+
+Route::view('billiard', 'billiard')
+    ->middleware(['auth', 'verified'])
+    ->name('billiard'); 
+
+Route::view('horse', 'horse')
+    ->middleware(['auth', 'verified'])
+    ->name('horse'); 
+
+
+    
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
