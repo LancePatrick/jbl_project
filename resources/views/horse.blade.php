@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kabayo Derby • Totalizator Style</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
+{{-- resources/views/billiard.blade.php --}}
+<x-layouts.app :title="__('Billiard')">
+  <head>
   <style>
     :root{
       --gloss: linear-gradient(to bottom, rgba(255,255,255,.28), rgba(255,255,255,0) 45%);
@@ -326,92 +321,6 @@
 <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
-  <!-- Header -->
-  <header class="glass-header sticky top-0 z-50">
-    <div class="relative header-gloss">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="h-14 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <!-- Horse crest -->
-            <svg class="brand-logo w-8 h-8" viewBox="0 0 64 64" fill="none" aria-label="Kabayo logo">
-              <path d="M10 46 C12 40, 18 32, 24 30 C32 28, 40 30, 48 28 C52 27, 56 22, 54 18 C50 12, 40 14, 36 12" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="40" cy="14" r="2" fill="#10b981"/>
-              <path d="M14 48 C24 50, 40 50, 52 46" stroke="#22c55e" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-            <div class="leading-tight">
-              <div class="text-sm uppercase tracking-widest text-white/70">KABAYO DERBY</div>
-            </div>
-          </div>
-
-          <nav class="hidden md:flex items-center gap-4 text-sm text-gray-200">
-            <a href="newIndex.html" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition">Home</a>
-            <a href="#" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition">Races</a>
-            <a href="#" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition">Support</a>
-          </nav>
-
-          <div class="flex items-center gap-2 relative">
-            <div class="hidden sm:flex items-center gap-1 px-2 py-1 rounded-full border border-emerald-300/40 bg-emerald-500/10">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3 5 5 3-5 3-3 5-3-5-5-3 5-3 3-5z"/>
-              </svg>
-              <span id="header-balance" class="text-xs font-bold">—</span>
-            </div>
-
-            <button class="relative p-2 rounded-lg hover:bg-white/10 transition" aria-label="Notifications">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.25 18.75a1.5 1.5 0 11-3 0m8.25-1.5H4.5l1.2-1.2a2.25 2.25 0 00.66-1.59V10.5a5.25 5.25 0 1110.5 0v2.46c0 .6.24 1.18.66 1.6l1.29 1.19z"/>
-              </svg>
-              <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-gray-900"></span>
-            </button>
-
-            <div class="relative">
-              <button id="header-history-btn" class="relative p-2 rounded-lg hover:bg-white/10 transition" aria-label="Bet History">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-90" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7 4h10a2 2 0 012 2v1H5V6a2 2 0 012-2zm-2 5h14v9a2 2 0 01-2 2H7a2 2 0 01-2-2V9zm4 2v2h6v-2H9z"/>
-                </svg>
-                <span id="header-history-dot" class="hidden absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full ring-2 ring-gray-900"></span>
-              </button>
-
-              <div id="header-history-menu" class="menu-card absolute right-0 mt-2 w-80 p-2 hidden">
-                <div class="px-3 py-2 flex items-center justify-between">
-                  <div>
-                    <div class="text-xs opacity-70">Recent Bets</div>
-                    <div class="text-sm font-bold">Last 8</div>
-                  </div>
-                  <button id="header-history-clear" class="text-[11px] px-2 py-1 rounded bg-gray-800/70 border border-white/10 hover:bg-gray-700">Clear</button>
-                </div>
-                <div id="header-history-empty" class="px-3 pb-2 text-xs text-white/60 italic">No bets yet.</div>
-                <div id="header-history-list" class="max-h-72 overflow-auto divide-y divide-white/10 hidden"></div>
-              </div>
-            </div>
-
-            <div class="relative">
-              <button id="account-btn" class="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-white/10 transition">
-                <div class="text-left">
-                  <div class="text-[11px] leading-tight opacity-80 hidden sm:block">Signed in as</div>
-                  <div id="account-name" class="shine-3d text-base leading-tight">Account Name</div>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-70" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.206l3.71-3.975a.75.75 0 111.08 1.04l-4.24 4.54a.75.75 0 01-1.08 0l-4.24-4.54a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                </svg>
-              </button>
-              <div id="account-menu" class="menu-card absolute right-0 mt-2 w-56 p-2 hidden">
-                <div class="px-3 py-2">
-                  <div class="text-xs opacity-70">Logged in as</div>
-                  <div class="shine-3d text-lg" id="account-name-menu">Account Name</div>
-                </div>
-                <hr class="border-white/10 my-1" />
-                <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 text-sm"><span>Profile</span></a>
-                <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 text-sm"><span>Settings</span></a>
-                <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 text-sm text-red-300"><span>Logout</span></a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </header>
 
   <!-- 4-column layout (Desktop): [slideL | video(+logro) | bets | slideR] -->
   <main class="max-w-7xl mx-auto p-4">
@@ -1037,4 +946,5 @@
     };
   </script>
 </body>
-</html>
+</x-layouts.app>
+

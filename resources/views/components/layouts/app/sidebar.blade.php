@@ -87,7 +87,7 @@
                       <a href="/billiard" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Billiards</a>
                     </li>
                     <li>
-                      <a href="kabayo2.html" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Horse Racing</a>
+                      <a href="/horse" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Horse Racing</a>
                     </li>
                     <li>
                       <a href="race.html" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Motor Racing</a>
