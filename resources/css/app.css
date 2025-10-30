@@ -1,66 +1,55 @@
-@import 'tailwindcss';
-@import '../../vendor/livewire/flux/dist/flux.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@source '../views';
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
-@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
+/* Optional if you use Flux */
+@import "../../vendor/livewire/flux/dist/flux.css";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-
-    --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-300: #d4d4d4;
-    --color-zinc-400: #a3a3a3;
-    --color-zinc-500: #737373;
-    --color-zinc-600: #525252;
-    --color-zinc-700: #404040;
-    --color-zinc-800: #262626;
-    --color-zinc-900: #171717;
-    --color-zinc-950: #0a0a0a;
-
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
-    --color-accent-foreground: var(--color-white);
+/* Tokens */
+:root{
+  --accent: 17 24 39;             /* slate-900 */
+  --accent-foreground: 255 255 255;
+}
+.dark{
+  --accent: 255 255 255;
+  --accent-foreground: 17 24 39;
 }
 
-@layer theme {
-    .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
-    }
-}
-
+/* Global border parity */
 @layer base {
-
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
-    }
+  *, ::before, ::after, ::backdrop, ::file-selector-button {
+    border-color: theme(colors.gray.200 / 1);
+  }
 }
 
-[data-flux-field]:not(ui-radio, ui-checkbox) {
-    @apply grid gap-2;
+/* Helper rings */
+@layer utilities {
+  .ring-accent { --tw-ring-color: rgb(var(--accent) / 1); }
+  .ring-offset-accent-foreground { --tw-ring-offset-color: rgb(var(--accent-foreground) / 1); }
 }
 
-[data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+/* ====== Login card look (from screenshot) ====== */
+.login-glass {
+  @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+         shadow-[0_20px_60px_rgba(0,0,0,.45)];
+}
+.input-dark {
+  @apply w-full rounded-xl bg-black/40 border border-slate-700/60
+         px-3 py-2.5 text-slate-100 placeholder:text-slate-500
+         focus:outline-none focus:ring-2 focus:ring-amber-400
+         focus:border-amber-400;
+}
+.btn-amber {
+  @apply inline-flex w-full items-center justify-center rounded-xl
+         bg-gradient-to-r from-amber-400 to-orange-500 text-black
+         px-4 py-2.5 text-sm font-extrabold
+         shadow-[0_0_30px_rgba(251,191,36,.35)]
+         hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-amber-400/70;
 }
 
-input:focus[data-flux-control],
-textarea:focus[data-flux-control],
-select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+/* Make the form column hug the right side on large screens (like your shot) */
+@media (min-width: 1024px){
+  .login-right {
+    padding-right: clamp(2rem, 8vw, 6rem);
+  }
 }
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */

@@ -1,17 +1,26 @@
+{{-- resources/views/pre.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Billiards Website</title>
+
+    <!-- Tailwind (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
       crossorigin="anonymous"
     />
+
+    <!-- AOS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Alpine -->
     <script
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
       defer
@@ -29,19 +38,17 @@
           class="relative bg-emerald-950 px-2 py-2 flex font-semibold items-center justify-between text-[10px] 2xl:text-xl 2xl:py-[2px] 2xl:px-12 shadow-lg shadow-emerald-800/50"
         >
           <!-- Logo -->
-          <img src="images/logo2real.png" class="h-8 2xl:h-20" alt="Logo" />
+          <img src="{{ asset('images/logo2real.png') }}" class="h-8 2xl:h-20" alt="Logo" />
 
           <!-- Nav Links -->
           <ul
             class="flex flex-wrap space-x-5 2xl:space-x-20 text-emerald-50 relative"
             x-data="{ open: false }"
           >
-            <li><a href="#" class="hover:text-emerald-300">Home</a></li>
-            <li>
-              <a href="preMatch.html" class="hover:text-emerald-300"
-                >Pre-Match</a
-              >
-            </li>
+            <!-- HOME -> dashboard.blade.php -->
+            <li><a href="{{ route('dashboard') }}" class="hover:text-emerald-300">Home</a></li>
+<li><a href="{{ route('pre') }}" class="hover:text-emerald-300">Pre-Match</a></li>
+
             <li><a href="#" class="hover:text-emerald-300">About</a></li>
             <li><a href="#" class="hover:text-emerald-300">Event</a></li>
 
@@ -105,7 +112,7 @@
           >
             <!-- Image (clickable trigger) -->
             <div class="flex cursor-pointer">
-              <img src="images/icon.png" class="h-3 2xl:h-13" alt="" />
+              <img src="{{ asset('images/icon.png') }}" class="h-3 2xl:h-13" alt="" />
             </div>
 
             <!-- Dropdown menu -->
@@ -169,37 +176,14 @@
               </div>
             </div>
             <img
-              src="images/peoples.png"
+              src="{{ asset('images/peoples.png') }}"
               class="h-40 w-40 translate-y-2 -translate-x-2 2xl:h-140 2xl:w-180 2xl:translate-y-1"
               alt=""
             />
           </div>
         </div>
 
-        <!--
-            <div class="flex flex-col bg-emerald-100/80 mx-3 rounded-lg p-4">
-                <h1 class="text-center font-semibold">Today's Matchup</h1>
-                <p class="text-sm text-center mb-4">Here's today's matchup — they'll duke it out later at 4PM!</p>
-
-                <div class="flex items-center justify-center space-x-6">
-                    
-                    <div class="flex flex-col items-center m-2">
-                        <img src="images/bata.png" alt="" class="h-30 w-auto object-contain rounded-[25px]" />
-                        <h1 class="text-lg font-semibold mt-2">Bata</h1>
-                    </div>
-
-                  
-                    <h1 class="text-3xl font-bold text-emerald-900">VS</h1>
-
-               
-                    <div class="flex flex-col items-center m-2">
-                        <img src="images/ying.png" alt="" class="h-30 w-auto object-contain rounded-[25px]" />
-                        <h1 class="text-lg font-semibold mt-2">Ying</h1>
-                    </div>
-                </div>
-            </div>
-        -->
-
+        <!-- Featured Sports -->
         <div
           data-aos="fade-down"
           class="flex flex-col text-white items-center justify-center mx-8 my-6 2xl:my-[150px] 2xl:mx-44 px-4"
@@ -212,6 +196,7 @@
             Choose your sport and start betting on your favorite events.
           </h1>
         </div>
+
         <div data-aos="fade-up">
           <!-- Cards Container -->
           <div
@@ -220,7 +205,7 @@
             <!-- Card 1 -->
             <div
               class="relative rounded-xl bg-emerald-100 w-1/3 h-50 bg-cover bg-center 2xl:h-120 2xl:w-100 hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
-              style="background-image: url('images/BilliardVisual.png')"
+              style="background-image: url('{{ asset('images/BilliardVisual.png') }}')"
             >
               <div
                 class="absolute inset-0 bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl"
@@ -241,10 +226,10 @@
               </div>
             </div>
 
-            <!-- Card 1 -->
+            <!-- Card 2 -->
             <div
               class="relative rounded-xl bg-emerald-100 w-1/3 h-50 bg-cover bg-center 2xl:h-120 2xl:w-100 hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
-              style="background-image: url('images/MotorVisual.png')"
+              style="background-image: url('{{ asset('images/MotorVisual.png') }}')"
             >
               <div
                 class="absolute inset-0 bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl"
@@ -265,10 +250,10 @@
               </div>
             </div>
 
-            <!-- Card 1 -->
+            <!-- Card 3 -->
             <div
               class="relative rounded-xl bg-emerald-100 w-1/3 h-50 bg-cover bg-center 2xl:h-120 2xl:w-100 hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
-              style="background-image: url('images/HorseVisual.png')"
+              style="background-image: url('{{ asset('images/HorseVisual.png') }}')"
             >
               <div
                 class="absolute inset-0 bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl"
@@ -291,19 +276,16 @@
           </div>
         </div>
 
+        <!-- Banner -->
         <div class="flex justify-center my-10">
           <div class="relative text-center">
-            <!-- Banner Image -->
             <img
-              src="images/addbanner.png"
+              src="{{ asset('images/addbanner.png') }}"
               alt=""
               class="w-[320px] h-20 rounded-lg 2xl:w-[800px] 2xl:h-40 object-cover"
             />
-
-            <!-- Dark Overlay -->
             <div class="absolute inset-0 bg-black/40 rounded-lg"></div>
 
-            <!-- Overlayed Text & Buttons -->
             <a
               href=""
               class="absolute top-3 left-3 text-gray-50 font-semibold py-1 px-2 rounded-full text-[14px] 2xl:text-3xl drop-shadow-lg"
@@ -327,7 +309,7 @@
           </div>
         </div>
 
-        <!--Promotions and Bonuses-->
+        <!-- Discover / How it works -->
         <div
           data-aos="fade-down"
           class="flex flex-col text-white items-center justify-center mx-8 mt-10 2xl:mt-[100px] 2xl:mx-44 px-4"
@@ -366,7 +348,7 @@
               class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[450px] overflow-hidden"
             >
               <img
-                src="images/week.png"
+                src="{{ asset('images/week.png') }}"
                 alt=""
                 class="object-cover w-full h-full rounded-2xl shadow-xl"
               />
@@ -381,7 +363,7 @@
               class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[450px] overflow-hidden"
             >
               <img
-                src="images/motor.png"
+                src="{{ asset('images/motor.png') }}"
                 alt=""
                 class="object-cover w-full h-full rounded-2xl shadow-xl"
               />
@@ -418,13 +400,15 @@
               class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[450px] overflow-hidden"
             >
               <img
-                src="images/payout2.png"
+                src="{{ asset('images/payout2.png') }}"
                 alt=""
                 class="object-cover w-full h-full rounded-2xl shadow-xl"
               />
             </div>
           </div>
         </div>
+
+        <!-- News -->
         <h1 class="font-semibold text-emerald-100 my-2 ml-4 2xl:text-3xl 2xl:ml-55 2xl:mb-6" data-aos="fade-up" data-aos-once="true">Sports News</h1>
         <div class="mx-auto" data-aos="fade-down" data-aos-once="true">
           <div class="flex space-x-3 2xl:justify-center">
@@ -444,7 +428,7 @@
             <div
               class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90 2xl:h-90"
             >
-              <img src="{{ asset ('images/horsenews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
+              <img src="{{ asset('images/horsenews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
               <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
                 What is the best way to play Billiards?
               </h1>
@@ -457,7 +441,7 @@
             <div
               class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90"
             >
-              <img src="{{ asset ('images/motornews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
+              <img src="{{ asset('images/motornews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
               <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
                 What is the best way to play Billiards?
               </h1>
