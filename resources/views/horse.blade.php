@@ -11,7 +11,7 @@
       --logro-rail-h: 48px;
 
       /* Mini bead road (vertical columns) */
-      --bead-bubble: 18px;   /* readable numbers */
+      --bead-bubble: 22px;   /* readable numbers */
       --bead-gap-x: 6px;     /* gap between columns */
       --bead-gap-y: 4px;     /* gap between rows */
       --bead-rows: 8;        /* 1..8 per column → 9th goes next column */
