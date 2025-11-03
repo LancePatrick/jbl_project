@@ -194,113 +194,63 @@
     class="overflow-x-hidden bg-[url('images/loginPicture2.png')] bg-cover bg-center bg-no-repeat min-h-screen [min-height:100dvh]"
     x-data="{ sport: 'billiards' }"
   >
-    <!-- Full-width NAV (edge-to-edge) -->
-    <nav class="relative bg-slate-950 shadow-lg shadow-slate-800/50 w-full">
-      <!-- Align nav contents to page width on 2xl -->
+     <nav class="relative z-[200] bg-slate-950 shadow-lg shadow-slate-800/50 w-full">
+
       <div
-              class="flex h-14 md:h-16 items-center justify-between px-3 md:px-8 text-[0.625rem] font-semibold text-slate-950 dark:text-slate-50 md:text-lg"
+        class="px-2 py-2 2xl:px-12 2xl:py-[2px] flex font-semibold items-center justify-between text-[10px] 2xl:text-xl w-full 2xl:max-w-screen-2xl 2xl:mx-auto"
+      >
+        <img src="{{ asset('images/logo2real.png') }}" class="h-8 2xl:h-20" alt="Logo" />
+
+        <ul class="flex flex-wrap space-x-5 2xl:space-x-20 text-slate-50 relative" x-data="{ open: false }">
+          <!-- ✅ Laravel route links -->
+          <li><a href="{{ route('dashboard') }}" class="hover:text-slate-300">Home</a></li>
+          <li><a href="{{ route('pre') }}" class="hover:text-slate-300">Pre-Match</a></li>
+          <li><a href="#" class="hover:text-slate-300">About</a></li>
+          <li><a href="#" class="hover:text-slate-300">Event</a></li>
+
+          <!-- Dropdown -->
+          <li class="relative items-center">
+            <button @click="open = !open" class="hover:text-slate-300 inline-flex items-center text-center">
+              Sports
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 2xl:w-6 2xl:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <ul
+              x-show="open"
+              @click.outside="open = false"
+              x-transition.opacity.duration.150ms
+              class="absolute left-0 mt-2 bg-slate-900 text-white rounded-lg shadow-lg w-44 z-50 2xl:w-64 2xl:text-base"
             >
-              <!-- Left: Burger (visible on mobile + tablet; hidden on lg+) -->
-              <div class="flex items-center gap-2">
-                
-                <img
-                  src="images/Avatar.png"
-                  class="w-8 lg:w-10 lg:mx-2"
-                  alt=""
-                />
-                <div class="flex-col lg:space-y-1">
-                  <h1 class="text-[9px] lg:text-lg">Player123321s</h1>
-                  <div class="flex items-center space-x-1 lg:space-x-2">
-                    <i
-                      class="fa-solid fa-gem text-blue-400 dark:text-blue-200"
-                    ></i>
-                    <span
-                      class="text-[8px] lg:text-sm text-yellow-500 dark:text-yellow-400"
-                      >24 Points</span
-                    >
-                  </div>
-                </div>
-              </div>
+              <!-- Keep as js filters; no route change needed -->
+              <li><a href="#" class="block px-4 py-2 hover:bg-slate-700" @click.prevent="sport='billiards'; open=false">Billiards</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-slate-700" @click.prevent="sport='horse'; open=false">Horse Racing</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-slate-700" @click.prevent="sport='motor'; open=false">Motor Racing</a></li>
+            </ul>
+          </li>
+        </ul>
 
-              <!-- Primary Nav -->
-              <ul
-                class="flex items-center space-x-3 md:space-x-12 xl:space-x-16 relative mr-4 md:mr-10 xl:mr-16"
-              >
-                <li><a href="#" class="hover:text-slate-300">Home</a></li>
-                <li>
-                  <a href="preMatch.html" class="hover:text-slate-300"
-                    >Pre-Match</a
-                  >
-                </li>
-                <li><a href="#" class="hover:text-slate-300">Event</a></li>
-
-                <!-- Sports dropdown -->
-                <li class="relative" x-data="{ open:false }">
-                  <button
-                    @click="open = !open"
-                    @keydown.escape.window="open=false"
-                    class="inline-flex items-center hover:text-slate-300"
-                    aria-haspopup="true"
-                    :aria-expanded="open"
-                  >
-                    Sports
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="ml-1 h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-
-                 
-                  <ul
-                    x-show="open"
-                    x-transition
-                    @click.outside="open=false"
-                    class="absolute right-0 left-auto mt-2 w-22 lg:w-35 rounded-xl bg-slate-900 text-slate-50 shadow-xl ring-1 ring-white/10 z-[9999] p-1 overflow-hidden text-end translate-x-4 lg:translate-x-1"
-                  >
-                    <li>
-                      <a
-                        href="sabong2.html"
-                        class="block px-4 py-2 dark:hover:bg-emerald-500 dark:hover:bg-emerald-600 hover:bg-emerald-200"
-                        >Billiards</a
-                      >
-                       
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="kabayo2.html"
-                        class="block px-4 py-2 dark:hover:bg-emerald-500 dark:hover:bg-emerald-600 hover:bg-emerald-200"
-                        >Horse Racing</a
-                      >
-                       
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="race.html"
-                        class="block w-full px-2 lg:px-4 py-2 whitespace-nowrap rounded-md hover:bg-slate-800"
-                      >
-                        Motor Racing
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+        <!-- User menu -->
+        <div x-data="{ open: false }" class="flex space-x-1 relative -translate-x-8 items-center">
+          <div class="flex cursor-pointer" @click="open = !open">
+            <img src="{{ asset('images/icon.png') }}" class="h-3 2xl:h-13" alt="User" />
+          </div>
+          <div
+            x-show="open"
+            @click.outside="open = false"
+            x-transition.opacity.duration.150ms
+            class="absolute left-10 top-2 mt-2 2xl:top-11 w-18 2xl:w-35 text-xs bg-white border border-gray-200 rounded-lg shadow-lg z-[100] user-menu"
+          >
+            <ul class="text-gray-700 text-sm 2xl:text-base">
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
+            </ul>
+          </div>
+          <span class="text-white">User1</span>
+        </div>
+      </div>
     </nav>
-
-    <!-- Gradient wrapper fills the remaining viewport height -->
-    <!-- Added pb-16 so content isn't hidden behind the fixed bottom nav on phones -->
     <div
       class="overflow-x-hidden bg-gradient-to-b from-slate-950/70 via-slate-800/70 to-slate-700/30 min-h-full"
     >
