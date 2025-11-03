@@ -79,7 +79,13 @@
               <div class="amount-3d text-3xl md:text-4xl mt-1" id="meron-amount"></div>
               <div class="mt-">
                 <div class="mt-2"><span class="odds-ribbon" id="meron-odds"></span></div>
+                
+                @auth
+            @if( auth()->user()->role_id == 2)
                 <button class="bet-btn red mt-2 w-full px-3 py-2 text-sm" id="bet-meron">BET</button>
+                @endif
+          @endauth
+
                 <div id="meron-result" class="mt-2 text-xs text-yellow-300 result-glow"></div>
               </div>
             </div>
@@ -90,15 +96,27 @@
               <div class="amount-3d text-3xl md:text-4xl mt-1" id="wala-amount"></div>
               <div class="mt-3">
                 <div class="mt-2"><span class="odds-ribbon" id="wala-odds"></span></div>
+                
+                @auth
+            @if( auth()->user()->role_id == 2)
                 <button class="bet-btn blue mt-2 w-full px-3 py-2 text-sm" id="bet-wala">BET</button>
+                @endif
+          @endauth
+
                 <div id="wala-result" class="mt-2 text-xs text-yellow-300 result-glow"></div>
               </div>
             </div>
           </div>
 
           <!-- Bet Amount + MINI ROAD -->
-          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0">
-            <div class="flex items-center justify-between mb-2">
+          
+          
+          
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-4">
+            
+          @auth
+            @if( auth()->user()->role_id == 2)
+          <div class="flex items-center justify-between mb-2">
               <div class="text-[15px] uppercase tracking-widest text-white/70">Bet Amount</div>
               <div class="text-[15px] text-white/60">min ₱100</div>
             </div>
@@ -153,6 +171,9 @@
               <button class="chip3d chip-black chip-outline text-sm bet-chip" data-val="500">♦500</button>
               <button class="chip3d chip-amber chip-outline text-sm bet-chip" data-val="1000">♦1000</button>
             </div>
+            @endif
+          @endauth
+
 
             <!-- MINI ROAD -->
             <div>
