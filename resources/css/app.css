@@ -1,95 +1,66 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
 
-/* Optional if you use Flux */
-@import "../../vendor/livewire/flux/dist/flux.css";
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
+@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
-/* ===== Custom gray palette (Tailwind v4 tokens) ===== */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-gray-50:  #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-zinc-50: #fafafa;
+    --color-zinc-100: #f5f5f5;
+    --color-zinc-200: #e5e5e5;
+    --color-zinc-300: #d4d4d4;
+    --color-zinc-400: #a3a3a3;
+    --color-zinc-500: #737373;
+    --color-zinc-600: #525252;
+    --color-zinc-700: #404040;
+    --color-zinc-800: #262626;
+    --color-zinc-900: #171717;
+    --color-zinc-950: #0a0a0a;
+
+    --color-accent: var(--color-neutral-800);
+    --color-accent-content: var(--color-neutral-800);
+    --color-accent-foreground: var(--color-white);
 }
 
-/* ===== Tokens ===== */
-:root{
-  --accent: 17 24 39;             /* slate-900 */
-  --accent-foreground: 255 255 255;
-}
-.dark{
-  --accent: 255 255 255;
-  --accent-foreground: 17 24 39;
+@layer theme {
+    .dark {
+        --color-accent: var(--color-white);
+        --color-accent-content: var(--color-white);
+        --color-accent-foreground: var(--color-neutral-800);
+    }
 }
 
-/* ===== Global border parity (now safe to use gray) ===== */
 @layer base {
-  *, ::before, ::after, ::backdrop, ::file-selector-button {
-    border-color: theme(colors.gray.200 / 1);
-  }
 
-  /* Optional: smooth fonts */
-  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-}
-
-/* ===== Helper rings (for utilities you can add on elements) ===== */
-@layer utilities {
-  .ring-accent { --tw-ring-color: rgb(var(--accent) / 1); }
-  .ring-offset-accent-foreground { --tw-ring-offset-color: rgb(var(--accent-foreground) / 1); }
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
 }
 
-/* ===== Login card look (plain CSS to avoid @apply issues) ===== */
-.login-glass {
-  border-radius: 1rem;                          /* ~rounded-2xl */
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.05);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+[data-flux-field]:not(ui-radio, ui-checkbox) {
+    @apply grid gap-2;
 }
 
-.input-dark {
-  width: 100%;
-  border-radius: .75rem;                        /* ~rounded-xl */
-  background: rgba(0,0,0,.40);
-  border: 1px solid rgba(100,116,139,.60);      /* slate-700/60 */
-  padding: .625rem .75rem;                      /* px-3 py-2.5 */
-  color: #e5e7eb;                               /* zinc-200 */
-}
-.input-dark::placeholder { color: #64748b; }    /* slate-500 */
-.input-dark:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #f59e0b;                /* ring-2 ring-amber-400 */
-  border-color: #f59e0b;                        /* border-amber-400 */
+[data-flux-label] {
+    @apply  !mb-0 !leading-tight;
 }
 
-.btn-amber {
-  display: inline-flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  border-radius: .75rem;                         /* ~rounded-xl */
-  background: linear-gradient(90deg,#fbbf24,#f97316); /* from-amber-400 to-orange-500 */
-  color: #000;
-  padding: .625rem 1rem;                         /* py-2.5 px-4 */
-  font-size: .875rem;                            /* text-sm */
-  font-weight: 800;
-  box-shadow: 0 0 30px rgba(251,191,36,.35);
-}
-.btn-amber:hover { filter: brightness(1.10); }
-.btn-amber:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(245,158,11,.70);
+input:focus[data-flux-control],
+textarea:focus[data-flux-control],
+select:focus[data-flux-control] {
+    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
-/* ===== Form column hugs the right side on lg+ ===== */
-@media (min-width: 1024px){
-  .login-right { padding-right: clamp(2rem, 8vw, 6rem); }
-}
+/* \[:where(&)\]:size-4 {
+    @apply size-4;
+} */

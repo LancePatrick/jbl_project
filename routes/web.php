@@ -21,7 +21,7 @@ Route::view('horse', 'horse')
     ->name('horse');
 
 Route::view('pre', 'pre')
-    ->middleware(['auth', 'verified'])
+
     ->name('pre');
 
 /* ✅ NEW: Drag Race page */

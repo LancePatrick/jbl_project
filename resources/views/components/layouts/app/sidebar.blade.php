@@ -90,7 +90,7 @@
                       <a href="/horse" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Horse Racing</a>
                     </li>
                     <li>
-                      <a href="race.html" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Motor Racing</a>
+                      <a href="/drag-race" class="block px-4 py-2 hover:bg-emerald-200 dark:hover:bg-emerald-600">Motor Racing</a>
                     </li>
                   </ul>
                 </li>
