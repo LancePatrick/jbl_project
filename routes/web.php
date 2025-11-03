@@ -10,20 +10,25 @@ Route::get('/', function () {
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
-    ->name('dashboard'); 
+    ->name('dashboard');
 
 Route::view('billiard', 'billiard')
     ->middleware(['auth', 'verified'])
-    ->name('billiard'); 
+    ->name('billiard');
 
 Route::view('horse', 'horse')
     ->middleware(['auth', 'verified'])
-    ->name('horse'); 
+    ->name('horse');
 
 Route::view('pre', 'pre')
     ->middleware(['auth', 'verified'])
-    ->name('pre'); 
-    
+    ->name('pre');
+
+/* ✅ NEW: Drag Race page */
+Route::view('drag-race', 'drag-race')
+    ->middleware(['auth', 'verified'])
+    ->name('drag.race');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -37,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
                 Features::canManageTwoFactorAuthentication()
                     && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
                 ['password.confirm'],
-                [], 
+                [],
             ),
         )
         ->name('two-factor.show');

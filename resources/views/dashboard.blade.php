@@ -36,7 +36,7 @@
               <h1 class="font-semibold md:text-5xl">Billiards</h1>
               <p class="text-[0.5rem] md:text-lg md:pl-2 py-2">Aim for precision and predict the winners in every cue match.</p>
             </div>
-            <a href="sabong2.html" class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet Now</a>
+            <a href="{{ route('billiard') }}" class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet Now</a>
           </div>
         </div>
 
@@ -47,7 +47,7 @@
               <h1 class="whitespace-nowrap shrink-0 font-semibold md:text-5xl">Motor Racing</h1>
               <p class="text-[0.5rem] md:text-lg md:pl-2 py-2">Bet on the fastest machines and top drivers from leagues around the world.</p>
             </div>
-            <a href="race.html" class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-6 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet Now</a>
+            <a href="{{ route('drag.race') }}" class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-6 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet Now</a>
           </div>
         </div>
 
@@ -58,7 +58,7 @@
               <h1 class="whitespace-nowrap shrink-0 font-semibold md:text-5xl">Horse Racing</h1>
               <p class="text-[0.5rem] md:text-lg md:pl-2 py-2">Experience the thrill of the tracks with live odds and instant results.</p>
             </div>
-            <a href="kabayo2.html" class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet Now</a>
+            <a href="{{ route('horse') }}" class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet Now</a>
           </div>
         </div>
       </div>

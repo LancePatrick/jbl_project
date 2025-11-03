@@ -47,7 +47,7 @@
           >
             <!-- HOME -> dashboard.blade.php -->
             <li><a href="{{ route('dashboard') }}" class="hover:text-emerald-300">Home</a></li>
-<li><a href="{{ route('pre') }}" class="hover:text-emerald-300">Pre-Match</a></li>
+            <li><a href="{{ route('pre') }}" class="hover:text-emerald-300">Pre-Match</a></li>
 
             <li><a href="#" class="hover:text-emerald-300">About</a></li>
             <li><a href="#" class="hover:text-emerald-300">Event</a></li>
@@ -96,7 +96,7 @@
                 </li>
                 <li>
                   <a
-                    href="race.html"
+                    href="{{ route('drag.race') }}"
                     class="block px-4 py-2 hover:bg-emerald-700"
                     >Motor Racing</a
                   >
