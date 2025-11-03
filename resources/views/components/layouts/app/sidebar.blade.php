@@ -48,7 +48,7 @@
                 </button>
                 <img src="images/Avatar.png" class="w-8 lg:w-10 lg:mx-2" alt=""/>
                 <div class="flex-col lg:space-y-1">
-                  <h1 class="text-[9px] lg:text-lg">Player123321s</h1>
+                  <h1 class="text-[9px] lg:text-lg">{{ Auth::user()->name  }}</h1>
                   <div class="flex items-center space-x-1 lg:space-x-2">
                     <i class="fa-solid fa-gem text-blue-400 dark:text-blue-200"></i>
                     <span class="text-[8px] lg:text-sm text-yellow-500 dark:text-yellow-400">24 Points</span>
@@ -59,7 +59,7 @@
               <!-- Primary Nav -->
               <ul class="flex items-center space-x-3 md:space-x-12 xl:space-x-16 relative">
                 <li><a href="dashboard" class="hover:text-emerald-300">Home</a></li>
-                <li><a href="preMatch.html" class="hover:text-emerald-300">Pre-Match</a></li>
+                <li><a href="/pre" class="hover:text-emerald-300">Pre-Match</a></li>
                 <li><a href="#" class="hover:text-emerald-300">Event</a></li>
 
                 <!-- Sports dropdown -->
