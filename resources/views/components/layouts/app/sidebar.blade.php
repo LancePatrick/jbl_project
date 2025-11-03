@@ -58,7 +58,7 @@
 
               <!-- Primary Nav -->
               <ul class="flex items-center space-x-3 md:space-x-12 xl:space-x-16 relative">
-                <li><a href="#" class="hover:text-emerald-300">Home</a></li>
+                <li><a href="dashboard" class="hover:text-emerald-300">Home</a></li>
                 <li><a href="preMatch.html" class="hover:text-emerald-300">Pre-Match</a></li>
                 <li><a href="#" class="hover:text-emerald-300">Event</a></li>
 
