@@ -13,7 +13,7 @@
 
       <!-- LEFT SLIDE -->
       <div class="hidden md:block">
-        <div class="w-full h-[600px] side-panel rounded-lg overflow-hidden relative">
+        <div class="w-full h-[0px] side-panel rounded-lg overflow-hidden relative">
           <img id="left-slide-desktop" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide left">
         </div>
       </div>
@@ -195,7 +195,7 @@
 
       <!-- RIGHT SLIDE -->
       <div class="hidden md:block">
-        <div class="w-full h-[600px] side-panel rounded-lg overflow-hidden relative">
+        <div class="w-full h-[0px] side-panel rounded-lg overflow-hidden relative">
           <img id="right-slide-desktop" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide right">
         </div>
       </div>
