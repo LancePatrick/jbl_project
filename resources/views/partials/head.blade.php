@@ -35,7 +35,7 @@
       --logro-step: 10px;
       --logro-rail-h: 48px;
       /* mini bead road (sidebar) */
-      --bead-bubble: 14px;
+      --bead-bubble: 22px;
       --bead-rail-h: 96px;
       --bead-gap-x: 6px;
       --bead-gap-y: 4px;
