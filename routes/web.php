@@ -8,11 +8,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::view('dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('billiard', 'billiard')
+Route::view('billiard', 'admin.billiard')
     ->middleware(['auth', 'verified'])
     ->name('billiard');
 
