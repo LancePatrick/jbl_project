@@ -19,7 +19,7 @@ Route::view('billiard', 'admin.billiard')
     ->middleware(['auth', 'verified'])
     ->name('billiard');
 
-Route::view('horse', 'horse')
+Route::view('horse', 'admin.horse')
     ->middleware(['auth', 'verified'])
     ->name('horse');
 
