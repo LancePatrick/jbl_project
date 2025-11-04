@@ -105,7 +105,10 @@
             </li>
           </ul>
 
-          <div
+          <div>
+            <span class="text-white cursor-pointer hover:text-emerald-300 ">Login</span>
+          </div>
+          {{-- <div
             x-data="{ open: false }"
             class="flex space-x-1 relative -translate-x-8 items-center"
             @click="open = !open"
@@ -141,7 +144,7 @@
               </ul>
             </div>
             <span class="text-white">User1</span>
-          </div>
+          </div> --}}
         </nav>
 
         <div class="w-full flex">
