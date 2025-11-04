@@ -112,7 +112,7 @@
           </div>
 
           <!-- Bet Amount + MINI ROAD -->
-          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-4">
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-4.5">
           @auth
             @if( auth()->user()->role_id == 2)
             <div class="flex items-center justify-between mb-2">
