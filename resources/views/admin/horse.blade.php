@@ -321,19 +321,18 @@
 <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
-
   <!-- 4-column layout (Desktop): [slideL | video(+logro) | bets | slideR] -->
-  <main class="max-w-7xl mx-auto p-4">
-    <div class="grid gap-4 md:grid-cols-[180px_minmax(0,1fr)_360px_180px]">
+  <main class="max-w-screen-2xl 2xl:max-w-[1500px] mx-auto p-4 ml-12">
+    <div class="grid gap-4 md:grid-cols-[0px_minmax(0,1fr)_360px_0px]">
 
-      <!-- LEFT SLIDE -->
+      <!-- LEFT SLIDE (kept but 0px h) -->
       <div class="hidden md:block">
-        <div class="w-full h-[600px] side-panel rounded-lg overflow-hidden relative">
+        <div class="w-full h-[0px] side-panel rounded-lg overflow-hidden relative">
           <img id="left-slide-desktop" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide left">
         </div>
       </div>
 
-      <!-- CENTER: Video + Logrohan + Road -->
+      <!-- CENTER: Video + Logrohan -->
       <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg">
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
           <div id="event-date" class="text-left"></div>
@@ -351,7 +350,7 @@
             </div>
             <iframe
               id="youtube-video-main"
-              class="w-full h-64 md:h-[250px] rounded-lg relative z-20 border-4 border-transparent"
+              class="absolute inset-0 w-full h-full rounded-lg z-20 border-4 border-transparent"
               src="https://www.youtube.com/embed/rUC_nHCOUW4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -362,52 +361,36 @@
 
         <!-- Logrohan (3-color) -->
         <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
-          
-        @auth
+          @auth
             @if( auth()->user()->role_id == 1)
-        <div class="flex items-center justify-between mb-1">
-            <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
-            <div class="flex items-center gap-2 text-[10px] logro-legend">
-              <div class="flex items-center gap-1"><span class="logro-chip green"></span><span class="opacity-70">Green</span></div>
-              <div class="flex items-center gap-1"><span class="logro-chip red"></span><span class="opacity-70">Red</span></div>
-              <div class="flex items-center gap-1"><span class="logro-chip blue"></span><span class="opacity-70">Blue</span></div>
+            <div class="flex items-center justify-between mb-1">
+              <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
+              <div class="flex items-center gap-2 text-[10px] logro-legend">
+                <div class="flex items-center gap-1"><span class="logro-chip green"></span><span class="opacity-70">Green</span></div>
+                <div class="flex items-center gap-1"><span class="logro-chip red"></span><span class="opacity-70">Red</span></div>
+                <div class="flex items-center gap-1"><span class="logro-chip blue"></span><span class="opacity-70">Blue</span></div>
+              </div>
             </div>
-          </div>
 
-          <div class="flex items-center gap-2 mb-2">
-            <button id="btn-win-green" class="px-2 py-1 rounded bg-emerald-700/70 border border-white/10 text-xs font-bold hover:bg-emerald-700">+ Green win</button>
-            <button id="btn-win-red"   class="px-2 py-1 rounded bg-red-700/70    border border-white/10 text-xs font-bold hover:bg-red-700">+ Red win</button>
-            <button id="btn-win-blue"  class="px-2 py-1 rounded bg-blue-700/70   border border-white/10 text-xs font-bold hover:bg-blue-700">+ Blue win</button>
-            <button id="btn-undo"      class="px-2 py-1 rounded bg-gray-700/70   border border-white/10 text-xs hover:bg-gray-700">Undo</button>
-            <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70   border border-white/10 text-xs hover:bg-gray-800">Clear</button>
-          </div>
-          @endif
+            <div class="flex items-center gap-2 mb-2">
+              <button id="btn-win-green" class="px-2 py-1 rounded bg-emerald-700/70 border border-white/10 text-xs font-bold hover:bg-emerald-700">+ Green win</button>
+              <button id="btn-win-red"   class="px-2 py-1 rounded bg-red-700/70    border border-white/10 text-xs font-bold hover:bg-red-700">+ Red win</button>
+              <button id="btn-win-blue"  class="px-2 py-1 rounded bg-blue-700/70   border border-white/10 text-xs font-bold hover:bg-blue-700">+ Blue win</button>
+              <button id="btn-undo"      class="px-2 py-1 rounded bg-gray-700/70   border border-white/10 text-xs hover:bg-gray-700">Undo</button>
+              <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70   border border-white/10 text-xs hover:bg-gray-800">Clear</button>
+            </div>
+            @endif
           @endauth
 
           <div id="logro-rail" class="logro-rail">
             <div id="logro-strip" class="logro-strip-3d"></div>
           </div>
         </div>
-               
 
-        <!-- Mini Bead Road (VERTICAL) -->
-        <div class="mt-3 bg-gray-900/50 border border-white/10 rounded-lg p-2">
-        <div class="flex items-center justify-between mb-1">
-            <div class="text-[11px] uppercase tracking-widest text-white/70">Road</div>
-            <div class="flex items-center gap-2 text-[10px]">
-              <div class="flex items-center gap-1"><span class="bead green inline-block" style="width:12px;height:12px"></span><span class="opacity-70">Green</span></div>
-              <div class="flex items-center gap-1"><span class="bead red   inline-block" style="width:12px;height:12px"></span><span class="opacity-70">Red</span></div>
-              <div class="flex items-center gap-1"><span class="bead blue  inline-block" style="width:12px;height:12px"></span><span class="opacity-70">Blue</span></div>
-            </div>
-          </div>
-          <div class="bead-rail">
-            <div id="bead-strip" class="bead-strip"></div>
-          </div>
-        </div>
+        <!-- (NOTE) The Road (bead-rail) was moved to the right sidebar below BET section -->
       </div>
-      
 
-      <!-- RIGHT: Bet cards + Bet Amount (sticky) -->
+      <!-- RIGHT: Bet cards + Bet Amount (sticky) + ROAD (moved here & smaller) -->
       <aside class="hidden md:block">
         <div class="sticky top-16 space-y-3">
           <div id="bet-area" class="bet-area grid grid-cols-1 gap-2 mt-0 mb-0">
@@ -421,12 +404,12 @@
               <div id="green-amount" class="amount-3d text-3xl md:text-4xl mt-1"></div>
               <div class="mt-3">
                 <div class="mt-2"><span id="green-odds" class="odds-ribbon"></span></div>
-                
+
                 @auth
-            @if( auth()->user()->role_id == 2)
-                <button id="bet-green" class="bet-btn green mt-2 w-full px-3 py-2 text-sm">BET</button>
-                @endif
-          @endauth
+                  @if( auth()->user()->role_id == 2)
+                    <button id="bet-green" class="bet-btn green mt-2 w-full px-3 py-2 text-sm">BET</button>
+                  @endif
+                @endauth
 
                 <div id="green-result" class="mt-2 text-xs text-yellow-300 result-glow"></div>
               </div>
@@ -442,12 +425,12 @@
               <div id="red-amount" class="amount-3d text-3xl md:text-4xl mt-1"></div>
               <div class="mt-3">
                 <div class="mt-2"><span id="red-odds" class="odds-ribbon"></span></div>
-                
+
                 @auth
-            @if( auth()->user()->role_id == 2)
-                <button id="bet-red" class="bet-btn red mt-2 w-full px-3 py-2 text-sm">BET</button>
-                @endif
-          @endauth
+                  @if( auth()->user()->role_id == 2)
+                    <button id="bet-red" class="bet-btn red mt-2 w-full px-3 py-2 text-sm">BET</button>
+                  @endif
+                @endauth
 
                 <div id="red-result" class="mt-2 text-xs text-yellow-300 result-glow"></div>
               </div>
@@ -463,85 +446,102 @@
               <div id="blue-amount" class="amount-3d text-3xl md:text-4xl mt-1"></div>
               <div class="mt-3">
                 <div class="mt-2"><span id="blue-odds" class="odds-ribbon"></span></div>
-                
+
                 @auth
-            @if( auth()->user()->role_id == 2)
-                <button id="bet-blue" class="bet-btn blue mt-2 w-full px-3 py-2 text-sm">BET</button>
-                @endif
-          @endauth
+                  @if( auth()->user()->role_id == 2)
+                    <button id="bet-blue" class="bet-btn blue mt-2 w-full px-3 py-2 text-sm">BET</button>
+                  @endif
+                @endauth
 
                 <div id="blue-result" class="mt-2 text-xs text-yellow-300 result-glow"></div>
               </div>
             </div>
           </div>
 
-          
           @auth
             @if( auth()->user()->role_id == 2)
-          <!-- Bet Amount -->
-          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0">
-          <div class="flex items-center justify-between mb-2">
-              <div class="text-[15px] uppercase tracking-widest text-white/70">Bet Amount</div>
-              <div class="text-[15px] text-white/60">min ♦100</div>
-            </div>
-            <div class="flex flex-wrap items-center gap-2 mb-2">
-              <input
-                type="number"
-                id="bet-amount"
-                class="bet-input p-2 text-sm text-white w-[160px]"
-                placeholder="Enter amount"
-                inputmode="numeric"
-              />
-              <div class="balance-pill text-emerald-300">
-                <svg class="w-5 h-5 opacity-90" viewBox="0 0 64 64" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="gemTop" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#e9ffe9"/><stop offset="40%" stop-color="#c6ffd9"/>
-                      <stop offset="70%" stop-color="#9fffc8"/><stop offset="100%" stop-color="#e6fff0"/>
-                    </linearGradient>
-                    <linearGradient id="gemSide" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stop-color="#b5ffd0"/><stop offset="100%" stop-color="#80f7b3"/>
-                    </linearGradient>
-                    <radialGradient id="gemGlow" cx="50%" cy="50%" r="60%">
-                      <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="60%" stop-color="rgba(255,255,255,0.0)"/>
-                    </radialGradient>
-                  </defs>
-                  <polygon points="32,60 6,24 58,24" fill="url(#gemSide)" stroke="#a7ffd8" stroke-width="1"/>
-                  <polygon points="12,24 20,8 44,8 52,24 12,24" fill="url(#gemTop)" stroke="#bfffe6" stroke-width="1"/>
-                  <polyline points="20,8 32,24 44,8" fill="none" stroke="#d8ffe8" stroke-width="1" opacity=".9"/>
-                  <polyline points="12,24 32,24 52,24" fill="none" stroke="#cfe" stroke-width="1" opacity=".9"/>
-                  <polyline points="6,24 32,60 58,24" fill="none" stroke="#a7ffd8" stroke-width="1" opacity=".7"/>
-                  <circle cx="32" cy="30" r="16" fill="url(#gemGlow)" opacity=".35"/>
-                </svg>
-                <span class="text-[11px] opacity-80 tracking-widest"></span>
-                <span id="mid-balance" class="amount text-base">5,000</span>
+              <!-- Bet Amount -->
+              <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="text-[15px] uppercase tracking-widest text-white/70">Bet Amount</div>
+                  <div class="text-[15px] text-white/60">min ♦100</div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  <input
+                    type="number"
+                    id="bet-amount"
+                    class="bet-input p-2 text-sm text-white w-[160px]"
+                    placeholder="Enter amount"
+                    inputmode="numeric"
+                  />
+                  <div class="balance-pill text-emerald-300">
+                    <svg class="w-5 h-5 opacity-90" viewBox="0 0 64 64" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="gemTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#e9ffe9"/><stop offset="40%" stop-color="#c6ffd9"/>
+                          <stop offset="70%" stop-color="#9fffc8"/><stop offset="100%" stop-color="#e6fff0"/>
+                        </linearGradient>
+                        <linearGradient id="gemSide" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stop-color="#b5ffd0"/><stop offset="100%" stop-color="#80f7b3"/>
+                        </linearGradient>
+                        <radialGradient id="gemGlow" cx="50%" cy="50%" r="60%">
+                          <stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="60%" stop-color="rgba(255,255,255,0.0)"/>
+                        </radialGradient>
+                      </defs>
+                      <polygon points="32,60 6,24 58,24" fill="url(#gemSide)" stroke="#a7ffd8" stroke-width="1"/>
+                      <polygon points="12,24 20,8 44,8 52,24 12,24" fill="url(#gemTop)" stroke="#bfffe6" stroke-width="1"/>
+                      <polyline points="20,8 32,24 44,8" fill="none" stroke="#d8ffe8" stroke-width="1" opacity=".9"/>
+                      <polyline points="12,24 32,24 52,24" fill="none" stroke="#cfe" stroke-width="1" opacity=".9"/>
+                      <polyline points="6,24 32,60 58,24" fill="none" stroke="#a7ffd8" stroke-width="1" opacity=".7"/>
+                      <circle cx="32" cy="30" r="16" fill="url(#gemGlow)" opacity=".35"/>
+                    </svg>
+                    <span class="text-[11px] opacity-80 tracking-widest"></span>
+                    <span id="mid-balance" class="amount text-base">5,000</span>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-1 mb-2">
+                  <button class="chip3d chip-emerald chip-outline text-sm bet-chip" data-val="100">♦100</button>
+                  <button class="chip3d chip-amber   chip-outline text-sm bet-chip" data-val="200">♦200</button>
+                  <button class="chip3d chip-black  chip-outline text-sm bet-chip" data-val="500">♦500</button>
+                  <button class="chip3d chip-blue   chip-outline text-sm bet-chip" data-val="1000">♦1000</button>
+                </div>
+              </div>
+            @endif
+          @endauth
+
+          <!-- ROAD (moved here, made smaller) -->
+          <div
+            class="bg-gray-900/50 border border-white/10 rounded-lg p-2"
+            style="--bead-bubble:16px; --bead-rows:6; --bead-gap-y:3px; --bead-gap-x:4px;"
+          >
+            <div class="flex items-center justify-between mb-1">
+              <div class="text-[10px] uppercase tracking-widest text-white/70">Road</div>
+              <div class="flex items-center gap-2 text-[9px]">
+                <div class="flex items-center gap-1"><span class="bead green inline-block" style="width:10px;height:10px"></span><span class="opacity-70">Green</span></div>
+                <div class="flex items-center gap-1"><span class="bead red   inline-block" style="width:10px;height:10px"></span><span class="opacity-70">Red</span></div>
+                <div class="flex items-center gap-1"><span class="bead blue  inline-block" style="width:10px;height:10px"></span><span class="opacity-70">Blue</span></div>
               </div>
             </div>
-            <div class="grid grid-cols-2 gap-1 mb-2">
-              <button class="chip3d chip-emerald chip-outline text-sm bet-chip" data-val="100">♦100</button>
-              <button class="chip3d chip-amber   chip-outline text-sm bet-chip" data-val="200">♦200</button>
-              <button class="chip3d chip-black  chip-outline text-sm bet-chip" data-val="500">♦500</button>
-              <button class="chip3d chip-blue   chip-outline text-sm bet-chip" data-val="1000">♦1000</button>
+            <div class="bead-rail">
+              <div id="bead-strip" class="bead-strip"></div>
             </div>
           </div>
         </div>
-        @endif
-          @endauth
       </aside>
 
-      <!-- RIGHTMOST SLIDE -->
+      <!-- RIGHTMOST SLIDE (kept but 0px h) -->
       <div class="hidden md:block">
-        <div class="w-full h-[600px] side-panel rounded-lg overflow-hidden relative">
+        <div class="w-full h-[0px] side-panel rounded-lg overflow-hidden relative">
           <img id="right-slide-desktop" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide right">
         </div>
       </div>
 
-      <!-- MOBILE STACK -->
+      <!-- MOBILE STACK (unchanged) -->
       <div class="md:hidden space-y-3 col-span-4">
-        <div class="w-full h-40 side-panel rounded-lg overflow-hidden">
+        <div class="w-full h-0 side-panel rounded-lg overflow-hidden">
           <img id="left-slide-mobile" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide L">
         </div>
-        <div class="w-full h-40 side-panel rounded-lg overflow-hidden">
+        <div class="w-full h-0 side-panel rounded-lg overflow-hidden">
           <img id="right-slide-mobile" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide R">
         </div>
 
@@ -623,7 +623,6 @@
     }
 
     function setRandomRace(){
-      // Three horses: G, R, B
       const nameG = pickName();
       const nameR = pickName(nameG);
       const nameB = pickName(nameG, nameR);
@@ -636,15 +635,14 @@
       setTxt('blue-name',  nameB); setTxt('blue-name-mob',  nameB);
       setTxt('match-no', id);
 
-      // Horse numbers
       setTxt('horseG-no', Math.floor(Math.random() * 9) + 1);
       setTxt('horseR-no', Math.floor(Math.random() * 9) + 1);
       setTxt('horseB-no', Math.floor(Math.random() * 9) + 1);
     }
 
-    const BIGROAD_MAX_ROWS = 8; // ilalim ng video
+    const BIGROAD_MAX_ROWS = 8;
 
-    /* ========= PA-L Logro Grid (unchanged) ========= */
+    /* ========= PA-L Logro Grid ========= */
     function streaks(seq){
       const out=[]; for(let i=0;i<seq.length;){
         const c=seq[i]; let j=i+1; while(j<seq.length && seq[j]===c) j++;
@@ -659,22 +657,18 @@
       for(const [color,count] of streaks(seq)){
         let remaining=count;
 
-        // vertical leg
         let col=startCol, row=0; ensure(col);
         while(remaining>0 && row<maxRows && isEmpty(col,row)){
           cols[col][row]={t:color}; remaining--; row++;
         }
-        // elbow row
         let elbowRow = Math.max(0, Math.min(maxRows-1, row-1));
 
-        // horizontal leg to the right on elbowRow
         col = startCol + 1;
         while(remaining>0){
-          while(!isEmpty(col, elbowRow)) col++; // skip occupied
+          while(!isEmpty(col, elbowRow)) col++;
           ensure(col); cols[col][elbowRow]={t:color}; remaining--; col++;
         }
 
-        // next streak starts beside the first bubble
         startCol += 1;
       }
       return cols;
@@ -709,33 +703,31 @@
       strip.scrollLeft = strip.scrollWidth;
     }
 
-    /* ===== STRAIGHT VERTICAL BEAD ROAD (1..8 down, 9th new column) ===== */
+    /* ===== STRAIGHT VERTICAL BEAD ROAD ===== */
     function renderBeadRoad(seq, stripId){
       const strip = document.getElementById(stripId);
       if(!strip) return;
       strip.innerHTML = '';
 
-      // Append in order — CSS Grid handles vertical fill then next column
       seq.forEach((t, i) => {
         const dot = document.createElement('div');
         dot.className = 'bead ' + (t==='R' ? 'red' : (t==='B' ? 'blue' : 'green'));
-        dot.textContent = (i + 1); // number in the center (sequence index)
+        dot.textContent = (i + 1);
         strip.appendChild(dot);
       });
 
-      // Auto-scroll to newest column on the right
       const rail = strip.parentElement;
       rail.scrollLeft = rail.scrollWidth;
     }
 
     function renderAllRoads(seq){
-      renderBigRoadToGrid(seq, 'logro-strip',     BIGROAD_MAX_ROWS); // desktop/video
-      renderBigRoadToGrid(seq, 'logro-strip-mob', BIGROAD_MAX_ROWS); // mobile
-      renderBeadRoad(seq, 'bead-strip');                               // vertical road
+      renderBigRoadToGrid(seq, 'logro-strip',     BIGROAD_MAX_ROWS);
+      renderBigRoadToGrid(seq, 'logro-strip-mob', BIGROAD_MAX_ROWS);
+      renderBeadRoad(seq, 'bead-strip'); // (now lives under right sidebar)
     }
 
     /* ---------- Betting State ---------- */
-    let results = []; // sequence of 'G'|'R'|'B'
+    let results = [];
     let greenAmount, redAmount, blueAmount;
     let greenOdds, redOdds, blueOdds;
     let currentBalance = 500000;
@@ -904,7 +896,6 @@
     }
 
     function pushResult(side){
-      // side: 'GREEN' | 'RED' | 'BLUE' -> map to 'G' | 'R' | 'B'
       const sym = side==='GREEN' ? 'G' : (side==='RED' ? 'R' : 'B');
       results.push(sym);
       renderAllRoads(results);
@@ -918,7 +909,6 @@
       setDateTime();
       setRandomRace();
 
-      // Seed amounts
       greenAmount = getRandomAmount();
       redAmount   = getRandomAmount();
       blueAmount  = getRandomAmount();
@@ -946,21 +936,17 @@
         document.addEventListener('click',(e)=>{ if(!btn.contains(e.target) && !menu.contains(e.target)) menu.classList.add('hidden'); });
       }
 
-      // Logro buttons
       document.getElementById('btn-win-green')?.addEventListener('click', ()=> pushResult('GREEN'));
       document.getElementById('btn-win-red')  ?.addEventListener('click', ()=> pushResult('RED'));
       document.getElementById('btn-win-blue') ?.addEventListener('click', ()=> pushResult('BLUE'));
       document.getElementById('btn-undo')     ?.addEventListener('click',  undoResult);
       document.getElementById('btn-clear')    ?.addEventListener('click',  clearResults);
 
-      // Seed initial pattern
       results = ['G','G','R','R','B','B','G','R','R','G','B','G','G','R','B','G','G','G','G','G','G','G','R','R','R','B','B','B','B','G','G','R','R','R'];
       renderAllRoads(results);
 
-      // Balance init
       renderBalance();
 
-      // Quick chips
       document.querySelectorAll('.bet-chip').forEach(btn=>{
         btn.addEventListener('click', ()=>{
           const raw = parseInt(btn.dataset.val || '0', 10);
@@ -969,7 +955,6 @@
         });
       });
 
-      // Bet buttons
       document.getElementById('bet-green')?.addEventListener('click', ()=> placeBet('GREEN'));
       document.getElementById('bet-red')  ?.addEventListener('click', ()=> placeBet('RED'));
       document.getElementById('bet-blue') ?.addEventListener('click', ()=> placeBet('BLUE'));
@@ -977,4 +962,3 @@
   </script>
 </body>
 </x-layouts.app>
-
