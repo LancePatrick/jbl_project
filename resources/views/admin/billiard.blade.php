@@ -20,7 +20,7 @@
       </div>
 
       <!-- CENTER: Video + Logrohan -->
-      <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg">
+      <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-17">
         <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
           <div id="event-date" class="text-left"></div>
@@ -77,8 +77,24 @@
       <!-- RIGHT: Bet cards + Bet Amount (wider) -->
       <aside>
         <div class="sticky mt-12 space-y-3">
+
+          <!-- ===== Bet Percentage Bar (added, position kept above cards) ===== -->
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-5">
+            <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Bet Percentage</div>
+            <div class="relative h-3 rounded-full bg-black/40 border border-white/10 overflow-hidden">
+              <div id="pct-red"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:50%"></div>
+              <div id="pct-blue" class="absolute right-0 top-0 h-full bg-blue-600/80" style="width:50%"></div>
+            </div>
+            <div class="mt-1 grid grid-cols-3 text-[11px] text-white/70">
+              <div id="pct-red-label"  class="text-left">Red 50%</div>
+              <div id="pct-total-label" class="text-center text-white/50">Total: ₱0</div>
+              <div id="pct-blue-label" class="text-right">Blue 50%</div>
+            </div>
+          </div>
+          <!-- ===== /Bet Percentage Bar ===== -->
+
           <!-- Cards -->
-          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-2 h-78">
+          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-3 h-78">
             <!-- Meron -->
             <div class="bet-card red tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
@@ -248,10 +264,10 @@
     // A) CONFIG / CONSTANTS
     // ----------------------------------------------------------
     const players = [
-      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
-      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
-      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
-      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
+      "Hagdang Bato","King Focus","LeBron James","Kid Molave",
+      "JBL","Autumn Blaze","Desert Sage","Hidden Hollow",
+      "Pony Punster","Santino","Panday","Hooves of Fury",
+      "Golden Hour","Sun Chaser"
     ];
     const slides = [
       "https://i.ibb.co/jPjC9YqC/raga.jpg","https://i.ibb.co/fd26jLNQ/de-luna.webp",
@@ -470,6 +486,33 @@
     }
 
     // ----------------------------------------------------------
+    // F.1) BET PERCENTAGE BAR (NEW)
+    // ----------------------------------------------------------
+    function updatePercentBar(){
+      const red = meronAmount||0;
+      const blue = walaAmount||0;
+      const total = red + blue;
+
+      let redPct = 50, bluePct = 50;
+      if(total > 0){
+        redPct  = Math.round((red / total) * 100);
+        bluePct = 100 - redPct;
+      }
+
+      const rEl = document.getElementById('pct-red');
+      const bEl = document.getElementById('pct-blue');
+      const rl  = document.getElementById('pct-red-label');
+      const bl  = document.getElementById('pct-blue-label');
+      const tl  = document.getElementById('pct-total-label');
+
+      if(rEl){ rEl.style.width = redPct + '%'; }
+      if(bEl){ bEl.style.width = bluePct + '%'; }
+      if(rl){ rl.textContent = `Red ${redPct}%`; }
+      if(bl){ bl.textContent = `Blue ${bluePct}%`; }
+      if(tl){ tl.textContent = `Total: ₱${Number(total).toLocaleString('en-PH')}`; }
+    }
+
+    // ----------------------------------------------------------
     // G) HISTORY UI
     // ----------------------------------------------------------
     function sideBadgeHTML(side){
@@ -558,6 +601,9 @@
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
       }
 
+      // update bar after amounts change
+      updatePercentBar();
+
       const totalWinnings=parseFloat(betAmount)*parseFloat(odds);
       if(betType==='MERON'){
         const r=document.getElementById('meron-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`;
@@ -612,6 +658,9 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
       const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
       const wam=document.getElementById('wala-amount-mob');  if(wam) wam.textContent=walaAmount.toLocaleString();
+
+      // initialize percentage bar with seeded values
+      updatePercentBar();
 
       updateSlides();
       document.querySelectorAll('.tilt').forEach(attachTilt);
