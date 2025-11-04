@@ -78,7 +78,7 @@
       <aside>
         <div class="sticky mt-12 space-y-3">
           <!-- Cards -->
-          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-2">
+          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-2 h-78">
             <!-- Meron -->
             <div class="bet-card red tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
