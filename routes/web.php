@@ -23,9 +23,8 @@ Route::view('horse', 'admin.horse')
     ->middleware(['auth', 'verified'])
     ->name('horse');
 
-Route::view('pre', 'pre')
-
-    ->name('pre');
+Route::view('pre-match', 'pre-match')
+    ->name('pre-match');
 
 /* ✅ NEW: Drag Race page */
 Route::view('drag-race', 'drag-race')

@@ -194,61 +194,51 @@
     class="overflow-x-hidden bg-[url('images/loginPicture2.png')] bg-cover bg-center bg-no-repeat min-h-screen [min-height:100dvh]"
     x-data="{ sport: 'billiards' }"
   >
-     <nav class="relative z-[200] bg-slate-950 shadow-lg shadow-slate-800/50 w-full">
+    <nav class=" inset-x-0 z-50 border-b border-amber-400/20 bg-black/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(251,191,36,.08)]">
+      <div class="mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
+          <a href="/" class="flex items-center gap-2 group">
+              <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-black font-extrabold text-lg shadow-[0_0_25px_rgba(251,191,36,.35)] ring-1 ring-amber-400/30">
+                  B
+              </span>
+              <span class="font-display tracking-wide text-slate-100 group-hover:text-amber-300 transition">
+                  BK2025
+              </span>
+          </a>
 
-      <div
-        class="px-2 py-2 2xl:px-12 2xl:py-[2px] flex font-semibold items-center justify-between text-[10px] 2xl:text-xl w-full 2xl:max-w-screen-2xl 2xl:mx-auto"
-      >
-        <img src="{{ asset('images/logo2real.png') }}" class="h-8 2xl:h-20" alt="Logo" />
+          <div class="flex items-center gap-4">
+              <a href="/" class="text-sm font-semibold hover:text-amber-300 transition">
+                  <i class="fa-solid fa-house text-amber-300 mr-1"></i> <span class=" text-white">Home</span>
+              </a>
 
-        <ul class="flex flex-wrap space-x-5 2xl:space-x-20 text-slate-50 relative" x-data="{ open: false }">
-          <!-- ✅ Laravel route links -->
-          <li><a href="{{ route('dashboard') }}" class="hover:text-slate-300">Home</a></li>
-          <li><a href="{{ route('pre') }}" class="hover:text-slate-300">Pre-Match</a></li>
-          <li><a href="#" class="hover:text-slate-300">About</a></li>
-          <li><a href="#" class="hover:text-slate-300">Event</a></li>
+              <div class="relative" x-data="{ open:false }">
+                  <button @click="open = !open" @click.away="open = false"
+                          class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/10 text-sm font-medium">
+                      <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-black text-xs font-extrabold ring-1 ring-amber-300/40">
+                          {{ strtoupper(substr($user?->username ?? 'U', 0, 1)) }}
+                      </span>
+                      <span class=" text-white">Test Player</span>
+                      <i class="fa-solid fa-chevron-down text-white text-[10px]"></i>
+                  </button>
 
-          <!-- Dropdown -->
-          <li class="relative items-center">
-            <button @click="open = !open" class="hover:text-slate-300 inline-flex items-center text-center">
-              Sports
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 2xl:w-6 2xl:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-              </svg>
-            </button>
-            <ul
-              x-show="open"
-              @click.outside="open = false"
-              x-transition.opacity.duration.150ms
-              class="absolute left-0 mt-2 bg-slate-900 text-white rounded-lg shadow-lg w-44 z-50 2xl:w-64 2xl:text-base"
-            >
-              <!-- Keep as js filters; no route change needed -->
-              <li><a href="#" class="block px-4 py-2 hover:bg-slate-700" @click.prevent="sport='billiards'; open=false">Billiards</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-slate-700" @click.prevent="sport='horse'; open=false">Horse Racing</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-slate-700" @click.prevent="sport='motor'; open=false">Motor Racing</a></li>
-            </ul>
-          </li>
-        </ul>
-
-        <!-- User menu -->
-        <div x-data="{ open: false }" class="flex space-x-1 relative -translate-x-8 items-center">
-          <div class="flex cursor-pointer" @click="open = !open">
-            <img src="{{ asset('images/icon.png') }}" class="h-3 2xl:h-13" alt="User" />
+                  <div x-show="open" x-transition
+                      class="absolute right-0 mt-2 w-56 rounded-xl border border-white/10 bg-black/85 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,.5)] overflow-hidden z-50">
+                      <div class="px-4 py-3 border-b border-white/10">
+                          <p class="text-sm font-semibold text-amber-300">Test Player</p>
+                          <p class="text-xs text-slate-400">player@example.com</p>
+                      </div>
+                      <a href="{{ url('/profile') }}" class="block px-4 py-2 text-sm text-slate-200 hover:bg-white/5">
+                          <i class="fa-regular fa-user mr-2 text-amber-300"></i> Profile
+                      </a>
+                      <form method="POST" action="{{ route('logout') }}">
+                          @csrf
+                          <button type="submit"
+                                  class="w-full text-left px-4 py-2 text-sm text-rose-300 hover:bg-white/5">
+                              <i class="fa-solid fa-right-from-bracket mr-2"></i> Sign out
+                          </button>
+                      </form>
+                  </div>
+              </div>
           </div>
-          <div
-            x-show="open"
-            @click.outside="open = false"
-            x-transition.opacity.duration.150ms
-            class="absolute left-10 top-2 mt-2 2xl:top-11 w-18 2xl:w-35 text-xs bg-white border border-gray-200 rounded-lg shadow-lg z-[100] user-menu"
-          >
-            <ul class="text-gray-700 text-sm 2xl:text-base">
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
-            </ul>
-          </div>
-          <span class="text-white">User1</span>
-        </div>
       </div>
     </nav>
     <div

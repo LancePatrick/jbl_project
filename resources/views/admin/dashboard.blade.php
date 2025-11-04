@@ -5,7 +5,7 @@
   <main class="mt-0 lg:ml-5">
     <!-- Hero -->
     <section class="relative overflow-hidden rounded-lg p-5 bg-[url('images/snookerplayer.jpg')] bg-cover bg-center bg-no-repeat dark:text-emerald-50 lg:py-20">
-      <div class="absolute inset-0 dark:bg-black/60 bg-gray-800/50"></div>
+      <div class="absolute inset-0 !dark:bg-black/60 !bg-gray-800/50"></div>
       <div class="relative z-10 grid items-center gap-8 md:grid-cols-2">
         <div>
           <h1 class="text-2xl font-semibold text-white sm:text-4xl lg:text-5xl md:text-6xl">
@@ -31,7 +31,7 @@
       <div class="flex justify-center items-center gap-4 scale-90 md:scale-100 my-12 md:my-40">
         <!-- Card 1 -->
         <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] md:w-[25rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800" style="background-image: url('images/BilliardVisual.png')">
-          <div class="absolute inset-0 bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
+          <div class="absolute inset-0 !bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 2xl:mt-[18.75rem]">
               <h1 class="font-semibold md:text-5xl">Billiards</h1>
               <p class="text-[0.5rem] md:text-lg md:pl-2 py-2">Aim for precision and predict the winners in every cue match.</p>
@@ -42,7 +42,7 @@
 
         <!-- Card 2 -->
         <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] md:w-[25rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800" style="background-image: url('images/MotorVisual.png')">
-          <div class="absolute inset-0 bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
+          <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
               <h1 class="whitespace-nowrap shrink-0 font-semibold md:text-5xl">Motor Racing</h1>
               <p class="text-[0.5rem] md:text-lg md:pl-2 py-2">Bet on the fastest machines and top drivers from leagues around the world.</p>
@@ -53,7 +53,7 @@
 
         <!-- Card 3 -->
         <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] md:w-[25rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800" style="background-image: url('images/HorseVisual.png')">
-          <div class="absolute inset-0 bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
+          <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
               <h1 class="whitespace-nowrap shrink-0 font-semibold md:text-5xl">Horse Racing</h1>
               <p class="text-[0.5rem] md:text-lg md:pl-2 py-2">Experience the thrill of the tracks with live odds and instant results.</p>
