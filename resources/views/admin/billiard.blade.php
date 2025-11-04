@@ -5,12 +5,12 @@
 
   <!-- ========================================================
        MAIN: [video+logro | bets]
-       NOTE: Left and Right have the SAME width on md+ screens.
+       NOTE: Left is wider than Right on md+ screens.
   ========================================================= -->
   <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-4">
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
 
-      <!-- LEFT: Video + Logrohan (SAME WIDTH AS RIGHT) -->
+      <!-- LEFT: Video + Logrohan (WIDER) -->
       <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-17">
         <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
@@ -44,7 +44,7 @@
             <div class="flex items-center gap-2 text-[10px]">
               <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
               <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
-            </div>
+            </div>  
           </div>
 
           @auth
@@ -56,7 +56,7 @@
                 <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70 border border-white/10 text-xs hover:bg-gray-800">Clear</button>
               </div>
             @endif
-          @endauth>
+          @endauth
 
           <div id="logro-rail" class="logro-rail">
             <div id="logro-strip" class="logro-strip-3d"></div>
