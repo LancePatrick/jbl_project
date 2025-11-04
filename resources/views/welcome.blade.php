@@ -105,46 +105,50 @@
             </li>
           </ul>
 
-          <div>
-            <span class="text-white cursor-pointer hover:text-emerald-300 ">Login</span>
-          </div>
-          {{-- <div
-            x-data="{ open: false }"
-            class="flex space-x-1 relative -translate-x-8 items-center"
-            @click="open = !open"
-          >
-            <!-- Image (clickable trigger) -->
-            <div class="flex cursor-pointer">
-              <img src="{{ asset('images/icon.png') }}" class="h-3 2xl:h-13" alt="" />
-            </div>
-
-            <!-- Dropdown menu -->
+         
+          @auth
             <div
-              x-show="open"
-              @click.outside="open = false"
-              x-transition
-              class="absolute left-10 top-2 mt-2 2xl:top-11 w-18 2xl:w-35 text-xs bg-white border border-gray-200 rounded-lg shadow-lg z-100"
+              x-data="{ open: false }"
+              class="flex space-x-1 relative -translate-x-8 items-center"
+              @click="open = !open"
             >
-              <ul class="text-gray-700 text-sm">
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                    >Profile</a
-                  >
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                    >Settings</a
-                  >
-                </li>
-                <li>
-                  <a href="/login" class="block px-4 py-2 hover:bg-gray-100"
-                    >Login</a
-                  >
-                </li>
-              </ul>
+              <!-- Image (clickable trigger) -->
+              <div class="flex cursor-pointer">
+                <img src="{{ asset('images/icon.png') }}" class="h-3 2xl:h-13" alt="" />
+              </div>
+
+              <!-- Dropdown menu -->
+              <div
+                x-show="open"
+                @click.outside="open = false"
+                x-transition
+                class="absolute left-10 top-2 mt-2 2xl:top-11 w-18 2xl:w-35 text-xs bg-white border border-gray-200 rounded-lg shadow-lg z-100"
+              >
+                <ul class="text-gray-700 text-sm">
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                      >Profile</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                      >Settings</a
+                    >
+                  </li>
+                  <li>
+                    <a href="/login" class="block px-4 py-2 hover:bg-gray-100"
+                      >Dashboard</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <span class="text-white cursor-pointer hover:text-emerald-300">{{Auth::user()->name}}</span>
             </div>
-            <span class="text-white">User1</span>
-          </div> --}}
+            @else
+               <div>
+                <a href="/login" class="text-white cursor-pointer hover:text-emerald-300 ">Login</a>
+              </div>
+          @endauth
         </nav>
 
         <div class="w-full flex">

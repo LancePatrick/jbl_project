@@ -26,7 +26,8 @@
       radial-gradient(900px 320px at 90% -30%, rgba(255,255,255,.05), transparent 70%)"
   ></div>
 
-  <div class="w-full max-w-[1180px] mx-auto grid gap-4 px-[var(--gutter,12px)] py-[18px] lg:-translate-x-[120px] md:translate-x-0">
+  <!-- NOTE: added translate-x-1.5 for mobile nudge -->
+  <div class="w-full max-w-[1180px] mx-auto grid gap-4 px-[var(--gutter,12px)] py-[18px] translate-x-1.5 md:translate-x-0 lg:-translate-x-[120px]">
 
     <!-- HEADER -->
     <header class="sticky top-0 z-[1000] flex flex-wrap items-center gap-3 bg-[linear-gradient(180deg,rgba(7,10,16,.58),rgba(7,10,16,.18))] backdrop-blur-[6px] border-b border-[rgb(208_219_255_/_.35)] px-[var(--gutter,12px)] py-2">
@@ -377,8 +378,8 @@
   <!-- Toast -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
-  <!-- Modals (Edit/Cash/Withdraw) -->
-  <div id="modal-edit" class="fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
+  <!-- Modals (Edit/Cash/Withdraw) — added class="modal" so close selector works -->
+  <div id="modal-edit" class="modal fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
     <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-4">
       <h2 class="m-0 mb-2">Edit Profile</h2>
       <div class="grid gap-2 rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1730] p-3">
@@ -396,7 +397,7 @@
     </div>
   </div>
 
-  <div id="modal-cash" class="fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
+  <div id="modal-cash" class="modal fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
     <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-4">
       <h2 class="m-0 mb-2">Cash In</h2>
       <div class="grid gap-2 rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1730] p-3">
@@ -416,7 +417,7 @@
     </div>
   </div>
 
-  <div id="modal-withdraw" class="fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
+  <div id="modal-withdraw" class="modal fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
     <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)]">
       <h2 class="m-0 p-4 pb-2">Withdraw</h2>
       <div class="mx-4 mb-4 grid gap-2 rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1730] p-3">
@@ -840,7 +841,7 @@
 
   document.querySelectorAll('.modal [data-close]').forEach(b=>b.addEventListener('click',()=> showModal(b.closest('.modal').id, false)));
   document.getElementById('modal-edit').addEventListener('click',(e)=>{ if(e.target.id==='modal-edit') showModal('modal-edit',false); });
-  document.getElementById('modal-cash').addEventListener('click',(e)=>{ if(e.target.id==='modal-cash') showModal('modal-cash',false); });
+  document.getElementById('modal-cash').addEventListener('click',(e)=>{ if(e.target.id==='mo pdal-cash') showModal('modal-cash',false); });
   document.getElementById('modal-withdraw').addEventListener('click',(e)=>{ if(e.target.id==='modal-withdraw') showModal('modal-withdraw',false); });
 
   document.getElementById('saveProfile').addEventListener('click', ()=>{
