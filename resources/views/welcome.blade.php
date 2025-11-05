@@ -84,13 +84,13 @@
               >
                 <li>
                   <a
-                    href="sabong2.html"
+                    href="billiard"
                     class="block px-4 py-2 hover:bg-emerald-700"
                     >Billiards</a
                   >
                 </li>
                 <li>
-                  <a href="kabayo2.html" class="block px-4 py-2 hover:bg-emerald-700"
+                  <a href="horse" class="block px-4 py-2 hover:bg-emerald-700"
                     >Horse Racing</a
                   >
                 </li>
@@ -515,7 +515,7 @@
         </footer>
       </div>
     </div>
-
+h
     <script>
       AOS.init();
       // Auto set current year

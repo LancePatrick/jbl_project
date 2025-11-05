@@ -708,238 +708,239 @@
           </div>
         </main>
         <!-- BETS BLOCK / RIGHT SIDEBAR (visible on all screens; compact on phones) -->
-        <aside
-          class="w-80 mx-auto 2xl:w-[26rem] shrink-0 my-3 2xl:my-4 2xl:sticky 2xl:top-4"
-        >
-          <div
-            class="rounded-2xl border border-slate-800/50 bg-gradient-to-b from-slate-950/90 to-slate-900/70 backdrop-blur-md shadow-2xl overflow-hidden"
-          >
-            <!-- Header -->
-            <div class="relative px-3 py-3 sm:px-4 sm:py-4">
-              <div
-                class="absolute inset-0 pointer-events-none"
-                style="
-                  background: radial-gradient(
-                    60% 80% at 50% 0%,
-                    rgba(16, 185, 129, 0.15),
-                    transparent 60%
-                  );
-                "
-              ></div>
-              <div class="relative flex items-center justify-between gap-2">
-                <h2
-                  class="text-slate-100 font-black tracking-wide text-sm sm:text-base"
-                >
-                  Bets
-                </h2>
-
-                <!-- Quick actions -->
-                <div class="flex items-center gap-1 sm:gap-2">
-                  <button
-                    class="px-2 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold text-slate-100/90 border border-slate-500/30 hover:bg-slate-800/40 transition"
-                  >
-                    Clear
-                  </button>
-                  <button
-                    class="px-2 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold text-slate-950 bg-slate-400/90 hover:bg-slate-400 transition border border-slate-300/60"
-                  >
-                    Export
-                  </button>
-                </div>
-              </div>
-
-              <!-- Totals (compact on phones) -->
-              <div class="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
-                <div
-                  class="flex items-center gap-2 rounded-xl bg-slate-900/60 border border-slate-700/50 px-2.5 py-2"
-                >
-                  <i
-                    class="fa-solid fa-coins text-yellow-300 text-slate-300/90 text-sm sm:text-base"
-                  ></i>
-                  <div>
-                    <p class="text-[10px] sm:text-xs text-slate-300/80">
-                      Total Staked
-                    </p>
-                    <p class="font-bold text-slate-100 text-sm sm:text-base">
-                      ₱ 12,500
-                    </p>
-                  </div>
-                </div>
-                <div
-                  class="flex items-center gap-2 rounded-xl bg-slate-900/60 border border-slate-700/50 px-2.5 py-2"
-                >
-                  <i
-                    class="fa-solid fa-gem text-teal-300/90 text-sm sm:text-base"
-                  ></i>
-                  <div>
-                    <p class="text-[10px] text-slate-300/80">
-                      Potential Payout
-                    </p>
-                    <p class="font-bold text-slate-100 text-sm sm:text-base">
-                      ₱ 21,750
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Column headers -->
-            <div class="px-3 sm:px-4">
-              <div
-                class="text-[10px] sm:text-[11px] text-slate-300/80 font-semibold grid grid-cols-12 border-t border-slate-800/60"
-              >
-                <div class="col-span-5 py-2">Match</div>
-                <div class="col-span-3 py-2 text-center">Bet</div>
-                <div class="col-span-2 py-2 text-center">Odds</div>
-                <div class="col-span-2 py-2 text-right pr-1.5">Result</div>
-              </div>
-            </div>
-
-            <!-- List (scrollable: smaller on phones) -->
+        @auth
+          <aside
+            class="w-80 mx-auto 2xl:w-[26rem] shrink-0 my-3 2xl:my-4 2xl:sticky 2xl:top-4">
             <div
-              class="max-h-64 sm:max-h-80 2xl:max-h-[520px] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#10b98133_transparent]"
-            >
-              <ul class="divide-y divide-slate-800/50">
-                <!-- Row -->
-                <li
-                  class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition"
-                >
-                  <div
-                    class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm"
+              class="rounded-2xl border border-slate-800/50 bg-gradient-to-b from-slate-950/90 to-slate-900/70 backdrop-blur-md shadow-2xl overflow-hidden">
+              
+              <!-- Header -->
+              <div class="relative px-3 py-3 sm:px-4 sm:py-4">
+                <div
+                  class="absolute inset-0 pointer-events-none"
+                  style="
+                    background: radial-gradient(
+                      60% 80% at 50% 0%,
+                      rgba(16, 185, 129, 0.15),
+                      transparent 60%
+                    );
+                  "
+                ></div>
+                <div class="relative flex items-center justify-between gap-2">
+                  <h2
+                    class="text-slate-100 font-black tracking-wide text-sm sm:text-base"
                   >
-                    <div class="col-span-5">
-                      <p class="text-slate-100 font-semibold leading-tight">
-                        #1232131
-                      </p>
-                      <p class="text-[10px] sm:text-[11px] text-slate-300/70">
-                        Strickland vs. Reyes
-                      </p>
-                    </div>
-                    <div class="col-span-3 flex justify-center">
-                      <span
-                        class="inline-flex items-center gap-1.5 rounded-full border border-slate-500/30 bg-slate-800/40 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] font-semibold text-slate-100"
-                      >
-                        <i
-                          class="fa-solid fa-coins text-yellow-300 text-slate-300 text-xs sm:text-sm"
-                        ></i>
-                        ₱500
-                      </span>
-                    </div>
-                    <div class="col-span-2 text-center">
-                      <span class="text-slate-200 font-semibold">1.90</span>
-                    </div>
-                    <div class="col-span-2 text-right">
-                      <span
-                        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-amber-200 bg-amber-600/20 border border-amber-400/30"
-                      >
-                        <i class="fa-regular fa-clock text-[11px]"></i> Pending
-                      </span>
-                    </div>
+                    Bets
+                  </h2>
+
+                  <!-- Quick actions -->
+                  <div class="flex items-center gap-1 sm:gap-2">
+                    <button
+                      class="px-2 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold text-slate-100/90 border border-slate-500/30 hover:bg-slate-800/40 transition"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      class="px-2 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold text-slate-950 bg-slate-400/90 hover:bg-slate-400 transition border border-slate-300/60"
+                    >
+                      Export
+                    </button>
                   </div>
-                </li>
-
-                <!-- Row -->
-                <li
-                  class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition"
-                >
-                  <div
-                    class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm"
-                  >
-                    <div class="col-span-5">
-                      <p class="text-slate-100 font-semibold leading-tight">
-                        #1232132
-                      </p>
-                      <p class="text-[10px] sm:text-[11px] text-slate-300/70">
-                        Orcullo vs. Ko
-                      </p>
-                    </div>
-                    <div class="col-span-3 flex justify-center">
-                      <span
-                        class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-800/30 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] font-semibold text-cyan-100"
-                      >
-                        <i class="fa-solid fa-gem text-xs sm:text-sm"></i>
-                        ₱1,000
-                      </span>
-                    </div>
-                    <div class="col-span-2 text-center">
-                      <span class="text-slate-200 font-semibold">2.05</span>
-                    </div>
-                    <div class="col-span-2 text-right">
-                      <span
-                        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-slate-200 bg-slate-600/20 border border-slate-400/30"
-                      >
-                        <i class="fa-solid fa-circle-check text-[11px]"></i> Win
-                      </span>
-                    </div>
-                  </div>
-                </li>
-
-                <!-- Row -->
-                <li
-                  class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition"
-                >
-                  <div
-                    class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm"
-                  >
-                    <div class="col-span-5">
-                      <p class="text-slate-100 font-semibold leading-tight">
-                        #1232133
-                      </p>
-                      <p class="text-[10px] sm:text-[11px] text-slate-300/70">
-                        Filler vs. Ouschan
-                      </p>
-                    </div>
-                    <div class="col-span-3 flex justify-center">
-                      <span
-                        class="inline-flex items-center gap-1.5 rounded-full border border-slate-500/30 bg-slate-800/40 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] font-semibold text-slate-100"
-                      >
-                        <i
-                          class="fa-solid fa-coins text-yellow-300 text-slate-300 text-xs sm:text-sm"
-                        ></i>
-                        ₱750
-                      </span>
-                    </div>
-                    <div class="col-span-2 text-center">
-                      <span class="text-slate-200 font-semibold">1.75</span>
-                    </div>
-                    <div class="col-span-2 text-right">
-                      <span
-                        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-rose-200 bg-rose-600/20 border border-rose-400/30"
-                      >
-                        <i class="fa-solid fa-circle-xmark text-[11px]"></i>
-                        Lost
-                      </span>
-                    </div>
-                  </div>
-                </li>
-
-                <!-- Add more rows as needed -->
-              </ul>
-            </div>
-
-            <!-- Footer / summary -->
-            <div
-              class="px-3 sm:px-5 py-2.5 sm:py-3 border-t border-slate-800/60 bg-slate-950/60"
-            >
-              <div
-                class="flex items-center justify-between text-[11px] sm:text-[12px]"
-              >
-                <div class="text-slate-300/80">
-                  <span class="mr-2">Open Bets:</span>
-                  <span class="font-bold text-slate-100">3</span>
                 </div>
-                <div class="flex items-center gap-3">
-                  <div class="text-slate-300/80">
-                    Won: <span class="font-bold text-slate-100">2</span>
+
+                <!-- Totals (compact on phones) -->
+                <div class="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
+                  <div
+                    class="flex items-center gap-2 rounded-xl bg-slate-900/60 border border-slate-700/50 px-2.5 py-2"
+                  >
+                    <i
+                      class="fa-solid fa-coins text-yellow-300 text-slate-300/90 text-sm sm:text-base"
+                    ></i>
+                    <div>
+                      <p class="text-[10px] sm:text-xs text-slate-300/80">
+                        Total Staked
+                      </p>
+                      <p class="font-bold text-slate-100 text-sm sm:text-base">
+                        ₱ 12,500
+                      </p>
+                    </div>
                   </div>
+                  <div
+                    class="flex items-center gap-2 rounded-xl bg-slate-900/60 border border-slate-700/50 px-2.5 py-2"
+                  >
+                    <i
+                      class="fa-solid fa-gem text-teal-300/90 text-sm sm:text-base"
+                    ></i>
+                    <div>
+                      <p class="text-[10px] text-slate-300/80">
+                        Potential Payout
+                      </p>
+                      <p class="font-bold text-slate-100 text-sm sm:text-base">
+                        ₱ 21,750
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Column headers -->
+              <div class="px-3 sm:px-4">
+                <div
+                  class="text-[10px] sm:text-[11px] text-slate-300/80 font-semibold grid grid-cols-12 border-t border-slate-800/60"
+                >
+                  <div class="col-span-5 py-2">Match</div>
+                  <div class="col-span-3 py-2 text-center">Bet</div>
+                  <div class="col-span-2 py-2 text-center">Odds</div>
+                  <div class="col-span-2 py-2 text-right pr-1.5">Result</div>
+                </div>
+              </div>
+
+              <!-- List (scrollable: smaller on phones) -->
+              <div
+                class="max-h-64 sm:max-h-80 2xl:max-h-[520px] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#10b98133_transparent]"
+              >
+                <ul class="divide-y divide-slate-800/50">
+                  <!-- Row -->
+                  <li
+                    class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition"
+                  >
+                    <div
+                      class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm"
+                    >
+                      <div class="col-span-5">
+                        <p class="text-slate-100 font-semibold leading-tight">
+                          #1232131
+                        </p>
+                        <p class="text-[10px] sm:text-[11px] text-slate-300/70">
+                          Strickland vs. Reyes
+                        </p>
+                      </div>
+                      <div class="col-span-3 flex justify-center">
+                        <span
+                          class="inline-flex items-center gap-1.5 rounded-full border border-slate-500/30 bg-slate-800/40 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] font-semibold text-slate-100"
+                        >
+                          <i
+                            class="fa-solid fa-coins text-yellow-300 text-slate-300 text-xs sm:text-sm"
+                          ></i>
+                          ₱500
+                        </span>
+                      </div>
+                      <div class="col-span-2 text-center">
+                        <span class="text-slate-200 font-semibold">1.90</span>
+                      </div>
+                      <div class="col-span-2 text-right">
+                        <span
+                          class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-amber-200 bg-amber-600/20 border border-amber-400/30"
+                        >
+                          <i class="fa-regular fa-clock text-[11px]"></i> Pending
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- Row -->
+                  <li
+                    class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition"
+                  >
+                    <div
+                      class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm"
+                    >
+                      <div class="col-span-5">
+                        <p class="text-slate-100 font-semibold leading-tight">
+                          #1232132
+                        </p>
+                        <p class="text-[10px] sm:text-[11px] text-slate-300/70">
+                          Orcullo vs. Ko
+                        </p>
+                      </div>
+                      <div class="col-span-3 flex justify-center">
+                        <span
+                          class="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-800/30 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] font-semibold text-cyan-100"
+                        >
+                          <i class="fa-solid fa-gem text-xs sm:text-sm"></i>
+                          ₱1,000
+                        </span>
+                      </div>
+                      <div class="col-span-2 text-center">
+                        <span class="text-slate-200 font-semibold">2.05</span>
+                      </div>
+                      <div class="col-span-2 text-right">
+                        <span
+                          class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-slate-200 bg-slate-600/20 border border-slate-400/30"
+                        >
+                          <i class="fa-solid fa-circle-check text-[11px]"></i> Win
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- Row -->
+                  <li
+                    class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition"
+                  >
+                    <div
+                      class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm"
+                    >
+                      <div class="col-span-5">
+                        <p class="text-slate-100 font-semibold leading-tight">
+                          #1232133
+                        </p>
+                        <p class="text-[10px] sm:text-[11px] text-slate-300/70">
+                          Filler vs. Ouschan
+                        </p>
+                      </div>
+                      <div class="col-span-3 flex justify-center">
+                        <span
+                          class="inline-flex items-center gap-1.5 rounded-full border border-slate-500/30 bg-slate-800/40 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[11px] sm:text-[12px] font-semibold text-slate-100"
+                        >
+                          <i
+                            class="fa-solid fa-coins text-yellow-300 text-slate-300 text-xs sm:text-sm"
+                          ></i>
+                          ₱750
+                        </span>
+                      </div>
+                      <div class="col-span-2 text-center">
+                        <span class="text-slate-200 font-semibold">1.75</span>
+                      </div>
+                      <div class="col-span-2 text-right">
+                        <span
+                          class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-rose-200 bg-rose-600/20 border border-rose-400/30"
+                        >
+                          <i class="fa-solid fa-circle-xmark text-[11px]"></i>
+                          Lost
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- Add more rows as needed -->
+                </ul>
+              </div>
+
+              <!-- Footer / summary -->
+              <div
+                class="px-3 sm:px-5 py-2.5 sm:py-3 border-t border-slate-800/60 bg-slate-950/60"
+              >
+                <div
+                  class="flex items-center justify-between text-[11px] sm:text-[12px]"
+                >
                   <div class="text-slate-300/80">
-                    Lost: <span class="font-bold text-slate-100">1</span>
+                    <span class="mr-2">Open Bets:</span>
+                    <span class="font-bold text-slate-100">3</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="text-slate-300/80">
+                      Won: <span class="font-bold text-slate-100">2</span>
+                    </div>
+                    <div class="text-slate-300/80">
+                      Lost: <span class="font-bold text-slate-100">1</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </aside>
+          </aside>
+        @endauth
       </div>
       <footer>
             <div class="flex justify-center items-center my-2 sm:mt-3">

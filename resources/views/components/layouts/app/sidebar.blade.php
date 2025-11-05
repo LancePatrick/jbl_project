@@ -50,7 +50,7 @@
                     <button @click="open = !open" @click.away="open = false"
                             class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/10 text-sm font-medium">
                         <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-black text-xs font-extrabold ring-1 ring-amber-300/40">
-                            {{ strtoupper(substr($user?->username ?? 'U', 0, 1)) }}
+                            {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                         </span>
                         <span>{{ Auth::user()->name ?? 'Player' }}</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -59,7 +59,11 @@
                     <div x-show="open" x-transition
                         class="absolute right-0 mt-2 w-56 rounded-xl border border-white/10 bg-black/85 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,.5)] overflow-hidden z-50">
                         <div class="px-4 py-3 border-b border-white/10">
+<<<<<<< HEAD
                             <p class="text-sm font-semibold text-amber-300">{{Auth::user()->name}}</p>
+=======
+                            <p class="text-sm font-semibold text-amber-300">{{ Auth::user()->name }}</p>
+>>>>>>> 8b6c27a68eff291a9301447726e19c68baa4b1c1
                             <p class="text-xs text-slate-400">{{ $user?->email ?? 'player@example.com' }}</p>
                         </div>
                         <a href="{{ url('/profile') }}" class="block px-4 py-2 text-sm text-slate-200 hover:bg-white/5">

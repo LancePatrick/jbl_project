@@ -4,22 +4,13 @@
   <div class="bg-animated"></div>
 
   <!-- ========================================================
-       MAIN: [slideL | video+logro | bets | slideR]
+       MAIN: [video+logro | bets]
+       NOTE: Left is wider than Right on md+ screens.
   ========================================================= -->
-  <main class="max-w-screen-2xl 2xl:max-w-[1500px] mx-auto p-4">
-    <div class="grid gap-4 ml-12
-                md:grid-cols-[0px_minmax(0,1fr)_440px_0px]
-                xl:grid-cols-[0px_minmax(0,1fr)_480px_0px]
-                2xl:grid-cols-[0px_minmax(0,1fr)_520px_0px]">
+  <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-4">
+    <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
 
-      <!-- LEFT SLIDE (kept, but width = 0px) -->
-      <div>
-        <div class="w-full h-[0px] side-panel rounded-lg overflow-hidden relative">
-          <img id="left-slide-desktop" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide left">
-        </div>
-      </div>
-
-      <!-- CENTER: Video + Logrohan -->
+      <!-- LEFT: Video + Logrohan (WIDER) -->
       <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-17">
         <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
@@ -53,7 +44,7 @@
             <div class="flex items-center gap-2 text-[10px]">
               <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
               <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
-            </div>
+            </div>  
           </div>
 
           @auth
@@ -74,11 +65,11 @@
         <!-- /LOGROHAN -->
       </div>
 
-      <!-- RIGHT: Bet cards + Bet Amount (wider) -->
+      <!-- RIGHT: Bet cards + Bet Amount (UNCHANGED) -->
       <aside>
         <div class="sticky mt-12 space-y-3">
 
-          <!-- ===== Bet Percentage Bar (added, position kept above cards) ===== -->
+          <!-- Bet Percentage Bar -->
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-5">
             <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Bet Percentage</div>
             <div class="relative h-3 rounded-full bg-black/40 border border-white/10 overflow-hidden">
@@ -91,10 +82,9 @@
               <div id="pct-blue-label" class="text-right">Blue 50%</div>
             </div>
           </div>
-          <!-- ===== /Bet Percentage Bar ===== -->
 
           <!-- Cards -->
-          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-3 h-78">
+          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-3">
             <!-- Meron -->
             <div class="bet-card red tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
@@ -206,22 +196,8 @@
         </div>
       </aside>
 
-      <!-- RIGHT SLIDE (kept, but width = 0px) -->
-      <div>
-        <div class="w-full h-[0px] side-panel rounded-lg overflow-hidden relative">
-          <img id="right-slide-desktop" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide right">
-        </div>
-      </div>
-
-      <!-- MOBILE STACK (unchanged) -->
-      <div class="md:hidden space-y-3 col-span-4">
-        <div class="w-full h-40 side-panel rounded-lg overflow-hidden">
-          <img id="left-slide-mobile" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide L">
-        </div>
-        <div class="w-full h-40 side-panel rounded-lg overflow-hidden">
-          <img id="right-slide-mobile" class="w-full h-full object-cover transition-all duration-700" src="" alt="slide R">
-        </div>
-
+      <!-- MOBILE STACK -->
+      <div class="md:hidden space-y-3 col-span-2">
         <!-- Mobile bet cards -->
         <div class="bet-area grid grid-cols-2 gap-2">
           <div class="bet-card red text-center">
@@ -242,7 +218,7 @@
         <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
-            <div class="flex items-center gap-2 text:[10px] text-[10px]">
+            <div class="flex items-center gap-2 text-[10px]">
               <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
               <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
             </div>
@@ -257,50 +233,26 @@
   </main>
 
   <!-- ========================================================
-       SCRIPT: betting + roads + helpers
+       SCRIPT: betting + roads + helpers (UNCHANGED)
   ========================================================= -->
   <script>
-    // ----------------------------------------------------------
     // A) CONFIG / CONSTANTS
-    // ----------------------------------------------------------
     const players = [
       "Hagdang Bato","King Focus","LeBron James","Kid Molave",
       "JBL","Autumn Blaze","Desert Sage","Hidden Hollow",
       "Pony Punster","Santino","Panday","Hooves of Fury",
       "Golden Hour","Sun Chaser"
     ];
-    const slides = [
-      "https://i.ibb.co/jPjC9YqC/raga.jpg","https://i.ibb.co/fd26jLNQ/de-luna.webp",
-      "https://i.ibb.co/TBS7P8Cd/mika.jpg","https://i.ibb.co/4nMYxQFp/biado.jpg",
-      "https://i.ibb.co/7dSvjwRK/amoroto.jpg","https://i.ibb.co/Q7cQ30tS/efren.webp"
-    ];
-    const BIGROAD_MAX_ROWS = 8;   // ilalim ng video
-    const BEAD_MAX_ROWS    = 6;   // sidebar mini road
+    const BIGROAD_MAX_ROWS = 8;
+    const BEAD_MAX_ROWS    = 6;
 
-    // ----------------------------------------------------------
     // B) STATE
-    // ----------------------------------------------------------
-    let slideIndex = 0;
     let results = [];
     let meronAmount, walaAmount, meronOdds, walaOdds;
-    let currentBalance = 500000;     // starting balance (frontend demo)
+    let currentBalance = 500000;
     const betHistory = [];
 
-    // ----------------------------------------------------------
-    // C) SMALL DOM / UTILS
-    // ----------------------------------------------------------
-    function setSrcIf(el, src){ if(el) el.src = src; }
-    function updateSlides(){
-      const a = slides[slideIndex];
-      const b = slides[(slideIndex+3)%slides.length];
-      setSrcIf(document.getElementById("left-slide-desktop"), a);
-      setSrcIf(document.getElementById("right-slide-desktop"), b);
-      setSrcIf(document.getElementById("left-slide-mobile"), a);
-      setSrcIf(document.getElementById("right-slide-mobile"), b);
-      slideIndex=(slideIndex+1)%slides.length;
-    }
-    setInterval(updateSlides,3000);
-
+    // C) UTILS
     function getRandomPlayer(exclude){
       let name; do{ name = players[Math.floor(Math.random()*players.length)]; } while(name===exclude);
       return name;
@@ -315,7 +267,6 @@
       const p1m = document.getElementById('player1-name-mob'); if(p1m) p1m.textContent = red;
       const p2m = document.getElementById('player2-name-mob'); if(p2m) p2m.textContent = blue;
     }
-
     function setDateTime(){
       const now=new Date();
       const optionsDate={month:'2-digit', day:'2-digit', year:'numeric'};
@@ -326,7 +277,6 @@
       const et = document.getElementById('event-time'); if(et) et.textContent = t;
     }
     setInterval(setDateTime,1000);
-
     function attachTilt(el){
       const damp=6;
       el.addEventListener('mousemove',(e)=>{
@@ -338,9 +288,7 @@
       el.addEventListener('mouseleave',()=>{ el.style.transform='rotateX(0) rotateY(0) translateY(0)'; });
     }
 
-    // ----------------------------------------------------------
-    // D) ROAD HELPERS / ALGORITHMS
-    // ----------------------------------------------------------
+    // D) ROAD HELPERS
     const isEmpty = (grid, c, r) => !(grid[c] && grid[c][r]);
     const ensureCol = (grid, c) => { if(!grid[c]) grid[c] = []; };
     function streakRuns(seq){
@@ -351,7 +299,6 @@
       }
       return out;
     }
-    // Strict L-only builder (for Logrohan under video)
     function buildBigRoadStrictL(seq, maxRows = BEAD_MAX_ROWS){
       const runs = streakRuns(seq);
       const grid = [];
@@ -378,20 +325,6 @@
       }
       return grid;
     }
-    // OLD runs-splitter (kept)
-    function computeColumnsContinuous(seq, maxRows){
-      const runs = streakRuns(seq); const cols=[]; let labelNo=1;
-      for(const run of runs){
-        let left=run.n;
-        while(left>0){
-          const take=Math.min(maxRows,left);
-          const col=[]; for(let i=0;i<take;i++) col.push({t:run.t,label:labelNo++});
-          cols.push(col); left-=take;
-        }
-      }
-      return cols;
-    }
-    // NEW sequential filler
     function computeColumnsSequential(seq, maxRows){
       const cols=[]; let col=[]; let labelNo=1;
       for(const t of seq){
@@ -402,9 +335,7 @@
       return cols;
     }
 
-    // ----------------------------------------------------------
     // E) RENDERERS
-    // ----------------------------------------------------------
     function renderLogroContinuous(seq, stripId, maxRows = BIGROAD_MAX_ROWS){
       const grid = buildBigRoadStrictL(seq, maxRows);
       const strip = document.getElementById(stripId); if(!strip) return;
@@ -432,7 +363,6 @@
       });
       strip.scrollLeft = strip.scrollWidth;
     }
-
     function renderRoadStrictL(seq, stripId, maxRows = BEAD_MAX_ROWS){
       const cols = computeColumnsSequential(seq, maxRows);
       const strip = document.getElementById(stripId); if(!strip) return;
@@ -451,16 +381,13 @@
       });
       strip.scrollLeft = strip.scrollWidth;
     }
-
     function renderAllRoads(seq){
       renderLogroContinuous(seq, 'logro-strip', BIGROAD_MAX_ROWS);
       renderLogroContinuous(seq, 'logro-strip-mob', BIGROAD_MAX_ROWS);
       renderRoadStrictL(seq, 'bead-strip', BEAD_MAX_ROWS);
     }
 
-    // ----------------------------------------------------------
-    // F) BETTING / BALANCE / ODDS (FUNCTIONS KEPT)
-    // ----------------------------------------------------------
+    // F) BETTING / BALANCE / ODDS
     function computeOdds(){
       meronOdds=(Math.random()*(2.0-1.5)+1.5).toFixed(2);
       walaOdds=(parseFloat(meronOdds)+0.20).toFixed(2);
@@ -479,32 +406,25 @@
     }
     function adjustBalance(delta){
       const next=currentBalance+delta;
-      if(next<0) return false;       // prevent negative
+      if(next<0) return false;
       currentBalance=next;
       renderBalance();
       return true;
     }
-
-    // ----------------------------------------------------------
-    // F.1) BET PERCENTAGE BAR (NEW)
-    // ----------------------------------------------------------
     function updatePercentBar(){
       const red = meronAmount||0;
       const blue = walaAmount||0;
       const total = red + blue;
-
       let redPct = 50, bluePct = 50;
       if(total > 0){
         redPct  = Math.round((red / total) * 100);
         bluePct = 100 - redPct;
       }
-
       const rEl = document.getElementById('pct-red');
       const bEl = document.getElementById('pct-blue');
       const rl  = document.getElementById('pct-red-label');
       const bl  = document.getElementById('pct-blue-label');
       const tl  = document.getElementById('pct-total-label');
-
       if(rEl){ rEl.style.width = redPct + '%'; }
       if(bEl){ bEl.style.width = bluePct + '%'; }
       if(rl){ rl.textContent = `Red ${redPct}%`; }
@@ -512,9 +432,7 @@
       if(tl){ tl.textContent = `Total: ₱${Number(total).toLocaleString('en-PH')}`; }
     }
 
-    // ----------------------------------------------------------
     // G) HISTORY UI
-    // ----------------------------------------------------------
     function sideBadgeHTML(side){
       const cls=side==='MERON'?'side-badge side-meron':'side-badge side-wala';
       return `<span class="side-3d"><span class="${cls}">${side}</span></span>`;
@@ -559,9 +477,7 @@
       }).join('');
     }
 
-    // ----------------------------------------------------------
-    // H) BET ACTIONS (PLACE BET WORKS + BALANCE DEDUCTS)
-    // ----------------------------------------------------------
+    // H) BET ACTIONS (unchanged)
     function resolveLatestBet(winSide){
       const idx=betHistory.findIndex(b=>b.status==='PENDING');
       if(idx===-1) return;
@@ -576,7 +492,6 @@
       }
       renderHeaderHistory();
     }
-
     function placeBet(betType){
       const input=document.getElementById('bet-amount');
       let betAmount=parseFloat(input.value);
@@ -591,8 +506,7 @@
         odds=walaOdds;  chosenPlayer=document.getElementById('player2-name').textContent;
       }
       const balanceBefore=currentBalance;
-      if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; } // deduct here
-
+      if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; }
       if(betType==='MERON'){
         meronAmount+=betAmount;
         const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
@@ -600,10 +514,7 @@
         walaAmount+=betAmount;
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
       }
-
-      // update bar after amounts change
       updatePercentBar();
-
       const totalWinnings=parseFloat(betAmount)*parseFloat(odds);
       if(betType==='MERON'){
         const r=document.getElementById('meron-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`;
@@ -612,73 +523,43 @@
         const r=document.getElementById('wala-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`;
         const c=document.getElementById('meron-result'); if(c) c.textContent="";
       }
-
       const matchId=document.getElementById('match-no').textContent||'—';
       const time=new Date().toLocaleString('en-PH',{hour12:true});
       addToHistory({
-        side:betType,
-        player:chosenPlayer||(betType==='MERON'?'Red':'Blue'),
-        matchId,
-        amount:betAmount,
-        odds:odds,
-        payout:totalWinnings.toFixed(2),
-        time,
-        balanceBefore,
-        balanceAfter:currentBalance,
-        status:'PENDING'
+        side:betType, player:chosenPlayer||(betType==='MERON'?'Red':'Blue'),
+        matchId, amount:betAmount, odds:odds, payout:totalWinnings.toFixed(2),
+        time, balanceBefore, balanceAfter:currentBalance, status:'PENDING'
       });
-
       alert(`You placed a bet of ${betAmount} on ${chosenPlayer}.
 Possible payout: ${totalWinnings.toFixed(2)}.
 New Balance: ${currentBalance.toLocaleString()}.`);
     }
-
-    function pushResult(side){
-      results.push(side==='MERON'?'R':'B');
-      renderAllRoads(results);
-      resolveLatestBet(side);
-    }
+    function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
     function undoResult(){ results.pop(); renderAllRoads(results); }
     function clearResults(){ results=[]; renderAllRoads(results); }
 
-    // ----------------------------------------------------------
     // I) INIT
-    // ----------------------------------------------------------
     window.onload = () => {
-      setDateTime();
-      setRandomMatch();
-
-      // seed amounts + odds
+      setDateTime(); setRandomMatch();
       let meronAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
       let walaAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
       meronAmount=meronAmountInit; walaAmount=walaAmountInit;
       computeOdds(); renderOddsEverywhere();
-
       const ma=document.getElementById('meron-amount'); if(ma) ma.textContent=meronAmount.toLocaleString();
       const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
       const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
       const wam=document.getElementById('wala-amount-mob');  if(wam) wam.textContent=walaAmount.toLocaleString();
-
-      // initialize percentage bar with seeded values
       updatePercentBar();
-
-      updateSlides();
       document.querySelectorAll('.tilt').forEach(attachTilt);
-
-      // account demo name (header)
       const name='AMOK';
       const acct=document.getElementById('account-name'); if(acct) acct.textContent=name;
       const acctm=document.getElementById('account-name-menu'); if(acctm) acctm.textContent=name;
-
-      // account menu toggle
       const btn=document.getElementById('account-btn');
       const menu=document.getElementById('account-menu');
       if(btn && menu){
         btn.addEventListener('click',()=>{ menu.classList.toggle('hidden'); });
         document.addEventListener('click',(e)=>{ if(!btn.contains(e.target)&&!menu.contains(e.target)) menu.classList.add('hidden'); });
       }
-
-      // logro buttons (admin)
       const wm=document.getElementById('btn-win-meron');
       const ww=document.getElementById('btn-win-wala');
       const uu=document.getElementById('btn-undo');
@@ -687,24 +568,13 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       if(ww) ww.addEventListener('click',  ()=> pushResult('WALA'));
       if(uu) uu.addEventListener('click',  undoResult);
       if(cc) cc.addEventListener('click', clearResults);
-
-      // seed pattern to show roads quickly
       results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
-      renderAllRoads(results);
-      renderBalance();
-
-      // header history dropdown (if present in layout)
+      renderAllRoads(results); renderBalance();
       const hBtn=document.getElementById('header-history-btn');
       const hMenu=document.getElementById('header-history-menu');
       const hClear=document.getElementById('header-history-clear');
-      if(hBtn && hMenu){
-        hBtn.addEventListener('click',(e)=>{ e.stopPropagation(); hMenu.classList.toggle('hidden'); });
-      }
-      if(hClear){
-        hClear.addEventListener('click',()=>{ betHistory.length=0; renderHeaderHistory(); const dot=document.getElementById('header-history-dot'); if(dot) dot.classList.add('hidden'); });
-      }
-
-      // quick amount chips
+      if(hBtn && hMenu){ hBtn.addEventListener('click',(e)=>{ e.stopPropagation(); hMenu.classList.toggle('hidden'); }); }
+      if(hClear){ hClear.addEventListener('click',()=>{ betHistory.length=0; renderHeaderHistory(); const dot=document.getElementById('header-history-dot'); if(dot) dot.classList.add('hidden'); }); }
       document.querySelectorAll('.bet-chip').forEach(btn=>{
         btn.addEventListener('click',()=>{
           const raw=parseInt(btn.dataset.val||'0',10);
@@ -712,8 +582,6 @@ New Balance: ${currentBalance.toLocaleString()}.`);
           btn.animate([{transform:'translateY(-3px)'},{transform:'translateY(0)'}],{duration:120});
         });
       });
-
-      // bet buttons (place bet works + balance deducts)
       const bm=document.getElementById('bet-meron');
       const bw=document.getElementById('bet-wala');
       if(bm) bm.addEventListener('click', ()=> placeBet('MERON'));
