@@ -219,7 +219,7 @@
     </div>
     <!--Footer-->
     <footer
-      class="flex bg-white/80 text-slate-950 dark:bg-slate-950/80 dark:text-slate-50 my-4 p-4 gap-3 rounded-lg lg:h-70 lg:gap-5">
+      class="flex bg-white/80 text-slate-950 dark:bg-slate-900/80 dark:text-slate-50 my-4 p-4 gap-3 rounded-lg lg:h-70 lg:gap-5">
       <div class="flex flex-col gap-1 w-1/2 lg:gap-2">
         <!--Left-->
         <h1 class="font-bold text-sm lg:text-xl">
