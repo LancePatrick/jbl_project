@@ -216,15 +216,15 @@
                       <span class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-black text-xs font-extrabold ring-1 ring-amber-300/40">
                           {{ strtoupper(substr($user?->username ?? 'U', 0, 1)) }}
                       </span>
-                      <span class=" text-white">Test Player</span>
+                      <span class=" text-white">{{Auth::user()->name}}</span>
                       <i class="fa-solid fa-chevron-down text-white text-[10px]"></i>
                   </button>
 
                   <div x-show="open" x-transition
                       class="absolute right-0 mt-2 w-56 rounded-xl border border-white/10 bg-black/85 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,.5)] overflow-hidden z-50">
                       <div class="px-4 py-3 border-b border-white/10">
-                          <p class="text-sm font-semibold text-amber-300">Test Player</p>
-                          <p class="text-xs text-slate-400">player@example.com</p>
+                          <p class="text-sm font-semibold text-amber-300">{{Auth::user()->name}}</p>
+                          <p class="text-xs text-slate-400">{{ $user?->email ?? 'player@example.com' }}</p>
                       </div>
                       <a href="{{ url('/profile') }}" class="block px-4 py-2 text-sm text-slate-200 hover:bg-white/5">
                           <i class="fa-regular fa-user mr-2 text-amber-300"></i> Profile

@@ -1,12 +1,6 @@
-{{-- resources/views/drag-race.blade.php --}}
 <x-layouts.app :title="__('Drag Race')">
   <body class="min-h-dvh overflow-x-hidden font-[Inter,system-ui,-apple-system,Segoe_UI,Roboto,Helvetica,Arial] text-[13px] text-[color:var(--tw-text,inherit)]"
       style="--tw-text:#e8f0ff">
-
-  @php
-    /** role_id: 1 = admin, 2 = user */
-    $roleId = auth()->user()->role_id ?? 2;
-  @endphp
 
   <!-- BG -->
   <div
@@ -26,31 +20,139 @@
   <!-- Page container -->
   <div class="w-full max-w-screen-2xl 2xl:max-w-[1500px] mx-auto grid gap-4 px-[var(--gutter,12px)] py-[18px] translate-x-1.5 md:translate-x-0 lg:translate-x-[24px] xl:translate-x-[40px]">
 
-    <!-- HEADER (placeholder for future use) -->
-    <header class="sticky top-0 z-[1000] hidden flex-wrap items-center gap-3 bg-[linear-gradient(180deg,rgba(7,10,16,.58),rgba(7,10,16,.18))] backdrop-blur-[6px] border-b border-[rgb(208_219_255_/_.35)] px-[var(--gutter,12px)] py-2"></header>
+    <!-- HEADER (hidden placeholder, ready if you need it later) -->
+    <header class="sticky top-0 z-[1000] hidden flex-wrap items-center gap-3 bg-[linear-gradient(180deg,rgba(7,10,16,.58),rgba(7,10,16,.18))] backdrop-blur-[6px] border-b border-[rgb(208_219_255_/_.35)] px-[var(--gutter,12px)] py-2">
+      <div class="ml-auto flex items-center gap-2 relative">
+        <button id="drawerOpen"
+                class="grid size-[38px] min-w-[38px] place-items-center rounded-[12px] border border-[#263a66] bg-[linear-gradient(180deg,#1a2848,#0f1b37)] text-[#e6f0ff] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)]">⚙️</button>
+
+        <button id="notifBtn"
+                class="relative grid size-[38px] min-w-[38px] place-items-center rounded-[12px] border border-[#263a66] bg-[linear-gradient(180deg,#1a2848,#0f1b37)] text-[#e6f0ff] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)]">
+          🔔
+          <span id="notifBadge"
+                class="absolute -right-0.5 -top-0.5 grid min-w-[16px] place-items-center rounded-full border-2 border-[#0c152a] bg-[#ff3b30] px-1 text-[10px] text-white"
+                style="display:none">0</span>
+        </button>
+
+        <!-- Notif panel -->
+        <div id="notifPanel"
+             class="absolute right-[52px] top-[46px] w-[300px] scale-[.98] rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 opacity-0 backdrop-blur-[14px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)] pointer-events-none transition-all duration-300 [transform:translateY(-8px)] data-[show=true]:opacity-100 data-[show=true]:pointer-events-auto data-[show=true]:translate-y-0"
+             data-show="false" role="menu" aria-hidden="true">
+          <div class="mb-2 ml-1 text-[12px] text-[#bcd1ff]">Notifications</div>
+          <div id="notifList" class="grid max-h-80 gap-2 overflow-auto"></div>
+          <div class="my-1 h-px bg-[linear-gradient(90deg,transparent,rgb(208_219_255_/_0.35),transparent)]"></div>
+          <div class="flex justify-end gap-2">
+            <button id="markAllRead" class="h-9 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0c1630] px-3 text-white">Mark all read</button>
+            <button id="clearNotif" class="h-9 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[rgba(12,22,48,.6)] px-3 text-white">Clear</button>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="relative">
+          <button id="profileBtn"
+                  class="grid size-[38px] min-w-[38px] place-items-center rounded-[12px] border border-[#263a66] bg-[linear-gradient(180deg,#1a2848,#0f1b37)] text-[#e6f0ff] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)]">
+            <div class="size-[38px] rounded-[12px] border-2 border-[#1f2b50] bg-cover bg-center"
+                 style="background-image:url('https://i.pravatar.cc/96?img=67')"></div>
+          </button>
+
+          <div id="profileMenu"
+               class="absolute right-0 top-[46px] w-[300px] scale-[.98] rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 opacity-0 backdrop-blur-[14px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)] pointer-events-none transition-all duration-300 [transform:translateY(-8px)] data-[show=true]:opacity-100 data-[show=true]:pointer-events-auto data-[show=true]:translate-y-0"
+               aria-hidden="true" data-show="false">
+            <div class="mb-2 grid cursor-default gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+              <div class="flex items-center gap-3">
+                <div class="size-8 rounded-[8px] bg-cover bg-center"
+                     style="background-image:url('https://i.pravatar.cc/96?img=67')"></div>
+                <div class="grid">
+                  <strong>Wilyonaryo</strong>
+                  <small class="text-[#bcd1ff]">Pro Member</small>
+                </div>
+              </div>
+            </div>
+            <a href="#" id="cashInBtn" class="mb-2 block rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3 text-white">Cash In</a>
+            <a href="#" id="withdrawBtn" class="mb-2 block rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3 text-white">Withdraw</a>
+            <a href="#" id="editProfile" class="mb-2 block rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3 text-white">Edit Profile</a>
+            <a href="{{ url('/') }}" class="block rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] p-3 text-[#ffecec]">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SETTINGS (modal) -->
+    <div id="settingsModal"
+         class="fixed inset-0 z-[1300] hidden place-items-center bg-[rgba(0,0,0,.45)] backdrop-blur-[4px] data-[show=true]:grid"
+         aria-label="Settings" role="dialog" aria-hidden="true" data-show="false">
+      <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-4 shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_24px_60px_rgba(0,0,0,.45)]">
+        <div class="mb-2 flex items-center justify-between gap-2">
+          <h3 class="m-0">Settings</h3>
+          <button id="settingsClose"
+                  class="grid size-9 min-w-9 place-items-center rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[rgba(12,22,48,.6)]">✕</button>
+        </div>
+
+        <!-- Reusable toggle row -->
+        <div class="grid gap-2">
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>Dark Mode</strong><br><small class="text-[#bcd1ff]">Switch theme</small></div>
+            <div id="sw-dark" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c] aria-checked:false data-[on=true]:bg-[linear-gradient(90deg,#2f7cff,#ff3b30)]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all data-[on=true]:left-[27px]"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>Fancy Animations</strong><br><small class="text-[#bcd1ff]">Glow, pulse, float</small></div>
+            <div id="sw-fancy" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>Sound Effects</strong><br><small class="text-[#bcd1ff]">Clicks & beeps</small></div>
+            <div id="sw-sound" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>Compact Mode</strong><br><small class="text-[#bcd1ff]">Tighter paddings</small></div>
+            <div id="sw-compact" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>High Contrast</strong><br><small class="text-[#bcd1ff]">Stronger borders/text</small></div>
+            <div id="sw-contrast" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>Haptic Feedback</strong><br><small class="text-[#bcd1ff]">Vibrate on actions</small></div>
+            <div id="sw-haptic" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all"></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 rounded-[12px] border border-[rgb(208_219_255_/_0.45)] bg-[#0e1730] p-3">
+            <div><strong>Desktop Notifications</strong><br><small class="text-[#bcd1ff]">Allow browser alerts</small></div>
+            <div id="sw-deskn" class="relative h-[30px] w-[54px] cursor-pointer rounded-full border border-[rgb(208_219_255_/_0.45)] bg-[#18223c]">
+              <div class="absolute left-[3px] top-[3px] size-6 rounded-full bg-white shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-all"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== VIDEO + SIDE ===== -->
+    <!-- Responsive token: clamp the side panel width -->
     <section
       class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)]"
       style="--side:clamp(300px,32vw,420px);"
     >
-      <!-- Tabs + Admin Show Video -->
-      <div class="flex items-center justify-between gap-3 border-b border-[rgb(208_219_255_/_0.35)] pb-2">
-        <div class="flex gap-1 overflow-auto px-1 sm:px-2">
-          <button class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)] px-3 py-2 font-black text-white shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
-                  data-tab="odds">ODDS</button>
-          <button class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap" data-tab="total">TOTAL</button>
-          <!-- New: HISTORY tab (shows the large Bet History section below via scroll) -->
-          <a href="#historySection"
-             class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap">HISTORY</a>
-        </div>
-
-        @if ($roleId === 1)
-        <label class="flex items-center gap-2 text-[12.5px] text-[#bcd1ff]">
-          <input id="toggleVideo" type="checkbox" class="size-[16px]" checked>
-          <span>Show Video</span>
-        </label>
-        @endif
+      <!-- Tabs -->
+      <div class="flex gap-1 overflow-auto border-b border-[rgb(208_219_255_/_0.35)] px-1 sm:px-2 pb-2">
+        <button class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)] px-3 py-2 font-black text-white shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
+                data-tab="odds">ODDS</button>
+        <button class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap" data-tab="total">TOTAL</button>
       </div>
 
       <!-- Grid: stack on mobile, split at md+ -->
@@ -59,7 +161,6 @@
         <div data-video class="relative aspect-[16/9] overflow-hidden rounded-[16px] border border-[rgb(200_214_255_/_0.45)] bg-black shadow-[0_18px_40px_rgba(0,0,0,.45),0_6px_14px_rgba(0,0,0,.25),inset_0_0_0_1px_rgba(255,255,255,.05)]">
           <div class="pointer-events-none absolute inset-0 rounded-[16px] shadow-[inset_0_0_0_4px_#2a3d6a,inset_0_0_0_6px_rgba(255,255,255,.06)]"></div>
           <iframe id="yt" class="absolute inset-0 size-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <div id="videoOverlay" class="absolute inset-0 hidden grid place-items-center bg-black/60 text-white text-sm">Video hidden by admin</div>
         </div>
 
         <!-- Kiosk -->
@@ -67,7 +168,6 @@
              class="flex max-h-[unset] md:max-h-[60svh] lg:max-h-[calc(100svh-140px)] xl:max-h-[calc(100svh-160px)]
                     lg:sticky lg:top-16 xl:top-20
                     flex-col gap-2 overflow-auto rounded-[14px] border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] p-2">
-
           <!-- ODDS VIEW -->
           <div id="oddsView" class="grid gap-2">
             <!-- Two cards -->
@@ -140,29 +240,6 @@
                 <button id="demoBets" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630]">Simulate</button>
               </div>
             </div>
-
-            <!-- ========== MINI BET HISTORY (sidebar) ========== -->
-            <div id="historyWidget" class="grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] p-2">
-              <div class="flex items-center justify-between">
-                <strong>Bet History</strong>
-                <div class="flex gap-2">
-                  <button id="histExport" class="h-8 rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12px]">Export CSV</button>
-                  <button id="histClear" class="h-8 rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12px]">Clear</button>
-                </div>
-              </div>
-              <div class="rounded-[10px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33] max-h-[220px] overflow-auto">
-                <table class="w-full text-[12.5px]">
-                  <thead class="sticky top-0 bg-[#0f1a33]">
-                    <tr class="[&>th]:px-2 [&>th]:py-1 [&>th]:text-left text-[#bcd1ff]">
-                      <th>Time</th><th>Side</th><th>Amt</th><th>Odds</th><th>Est.Win</th>
-                    </tr>
-                  </thead>
-                  <tbody id="betHistory" class="[&>tr>td]:px-2 [&>tr>td]:py-1"></tbody>
-                </table>
-              </div>
-              <a href="#historySection" class="text-[12px] text-[#97b3ff] underline underline-offset-2">Open full Bet History »</a>
-            </div>
-            <!-- ========== /MINI BET HISTORY ========== -->
           </div>
 
           <!-- TOTAL VIEW -->
@@ -200,25 +277,19 @@
     </section>
 
     <!-- ===== RESULTS / ROADMAP ===== -->
-    <section class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]">
-      <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[#0e1426]/80 px-3 py-1 text-[12px] text-[#bcd1ff] backdrop-blur">Results / Roadmap</h2>
-
+    <section class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)]">
       <div class="grid gap-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <h3 class="m-0">Roadmap • Results</h3>
-
-          {{-- ADMIN-ONLY TOOLBAR --}}
-          @if ($roleId === 1)
-            <div class="flex gap-2 overflow-auto pb-1">
-              <button id="winRed" class="h-10 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[#ffecec]">Record: Red Wins</button>
-              <button id="winBlue" class="h-10 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-[#e6f0ff]">Record: Blue Wins</button>
-              <button id="undo" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Undo</button>
-              <button id="startRound" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Start Round</button>
-              <button id="resetRound" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Reset Round</button>
-              <button id="clearLog" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Clear Log</button>
-              <button id="exportCsv" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Export CSV</button>
-            </div>
-          @endif
+          <div class="flex gap-2 overflow-auto pb-1">
+            <button id="winRed" class="h-10 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[#ffecec]">Record: Red Wins</button>
+            <button id="winBlue" class="h-10 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-[#e6f0ff]">Record: Blue Wins</button>
+            <button id="undo" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Undo</button>
+            <button id="startRound" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Start Round</button>
+            <button id="resetRound" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Reset Round</button>
+            <button id="clearLog" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Clear Log</button>
+            <button id="exportCsv" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Export CSV</button>
+          </div>
         </div>
 
         <div class="mx-auto -mt-1 rounded-[10px] border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] px-3 py-1.5 text-center" id="roadOdds">
@@ -260,53 +331,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ===== DEDICATED BET HISTORY UI ===== -->
-    <section id="historySection" class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.88)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <h2 class="m-0 text-[14px] font-bold text-[#bcd1ff]">Bet History</h2>
-        <div class="flex flex-wrap items-center gap-2">
-          <label class="text-[12px] text-[#bcd1ff]/90">Side
-            <select id="hf-side" class="ml-1 rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1">
-              <option value="all">All</option>
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
-            </select>
-          </label>
-          <label class="text-[12px] text-[#bcd1ff]/90">Min ₱
-            <input id="hf-min" type="number" min="0" value="0" class="ml-1 w-[90px] rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1"/>
-          </label>
-          <button id="hf-apply" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Apply</button>
-          <button id="hf-reset" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Reset</button>
-          <button id="hf-export" class="h-9 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-white">Export CSV</button>
-          <button id="hf-clear" class="h-9 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[#ffecec]">Clear</button>
-        </div>
-      </div>
-
-      <div class="mt-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-2">
-        <div class="overflow-auto rounded-[10px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33]">
-          <table class="w-full border-separate border-spacing-0 text-[13px]">
-            <thead class="sticky top-0 bg-[#0f1a33]">
-              <tr class="[&>th]:px-3 [&>th]:py-2 [&>th]:text-left text-[#bcd1ff]">
-                <th>Time</th><th>Side</th><th>Amount</th><th>Odds (x)</th><th>Est. Win</th>
-              </tr>
-            </thead>
-            <tbody id="hf-body" class="[&>tr>td]:px-3 [&>tr>td]:py-2"></tbody>
-          </table>
-        </div>
-
-        <div class="mt-2 flex items-center justify-between text-[#bcd1ff]">
-          <div>Total: <span id="hf-count">0</span> bets • Sum ₱<span id="hf-sum">0</span></div>
-          <div class="flex items-center gap-2">
-            <button id="hf-first" class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">« First</button>
-            <button id="hf-prev"  class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">‹ Prev</button>
-            <span class="font-extrabold"><span id="hf-page-now">1</span> / <span id="hf-page-total">1</span></span>
-            <button id="hf-next"  class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">Next ›</button>
-            <button id="hf-last"  class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">Last »</button>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 
   <!-- Sticky mobile quick-bet rail -->
@@ -322,53 +346,7 @@
   <!-- Toast -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
-  <!-- ===== Receipt Modal (admin) ===== -->
-  <div id="receiptModal" class="fixed inset-0 z-[2200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
-    <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-white text-slate-900 p-4">
-      <div class="flex items-center justify-between">
-        <h2 class="m-0 text-lg font-bold">Bet Receipt</h2>
-        <button id="rc-close" class="rounded-md border px-3 py-1 text-sm">Close</button>
-      </div>
-      <div class="mt-3 grid gap-2">
-        <div class="grid gap-1">
-          <div class="text-xs text-slate-600">Ref</div>
-          <div id="rc-ref" class="font-mono text-sm">—</div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <div class="text-xs text-slate-600">Date</div>
-            <div id="rc-date" class="font-mono text-sm">—</div>
-          </div>
-          <div>
-            <div class="text-xs text-slate-600">Side</div>
-            <div id="rc-side" class="font-bold">—</div>
-          </div>
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <div>
-            <div class="text-xs text-slate-600">Amount</div>
-            <div>₱ <span id="rc-amt" class="font-bold">0</span></div>
-          </div>
-          <div>
-            <div class="text-xs text-slate-600">Odds (x)</div>
-            <div><span id="rc-odds" class="font-bold">0.00</span></div>
-          </div>
-          <div>
-            <div class="text-xs text-slate-600">Est. Win</div>
-            <div>₱ <span id="rc-win" class="font-bold">0</span></div>
-          </div>
-        </div>
-        <div class="mt-2 grid place-items-center">
-          <div id="rc-qr" class="size-[160px]"></div>
-        </div>
-      </div>
-      <div class="mt-4 flex justify-end gap-2">
-        <button onclick="window.print()" class="rounded-md border px-3 py-1 text-sm">Print</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== Modals (Edit/Cash/Withdraw) ===== -->
+  <!-- Modals (Edit/Cash/Withdraw) -->
   <div id="modal-edit" class="modal fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
     <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-4">
       <h2 class="m-0 mb-2">Edit Profile</h2>
@@ -429,9 +407,6 @@
 
   <!-- ===== JS ===== -->
   <script>
-  // Role
-  const ROLE_ID = {{ $roleId }};
-
   // YouTube
   (function(){
     const url='https://youtu.be/mzBv3fUDxRA?si=0X903bZ6UrB-v6UF';
@@ -441,34 +416,15 @@
     iframe.addEventListener('load', syncSideHeight);
   })();
 
-  // Admin: Show/Hide Video
-  (function(){
-    const chk = document.getElementById('toggleVideo');
-    const frameWrap = document.querySelector('[data-video]');
-    const overlay = document.getElementById('videoOverlay');
-    if(!chk || !frameWrap) return;
-    const apply = () => {
-      const on = chk.checked;
-      frameWrap.querySelector('iframe').style.display = on ? 'block' : 'none';
-      overlay.classList.toggle('hidden', on);
-    };
-    chk.addEventListener('change', apply);
-    apply();
-  })();
-
-  // ===== Global State =====
+  // State
   const state={ red:0, blue:0, oddsRed:1.88, oddsBlue:2.08, market:'—' };
   const el=id=>document.getElementById(id);
   const fmt=n=>Number(n).toLocaleString('en-PH',{maximumFractionDigits:0});
 
-  // Results log / pager
+  // Logs/pager
   const PAGE_SIZE=5; let curPage=1; let logs=[];
 
-  // Bet History (shared across mini + dedicated UI)
-  /** each entry: {ts, timeStr, side:'Red'|'Blue', amount:number, odds:number, est:number} */
-  let history = [];
-
-  // Sounds/Haptics
+  // Sound/Haptics
   let SOUND_ON=true, HAPTIC_ON=false;
   function beep(type='click', dur=80, freq=440, vol=0.05){
     if(!SOUND_ON || typeof AudioContext==='undefined') return;
@@ -480,12 +436,11 @@
   }
   function vibe(ms=10){ if(HAPTIC_ON && navigator.vibrate) navigator.vibrate(ms); }
 
-  // Notifications (kept)
+  // Notifications
   let DESK_NOTIF=false;
   const notifs=[]; let unread=0;
   const notifUI={btn:el('notifBtn'),panel:el('notifPanel'),list:el('notifList'),badge:el('notifBadge')};
   function renderNotifs(){
-    if(!notifUI.list) return;
     notifUI.list.innerHTML='';
     if(!notifs.length){
       const d=document.createElement('div');
@@ -501,16 +456,12 @@
         notifUI.list.appendChild(d);
       });
     }
-    if(notifUI.badge){
-      notifUI.badge.style.display=unread>0?'grid':'none';
-      notifUI.badge.textContent=unread>99?'99+':String(unread);
-    }
-    try{
-      localStorage.setItem('dr_notifs', JSON.stringify(notifs));
-      localStorage.setItem('dr_unread', String(unread));
-    }catch{}
+    notifUI.badge.style.display=unread>0?'grid':'none';
+    notifUI.badge.textContent=unread>99?'99+':String(unread);
+    localStorage.setItem('dr_notifs', JSON.stringify(notifs));
+    localStorage.setItem('dr_unread', String(unread));
   }
-  function panelShow(node, show){ if(node) node.dataset.show = show ? 'true' : 'false'; }
+  function panelShow(node, show){ node.dataset.show = show ? 'true' : 'false'; }
   function addNotif(title, body='', type='info', deskTry=true){
     const n={id:crypto.randomUUID?.()||Math.random().toString(36).slice(2), title, body, type, ts:Date.now(), read:false};
     notifs.push(n); unread++; renderNotifs(); toast(title + (body?` • ${body}`:''), 2400);
@@ -523,19 +474,19 @@
     }
   }
   (function(){
-    notifUI.btn?.addEventListener('click', (e)=>{ e.stopPropagation(); const show=notifUI.panel?.dataset.show!=='true'; panelShow(notifUI.panel, show); if(show){ notifs.forEach(n=>n.read=true); unread=0; renderNotifs(); }});
-    document.addEventListener('click', (e)=>{ if(notifUI.panel && !notifUI.panel.contains(e.target) && !notifUI.btn?.contains(e.target)) panelShow(notifUI.panel,false); });
-    try{
-      const s=JSON.parse(localStorage.getItem('dr_notifs')||'[]'); const u=Number(localStorage.getItem('dr_unread')||'0');
-      if(Array.isArray(s)) notifs.push(...s); unread=u||0; renderNotifs();
-    }catch{}
+    notifUI.btn?.addEventListener('click', (e)=>{ e.stopPropagation(); const show=notifUI.panel.dataset.show!=='true'; panelShow(notifUI.panel, show); if(show){ notifs.forEach(n=>n.read=true); unread=0; renderNotifs(); }});
+    document.addEventListener('click', (e)=>{ if(!notifUI.panel.contains(e.target) && !notifUI.btn.contains(e.target)) panelShow(notifUI.panel,false); });
+    document.getElementById('markAllRead')?.addEventListener('click',()=>{ notifs.forEach(n=>n.read=true); unread=0; renderNotifs(); });
+    document.getElementById('clearNotif')?.addEventListener('click',()=>{ notifs.length=0; unread=0; renderNotifs(); });
+    try{ const s=JSON.parse(localStorage.getItem('dr_notifs')||'[]'); const u=Number(localStorage.getItem('dr_unread')||'0'); if(Array.isArray(s)) notifs.push(...s); unread=u||0; renderNotifs(); }catch{}
   })();
 
-  // ===== UI Sync/Persist =====
+  // UI Sync/Persist
   function sync(){
     const pot=state.red+state.blue;
     const r = pot? state.red/pot*100 : 0; const b=100-r;
 
+    // null-safe updates (tR/tB/pot may not exist in this view)
     if(el('tR')) el('tR').textContent=fmt(state.red);
     if(el('tB')) el('tB').textContent=fmt(state.blue);
     if(el('pot')) el('pot').textContent=fmt(pot);
@@ -553,32 +504,26 @@
     el('totalRed').textContent=fmt(state.red); el('totalBlue').textContent=fmt(state.blue);
 
     checkMilestones(pot); syncSideHeight(); saveAll();
-    renderHistorySidebar(); renderHistoryTable(); // refresh both UIs
   }
   function saveAll(){
-    try{
-      localStorage.setItem('dr_state', JSON.stringify(state));
-      localStorage.setItem('dr_seq', JSON.stringify(seq));
-      localStorage.setItem('dr_logs', JSON.stringify(logs));
-      localStorage.setItem('dr_history', JSON.stringify(history));
-    }catch{}
+    localStorage.setItem('dr_state', JSON.stringify(state));
+    localStorage.setItem('dr_seq', JSON.stringify(seq));
+    localStorage.setItem('dr_logs', JSON.stringify(logs));
   }
   (function restore(){
     try{
       const s=JSON.parse(localStorage.getItem('dr_state')||'null');
       const q=JSON.parse(localStorage.getItem('dr_seq')||'null');
       const lg=JSON.parse(localStorage.getItem('dr_logs')||'null');
-      const hi=JSON.parse(localStorage.getItem('dr_history')||'null');
       const dn=localStorage.getItem('deskn')==='1';
       if(s) Object.assign(state,s);
       if(Array.isArray(q)) seq.push(...q);
       if(Array.isArray(lg)) logs = lg;
-      if(Array.isArray(hi)) history = hi;
       DESK_NOTIF=dn;
     }catch{}
   })();
 
-  // ===== Chips / Odds calc =====
+  // Chips / Odds
   document.querySelectorAll('#chips button').forEach(b=>{
     b.addEventListener('click',()=>{ const amt=Number(b.textContent.replace(/[^\d]/g,''))||0; const input=el('amount'); input.value=Number(input.value||0)+amt; });
   });
@@ -595,136 +540,7 @@
     smoothOdds(tR,tB);
   }
 
-  // ===== Receipt (admin) =====
-  function showReceipt({side, amount, odds}){
-    const ref = 'BK' + Date.now().toString(36).toUpperCase().slice(-6) + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
-    const win = Math.round(amount * odds);
-
-    el('rc-ref').textContent  = ref;
-    el('rc-date').textContent = new Date().toLocaleString('en-PH',{hour12:false});
-    el('rc-side').textContent = side.toUpperCase();
-    el('rc-amt').textContent  = Number(amount).toLocaleString('en-PH');
-    el('rc-odds').textContent = Number(odds).toFixed(2);
-    el('rc-win').textContent  = Number(win).toLocaleString('en-PH');
-
-    const qrBox = el('rc-qr'); qrBox.innerHTML = '';
-    const payload = JSON.stringify({ref, side:side.toUpperCase(), amount, odds:+Number(odds).toFixed(2), win});
-
-    try {
-      if (window.QRCode) new QRCode(qrBox, { text: payload, width: 160, height: 160, correctLevel: QRCode.CorrectLevel.M });
-      else qrBox.innerHTML = '<div class="text-[12px] text-gray-700">QR unavailable. Ref: '+ref+'</div>';
-    } catch { qrBox.innerHTML = '<div class="text-[12px] text-gray-700">QR error. Ref: '+ref+'</div>'; }
-
-    const modal = document.getElementById('receiptModal');
-    modal.style.display = 'grid'; modal.setAttribute('aria-hidden', 'false');
-    document.getElementById('rc-close').onclick = () => { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); };
-  }
-
-  // ===== Bet History helpers (shared) =====
-  function addToHistory({side, amount, odds}){
-    const ts = Date.now();
-    const timeStr = new Date(ts).toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
-    const est = Math.round(amount * odds);
-    history.unshift({ ts, timeStr, side: side==='red'?'Red':'Blue', amount, odds: +Number(odds).toFixed(2), est });
-    if(history.length > 1000) history.length = 1000; // cap
-    saveAll();
-    renderHistorySidebar();
-    renderHistoryTable();
-  }
-
-  // --- Mini sidebar renderer
-  function renderHistorySidebar(){
-    const tbody = el('betHistory');
-    if(!tbody) return;
-    tbody.innerHTML = '';
-    if(history.length===0){
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center opacity-70 py-3">No bets yet</td></tr>`;
-      return;
-    }
-    history.slice(0,20).forEach(h=>{
-      const pill = h.side==='Red'
-        ? 'border-[#b71c1c] bg-[#3b1212] text-[#ffecec]'
-        : 'border-[#0b3ca8] bg-[#11244d] text-[#e6f0ff]';
-      const tr=document.createElement('tr');
-      tr.innerHTML = `
-        <td>${h.timeStr}</td>
-        <td><span class="inline-flex items-center justify-center rounded-full border-2 px-2 py-0.5 ${pill}">${h.side}</span></td>
-        <td>₱${fmt(h.amount)}</td>
-        <td>× ${h.odds.toFixed(2)}</td>
-        <td>₱${fmt(h.est)}</td>`;
-      tbody.appendChild(tr);
-    });
-  }
-  function exportHistoryCSV(list){
-    const rows=[['Time','Side','Amount','Odds','Est.Win']];
-    list.forEach(h=>rows.push([h.timeStr, h.side, h.amount, h.odds, h.est]));
-    const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob); a.download='bet-history.csv'; a.click(); URL.revokeObjectURL(a.href);
-    toast('Bet history exported');
-  }
-  el('histExport')?.addEventListener('click', ()=>exportHistoryCSV(history));
-  el('histClear')?.addEventListener('click', ()=>{ history=[]; saveAll(); renderHistorySidebar(); renderHistoryTable(); toast('Bet history cleared'); });
-
-  // --- Dedicated History UI (filters + pagination)
-  const HF_PAGE= { size: 12, now: 1 };
-  function getHFFilters(){
-    return {
-      side: (el('hf-side')?.value||'all'),
-      min:  Math.max(0, Number(el('hf-min')?.value||0))
-    };
-  }
-  function filterHistory(){
-    const f = getHFFilters();
-    return history.filter(h=>{
-      const sideOk = f.side==='all' || h.side.toLowerCase()===f.side;
-      const amtOk  = h.amount >= f.min;
-      return sideOk && amtOk;
-    });
-  }
-  function renderHistoryTable(){
-    const list = filterHistory();
-    const tbody = el('hf-body'); if(!tbody) return;
-    const total = list.length;
-    const pages = Math.max(1, Math.ceil(total / HF_PAGE.size));
-    if(HF_PAGE.now > pages) HF_PAGE.now = pages;
-    const start = (HF_PAGE.now-1) * HF_PAGE.size;
-    const pageList = list.slice(start, start+HF_PAGE.size);
-    tbody.innerHTML = '';
-    if(!pageList.length){
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center opacity-70 py-4">No bets match filters</td></tr>`;
-    }else{
-      pageList.forEach(h=>{
-        const pill = h.side==='Red'
-          ? 'border-[#b71c1c] bg-[#3b1212] text-[#ffecec]'
-          : 'border-[#0b3ca8] bg-[#11244d] text-[#e6f0ff]';
-        const tr=document.createElement('tr');
-        tr.innerHTML = `
-          <td>${h.timeStr}</td>
-          <td><span class="inline-flex items-center justify-center rounded-full border-2 px-2 py-0.5 ${pill}">${h.side}</span></td>
-          <td>₱${fmt(h.amount)}</td>
-          <td>× ${h.odds.toFixed(2)}</td>
-          <td>₱${fmt(h.est)}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
-    el('hf-page-now').textContent   = String(HF_PAGE.now);
-    el('hf-page-total').textContent = String(pages);
-    el('hf-count').textContent = String(total);
-    const sum = list.reduce((a,b)=>a+b.amount,0);
-    el('hf-sum').textContent = fmt(sum);
-  }
-  // filter controls
-  el('hf-apply')?.addEventListener('click', ()=>{ HF_PAGE.now=1; renderHistoryTable(); });
-  el('hf-reset')?.addEventListener('click', ()=>{ if(el('hf-side')) el('hf-side').value='all'; if(el('hf-min')) el('hf-min').value=0; HF_PAGE.now=1; renderHistoryTable(); });
-  el('hf-first')?.addEventListener('click', ()=>{ HF_PAGE.now=1; renderHistoryTable(); });
-  el('hf-prev') ?.addEventListener('click', ()=>{ HF_PAGE.now=Math.max(1,HF_PAGE.now-1); renderHistoryTable(); });
-  el('hf-next') ?.addEventListener('click', ()=>{ const pages=Math.max(1, Math.ceil(filterHistory().length/HF_PAGE.size)); HF_PAGE.now=Math.min(pages,HF_PAGE.now+1); renderHistoryTable(); });
-  el('hf-last') ?.addEventListener('click', ()=>{ HF_PAGE.now=Math.max(1, Math.ceil(filterHistory().length/HF_PAGE.size)); renderHistoryTable(); });
-  el('hf-export')?.addEventListener('click', ()=>exportHistoryCSV(filterHistory()));
-  el('hf-clear') ?.addEventListener('click', ()=>{ history=[]; saveAll(); renderHistorySidebar(); renderHistoryTable(); toast('Bet history cleared'); });
-
-  // ===== Bets =====
+  // Bets
   document.querySelectorAll('[data-bet]').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const side=btn.getAttribute('data-bet');
@@ -733,11 +549,6 @@
       state[side]+=val; el('amount').value='';
       recalcOdds(); sync();
       addNotif('Bet placed', `${side.toUpperCase()} • ₱${fmt(val)}`, 'bet');
-
-      const odds = side==='red'? state.oddsRed : state.oddsBlue;
-      addToHistory({side, amount:val, odds});
-
-      if(ROLE_ID===1){ showReceipt({side, amount:val, odds}); }
     });
   });
   el('reset').addEventListener('click',()=>{ el('amount').value=''; });
@@ -755,11 +566,6 @@
       const side = state.oddsRed>state.oddsBlue ? 'red' : 'blue';
       state[side]+=v; el('mbAmount').value=''; recalcOdds(); sync();
       addNotif('Quick Bet', `${side.toUpperCase()} • ₱${fmt(v)}`, 'bet');
-
-      const odds = side==='red'? state.oddsRed : state.oddsBlue;
-      addToHistory({side, amount:v, odds});
-
-      if(ROLE_ID===1){ showReceipt({side, amount:v, odds}); }
     });
   })();
 
@@ -773,6 +579,7 @@
   // Roads / Results
   const seq=[]; const ROWS=6, COLS=36;
 
+  // logs + pagination
   function addLog(winner){
     const pot = state.red + state.blue;
     const odds = (winner === 'Red' ? state.oddsRed : state.oddsBlue).toFixed(2);
@@ -783,7 +590,6 @@
   }
   function renderLog(){
     const tbody = el('logBody');
-    if(!tbody) return;
     tbody.innerHTML = '';
     const totalPages = Math.max(1, Math.ceil(logs.length / PAGE_SIZE));
     if (curPage > totalPages) curPage = totalPages;
@@ -801,10 +607,10 @@
     el('pageNow').textContent = String(curPage);
     el('pageTotal').textContent = String(totalPages);
   }
-  document.getElementById('firstPage')?.addEventListener('click', ()=>{ curPage = 1; renderLog(); });
-  document.getElementById('prevPage') ?.addEventListener('click', ()=>{ if (curPage > 1) { curPage--; renderLog(); } });
-  document.getElementById('nextPage') ?.addEventListener('click', ()=>{ const t=Math.max(1, Math.ceil(logs.length/PAGE_SIZE)); if (curPage < t) { curPage++; renderLog(); } });
-  document.getElementById('lastPage') ?.addEventListener('click', ()=>{ curPage = Math.max(1, Math.ceil(logs.length/PAGE_SIZE)); renderLog(); });
+  document.getElementById('firstPage').onclick = ()=>{ curPage = 1; renderLog(); };
+  document.getElementById('prevPage').onclick  = ()=>{ if (curPage > 1) { curPage--; renderLog(); } };
+  document.getElementById('nextPage').onclick  = ()=>{ const t=Math.max(1, Math.ceil(logs.length/PAGE_SIZE)); if (curPage < t) { curPage++; renderLog(); } };
+  document.getElementById('lastPage').onclick  = ()=>{ curPage = Math.max(1, Math.ceil(logs.length/PAGE_SIZE)); renderLog(); };
 
   // Roads
   function cell(div, kind, hollow=false){
@@ -820,7 +626,7 @@
     }
   }
   function renderBead(){
-    const bead=el('bead'); if(!bead) return; bead.innerHTML='';
+    const bead=el('bead'); bead.innerHTML='';
     for(let c=0;c<COLS;c++) for(let r=0;r<ROWS;r++){
       const d=document.createElement('div'); d.style.gridRow=(r+1); cell(d); bead.appendChild(d);
     }
@@ -830,7 +636,7 @@
     });
   }
   function renderBig(){
-    const big=el('big'); if(!big) return; big.innerHTML='';
+    const big=el('big'); big.innerHTML='';
     for(let c=0;c<COLS;c++) for(let r=0;r<ROWS;r++){
       const d=document.createElement('div'); d.style.gridRow=(r+1); cell(d, null, true); big.appendChild(d);
     }
@@ -852,8 +658,8 @@
     logs.shift();
     renderBead(); renderBig(); renderLog(); saveAll();
   }
-  document.getElementById('winRed')?.addEventListener('click',()=>mark('R'));
-  document.getElementById('winBlue')?.addEventListener('click',()=>mark('B'));
+  document.getElementById('winRed').addEventListener('click',()=>mark('R'));
+  document.getElementById('winBlue').addEventListener('click',()=>mark('B'));
 
   // Round Timer
   let tHandle=null, tLeft=0;
@@ -865,10 +671,10 @@
     tHandle=setInterval(()=>{ tLeft--; setTimerText(formatSecs(Math.max(tLeft,0))); if(tLeft<=0){ clearInterval(tHandle); tHandle=null; setTimerText('00:00'); addNotif('Round ended','Place bets closed','alert'); } },1000);
   }
   function resetRound(){ clearInterval(tHandle); tHandle=null; tLeft=0; setTimerText('—'); addNotif('Timer reset','Round timer cleared','info'); }
-  document.getElementById('startRound')?.addEventListener('click', ()=>startRound(60));
-  document.getElementById('resetRound')?.addEventListener('click', resetRound);
+  document.getElementById('startRound').addEventListener('click', ()=>startRound(60));
+  document.getElementById('resetRound').addEventListener('click', resetRound);
 
-  // Tabs visual toggling for ODDS/TOTAL (kept)
+  // Tabs
   function showTab(name){
     document.querySelectorAll('[data-tab]').forEach(b=>{
       const active = b.dataset.tab===name;
@@ -885,6 +691,82 @@
     syncSideHeight();
   }
   document.querySelectorAll('[data-tab]').forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+
+  // Profile dropdown
+  const profileBtn=el('profileBtn'), profileMenu=el('profileMenu');
+  function toggleMenu(force){
+    const show=typeof force==='boolean'?force:profileMenu.dataset.show!=='true';
+    profileMenu.dataset.show = show ? 'true' : 'false';
+    profileMenu.setAttribute('aria-hidden', show?'false':'true');
+  }
+  profileBtn?.addEventListener('click', e=>{ e.stopPropagation(); toggleMenu(); });
+  document.addEventListener('click', e=>{ if(profileMenu && !profileMenu.contains(e.target) && !profileBtn?.contains(e.target)) toggleMenu(false); });
+
+  // Settings modal
+  const settingsModal = document.getElementById('settingsModal');
+  const openSettings  = document.getElementById('drawerOpen');
+  const closeSettings = document.getElementById('settingsClose');
+  function showSettings(show=true){
+    settingsModal.dataset.show = show ? 'true' : 'false';
+    settingsModal.style.display = show ? 'grid' : 'none';
+    settingsModal.setAttribute('aria-hidden', show ? 'false' : 'true');
+  }
+  openSettings?.addEventListener('click', ()=> showSettings(true));
+  closeSettings?.addEventListener('click', ()=> showSettings(false));
+  settingsModal?.addEventListener('click', (e)=>{ if(e.target === settingsModal) showSettings(false); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') showSettings(false); });
+
+  // Settings toggles
+  const switches={ dark:el('sw-dark'), fancy:el('sw-fancy'), sound:el('sw-sound'), compact:el('sw-compact'), contrast:el('sw-contrast'), haptic:el('sw-haptic'), deskn:el('sw-deskn') };
+  function setSwitch(elem,on){
+    if(!elem) return;
+    elem.dataset.on = on ? 'true' : 'false';
+    elem.setAttribute('aria-checked', on?'true':'false');
+    const knob=elem.firstElementChild;
+    knob && (knob.style.left = on ? '27px' : '3px');
+    elem.style.background = on && elem.id==='sw-dark' ? 'linear-gradient(90deg,#2f7cff,#ff3b30)' : '#18223c';
+  }
+  function applyFromStorage(){
+    const theme=localStorage.getItem('theme')||'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    setSwitch(switches.dark, theme==='dark');
+
+    const fancy=localStorage.getItem('fancy')!=='0';
+    document.body.classList.toggle('no-fancy', !fancy); setSwitch(switches.fancy, fancy);
+
+    SOUND_ON=localStorage.getItem('sound')!=='0'; setSwitch(switches.sound, SOUND_ON);
+
+    const compact=localStorage.getItem('compact')==='1';
+    document.body.classList.toggle('compact', compact); setSwitch(switches.compact, compact);
+
+    const contrast=localStorage.getItem('contrast')==='1';
+    document.body.classList.toggle('high-contrast', contrast); setSwitch(switches.contrast, contrast);
+
+    HAPTIC_ON=localStorage.getItem('haptic')==='1'; setSwitch(switches.haptic, HAPTIC_ON);
+
+    DESK_NOTIF=localStorage.getItem('deskn')==='1'; setSwitch(switches.deskn, DESK_NOTIF);
+  } applyFromStorage();
+
+  Object.entries(switches).forEach(([key, elem])=>{
+    elem?.addEventListener('click', async ()=>{
+      const isOn = elem.dataset.on !== 'true'; setSwitch(elem, isOn);
+      switch(key){
+        case 'dark': document.documentElement.setAttribute('data-theme', isOn?'dark':'light'); localStorage.setItem('theme', isOn?'dark':'light'); break;
+        case 'fancy': document.body.classList.toggle('no-fancy', !isOn); localStorage.setItem('fancy', isOn?'1':'0'); break;
+        case 'sound': SOUND_ON=isOn; localStorage.setItem('sound', isOn?'1':'0'); break;
+        case 'compact': document.body.classList.toggle('compact', isOn); localStorage.setItem('compact', isOn?'1':'0'); break;
+        case 'contrast': document.body.classList.toggle('high-contrast', isOn); localStorage.setItem('contrast', isOn?'1':'0'); break;
+        case 'haptic': HAPTIC_ON=isOn; localStorage.setItem('haptic', isOn?'1':'0'); break;
+        case 'deskn':
+          if(isOn && 'Notification' in window){
+            let perm=Notification.permission; if(perm!=='granted'){ perm=await Notification.requestPermission(); }
+            const ok=(perm==='granted'); localStorage.setItem('deskn', ok?'1':'0'); setSwitch(elem, ok);
+            addNotif(ok?'Desktop notifications ON':'Desktop notifications OFF','', 'info', false);
+          } else { localStorage.setItem('deskn','0'); setSwitch(elem,false); addNotif('Desktop notifications OFF','', 'info', false); }
+          break;
+      }
+    });
+  });
 
   // Toast + layout sync
   function toast(msg,ms=2200){
@@ -905,8 +787,8 @@
   addEventListener('resize', syncSideHeight);
   addEventListener('load', syncSideHeight);
 
-  // Export/Clear results (admin)
-  document.getElementById('exportCsv')?.addEventListener('click', ()=>{
+  // CSV / Clear
+  el('exportCsv').addEventListener('click', ()=>{
     const rows=[['Time','Winner','Pot','Odds','Payout per 100']];
     logs.forEach(r => rows.push([r.time, r.winner, '₱'+fmt(r.pot), '× '+r.odds, '₱'+fmt(r.payout)]));
     const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
@@ -914,27 +796,51 @@
     a.href=URL.createObjectURL(blob); a.download='drag-race-results.csv'; a.click(); URL.revokeObjectURL(a.href);
     toast('CSV exported'); addNotif('CSV exported','Results saved locally','info');
   });
-  document.getElementById('clearLog')?.addEventListener('click', ()=>{
-    logs = []; el('logBody') && (el('logBody').innerHTML = ''); curPage = 1; renderLog();
+  el('clearLog').addEventListener('click', ()=>{
+    logs = []; el('logBody').innerHTML = ''; curPage = 1; renderLog();
     toast('Logs cleared'); addNotif('Logs cleared','History table emptied','alert');
   });
 
+  // Modals
+  function showModal(id, show=true){
+    const m = document.getElementById(id);
+    if(!m) return;
+    m.style.display = show ? 'grid' : 'none';
+    m.setAttribute('aria-hidden', show ? 'false' : 'true');
+  }
+  document.getElementById('editProfile')?.addEventListener('click', (e)=>{ e.preventDefault(); showModal('modal-edit', true); });
+  document.getElementById('cashInBtn')?.addEventListener('click', (e)=>{ e.preventDefault(); showModal('modal-cash', true); });
+  document.getElementById('withdrawBtn')?.addEventListener('click', (e)=>{ e.preventDefault(); showModal('modal-withdraw', true); });
+
+  document.querySelectorAll('.modal [data-close]').forEach(b=>b.addEventListener('click',()=> showModal(b.closest('.modal').id, false)));
+  document.getElementById('modal-edit')?.addEventListener('click',(e)=>{ if(e.target.id==='modal-edit') showModal('modal-edit',false); });
+  document.getElementById('modal-cash')?.addEventListener('click',(e)=>{ if(e.target.id==='modal-cash') showModal('modal-cash',false); }); // fixed id typo
+  document.getElementById('modal-withdraw')?.addEventListener('click',(e)=>{ if(e.target.id==='modal-withdraw') showModal('modal-withdraw',false); });
+
+  document.getElementById('saveProfile')?.addEventListener('click', ()=>{
+    const name = (document.getElementById('prof-name').value||'Wilyonaryo').trim();
+    const avatar = (document.getElementById('prof-avatar').value||'').trim();
+    if(name) addNotif('Profile saved', name, 'info');
+    if(avatar) document.querySelectorAll('.size-\\[38px\\],.size-8').forEach(a=>a.style.backgroundImage=`url('${avatar}')`);
+    showModal('modal-edit', false);
+  });
+  document.getElementById('cashSubmit')?.addEventListener('click', ()=>{
+    const amt = Number(document.getElementById('cash-amt').value||0);
+    if(amt>0){ addNotif('Cash In requested', `₱${fmt(amt)} • ${document.getElementById('cash-method').value}`, 'info'); }
+    showModal('modal-cash', false);
+  });
+  document.getElementById('wdSubmit')?.addEventListener('click', ()=>{
+    const amt = Number(document.getElementById('wd-amt').value||0);
+    if(amt>0){ addNotif('Withdraw requested', `₱${fmt(amt)} • ${document.getElementById('wd-method').value}`, 'info'); }
+    showModal('modal-withdraw', false);
+  });
+
   // Init
-  function init(){ renderBead(); renderBig(); renderLog(); renderHistorySidebar(); renderHistoryTable(); sync(); }
+  function init(){ renderBead(); renderBig(); renderLog(); sync(); }
   init();
   </script>
 
-  <!-- Lazy-load QRCode lib -->
-  <script>
-  (function ensureQR(){
-    if (window.QRCode) return;
-    const s=document.createElement('script');
-    s.src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
-    s.async=true;
-    s.onerror=()=>console.warn('QRCode lib failed to load — using fallback.');
-    document.head.appendChild(s);
-  })();
-  </script>
-
+  
 </body>
+
 </x-layouts.app>
