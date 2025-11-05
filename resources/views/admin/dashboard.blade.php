@@ -217,5 +217,42 @@
         </div>
       </div>
     </div>
+    <!--Footer-->
+    <footer
+      class="flex bg-white/80 text-slate-950 dark:bg-slate-950/80 dark:text-slate-50 my-4 p-4 gap-3 rounded-lg lg:h-70 lg:gap-5">
+      <div class="flex flex-col gap-1 w-1/2 lg:gap-2">
+        <!--Left-->
+        <h1 class="font-bold text-sm lg:text-xl">
+          We make betting easy, try all our games and bet now!
+        </h1>
+        <h1 class="text-xs lg:text-sm">
+          For our latest news, sign up to our newsletter.
+        </h1>
+        <input type="text" class="p-1 border-b border-slate-900 dark:border-slate-200" placeholder="Email Address" />
+        <div class="flex gap-2">
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+          <a href=""><i class="fa-brands fa-instagram"></i></a>
+          <a href=""><i class="fa-brands fa-square-x-twitter"></i></a>
+          <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <h1 class="text-[10px]">BK2025. All rights reserved, 2025</h1>
+      </div>
+      <div class="flex flex-col w-1/3 text-[12px] gap-2 lg:gap-4 lg:mt-4 font-semibold">
+        <!--Right-->
+        <a href="" class="hover:underline underline-offset-2">Get in touch</a>
+        <a href="" class="hover:underline underline-offset-2">Join our team</a>
+        <a href="" class="hover:underline underline-offset-2">About</a>
+        <a href="" class="hover:underline underline-offset-2">FAQ</a>
+        <a href="" class="hover:underline underline-offset-2">Terms of Use</a>
+        <a href="" class="hover:underline underline-offset-2">Privacy</a>
+      </div>
+      <div class="flex flex-col w-1/3 text-[12px] gap-2 lg:gap-4 lg:mt-4 font-semibold">
+        <!--Right-->
+        <a href="" class="hover:underline underline-offset-2">Billiard Club</a>
+        <a href="" class="hover:underline underline-offset-2">Promotions</a>
+        <a href="" class="hover:underline underline-offset-2">Betting</a>
+        <a href="" class="hover:underline underline-offset-2">Terms of Service</a>
+      </div>
+    </footer>
   </main>
 </x-layouts.app>
