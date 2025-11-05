@@ -230,10 +230,10 @@
         </h1>
         <input type="text" class="p-1 border-b border-slate-900 dark:border-slate-200" placeholder="Email Address" />
         <div class="flex gap-2">
-          <a href=""><i class="fa-brands fa-facebook"></i></a>
-          <a href=""><i class="fa-brands fa-instagram"></i></a>
-          <a href=""><i class="fa-brands fa-square-x-twitter"></i></a>
-          <a href=""><i class="fa-brands fa-youtube"></i></a>
+          <a href=""><i class="fa-brands fa-facebook hover:text-emerald"></i></a>
+          <a href=""><i class="fa-brands fa-instagram hover:text-emerald"></i></a>
+          <a href=""><i class="fa-brands fa-square-x-twitter hover:text-emerald"></i></a>
+          <a href=""><i class="fa-brands fa-youtube hover:text-emerald"></i></a>
         </div>
         <h1 class="text-[10px]">BK2025. All rights reserved, 2025</h1>
       </div>
