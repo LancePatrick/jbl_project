@@ -590,3 +590,4 @@ New Balance: ${currentBalance.toLocaleString()}.`);
   </script>
 </body>
 </x-layouts.app>
+  
