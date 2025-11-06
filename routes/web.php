@@ -11,6 +11,10 @@ Route::get('/player', function () {
     return view('player');
 })->name('player');
 
+Route::get('/teller', function () {
+    return view('teller');
+})->name('teller');
+
 Route::view('dashboard', 'admin.dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
