@@ -238,10 +238,10 @@
   <script>
     // A) CONFIG / CONSTANTS
     const players = [
-      "Hagdang Bato","King Focus","LeBron James","Kid Molave",
-      "JBL","Autumn Blaze","Desert Sage","Hidden Hollow",
-      "Pony Punster","Santino","Panday","Hooves of Fury",
-      "Golden Hour","Sun Chaser"
+      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
+      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
+      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
+      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
     ];
     const BIGROAD_MAX_ROWS = 8;
     const BEAD_MAX_ROWS    = 6;

@@ -75,7 +75,6 @@
     }
 
     /* Bet cards: keep original theme colors (no forced bg override) */
-    /* (Intentionally no .bet-area .bet-card background override) */
 
     /* Enhancements compatible with original colors */
     .bet-area .name-chip{
@@ -103,7 +102,6 @@
     /* ⬇️ REVERT: allow original chip colors to show */
     .chip3d{
       border:1px solid rgba(255,255,255,.16) !important;
-      /* no background override here so chip-emerald/blue/black/amber apply */
     }
 
     .bead-rail{
@@ -121,6 +119,29 @@
       background:#0b1223 !important;
       border:1px solid rgba(255,255,255,.12) !important;
     }
+
+    /* ===== Confirmation Modal (lightweight) ===== */
+    #confirm-overlay{
+      position: fixed; inset: 0; background: rgba(0,0,0,.6);
+      display: none; align-items: center; justify-content: center;
+      z-index: 60;
+    }
+    #confirm-modal{
+      width: 100%; max-width: 420px; background: #0f172a; color:#e5e7eb;
+      border:1px solid rgba(255,255,255,.14); border-radius: .75rem;
+      box-shadow: 0 20px 80px rgba(0,0,0,.6);
+      overflow: hidden;
+    }
+    #confirm-modal header{
+      padding: 12px 16px; background:#0b1223; border-bottom:1px solid rgba(255,255,255,.1);
+      font-weight: 700; letter-spacing: .3px;
+    }
+    #confirm-modal .body{ padding: 14px 16px; }
+    #confirm-modal .row{ display:grid; grid-template-columns: 120px 1fr; gap:10px; margin:6px 0; font-size:14px;}
+    #confirm-modal .row span:first-child{ color:#93c5fd; }
+    #confirm-modal footer{ padding: 12px 16px; background:#0b1223; border-top:1px solid rgba(255,255,255,.1); display:flex; gap:8px; justify-content:flex-end;}
+    #confirm-cancel{ background:#1f2937; border:1px solid rgba(255,255,255,.16); padding:.5rem .75rem; border-radius:.5rem; }
+    #confirm-ok{ background:#16a34a; border:1px solid rgba(255,255,255,.16); padding:.5rem .75rem; border-radius:.5rem; font-weight:700; }
   </style>
 
   <!-- ========================================================
@@ -375,6 +396,26 @@
     </div>
   </div>
 
+  <!-- ===== Confirmation Modal HTML ===== -->
+  <div id="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div id="confirm-modal">
+      <header id="confirm-title">Confirm Bet</header>
+      <div class="body">
+        <div class="row"><span>Side</span><strong id="c-side">—</strong></div>
+        <div class="row"><span>Player</span><span id="c-player">—</span></div>
+        <div class="row"><span>Match #</span><span id="c-match">—</span></div>
+        <div class="row"><span>Amount</span><span id="c-amount">—</span></div>
+        <div class="row"><span>Odds</span><span id="c-odds">—</span></div>
+        <div class="row"><span>Potential Payout</span><span id="c-payout">—</span></div>
+        <div class="row"><span>Balance After</span><span id="c-balance">—</span></div>
+      </div>
+      <footer>
+        <button id="confirm-cancel">Cancel</button>
+        <button id="confirm-ok">Confirm Bet</button>
+      </footer>
+    </div>
+  </div>
+
   <!-- ========================================================
        SCRIPT: (unchanged functions) + barcode + pagination + print
   ========================================================= -->
@@ -400,7 +441,7 @@
         const h = opts.height || 60;
         const m = opts.module || 2;
         const wide = 3*m;
-        const patt = encode(text);
+        const patt = encode(data); /* bugfix: was 'text' */
         let total = 0; for(const c of patt){ total += (c==='n'?m:wide); }
         let x = 0, svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${total}" height="${h+22}">`;
         let drawBar = true;
@@ -428,6 +469,9 @@
     let meronAmount, walaAmount, meronOdds, walaOdds;
     let currentBalance=500000;
     const betHistory=[];
+
+    // Pending bet (for modal confirm)
+    let pendingBet = null;
 
     function getRandomPlayer(ex){let n;do{n=players[Math.floor(Math.random()*players.length)];}while(n===ex);return n;}
     function setRandomMatch(){
@@ -682,6 +726,25 @@
       }
     }
 
+    /* ===== Confirmation helpers ===== */
+    function openConfirmModal(details){
+      // details: {side, player, matchId, amount, odds, payout, balanceAfter}
+      pendingBet = details;
+      document.getElementById('c-side').textContent    = details.side;
+      document.getElementById('c-player').textContent  = details.player;
+      document.getElementById('c-match').textContent   = details.matchId;
+      document.getElementById('c-amount').textContent  = `₱${Number(details.amount).toLocaleString('en-PH')}`;
+      document.getElementById('c-odds').textContent    = details.odds;
+      document.getElementById('c-payout').textContent  = `₱${Number(details.payout).toLocaleString('en-PH')}`;
+      document.getElementById('c-balance').textContent = `₱${Number(details.balanceAfter).toLocaleString('en-PH')}`;
+      document.getElementById('confirm-overlay').style.display = 'flex';
+    }
+    function closeConfirmModal(){
+      pendingBet = null;
+      document.getElementById('confirm-overlay').style.display = 'none';
+    }
+
+    /* ===== Original placeBet now shows modal first, then executes on confirm ===== */
     function placeBet(betType){
       const input=document.getElementById('bet-amount');
       let betAmount=parseFloat(input?.value);
@@ -695,8 +758,36 @@
       } else {
         odds=walaOdds;  chosenPlayer=document.getElementById('player2-name').textContent;
       }
+      const matchId=document.getElementById('match-no').textContent||'—';
+
+      // Check balance first but DO NOT deduct yet; just preview post-balance
+      const balanceAfter = currentBalance - betAmount;
+      if(balanceAfter < 0){
+        alert('Insufficient balance.');
+        return;
+      }
+
+      const potential = (betAmount * parseFloat(odds)).toFixed(2);
+
+      // Open confirmation with preview data
+      openConfirmModal({
+        side: betType,
+        player: chosenPlayer || (betType==='MERON'?'Red':'Blue'),
+        matchId,
+        amount: betAmount,
+        odds: odds,
+        payout: potential,
+        balanceAfter: balanceAfter
+      });
+    }
+
+    // Executes the original side effects and printing after user confirms
+    function executeBet(details){
+      const { side:betType, player:chosenPlayer, matchId, amount:betAmount, odds } = details;
+
       const balanceBefore=currentBalance;
       if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; }
+
       if(betType==='MERON'){
         meronAmount+=betAmount;
         const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
@@ -705,6 +796,7 @@
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
       }
       updatePercentBar();
+
       const totalWinnings=parseFloat(betAmount)*parseFloat(odds);
       if(betType==='MERON'){
         const r=document.getElementById('meron-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`;
@@ -713,10 +805,10 @@
         const r=document.getElementById('wala-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`;
         const c=document.getElementById('meron-result'); if(c) c.textContent="";
       }
-      const matchId=document.getElementById('match-no').textContent||'—';
+
       const time=new Date().toLocaleString('en-PH',{hour12:true});
       const entry = {
-        side:betType, player:chosenPlayer||(betType==='MERON'?'Red':'Blue'),
+        side:betType, player:chosenPlayer,
         matchId, amount:betAmount, odds:odds, payout:totalWinnings.toFixed(2),
         time, balanceBefore, balanceAfter:currentBalance, status:'PENDING'
       };
@@ -865,6 +957,16 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       const nextBtn=document.getElementById('history-next');
       prevBtn?.addEventListener('click',()=>{ historyPage=Math.max(1, historyPage-1); renderBetHistoryPage(); });
       nextBtn?.addEventListener('click',()=>{ const totalPages=Math.max(1, Math.ceil(betHistory.length/pageSize)); historyPage=Math.min(totalPages, historyPage+1); renderBetHistoryPage(); });
+
+      // Modal buttons
+      document.getElementById('confirm-cancel').addEventListener('click', closeConfirmModal);
+      document.getElementById('confirm-overlay').addEventListener('click', (e)=>{
+        if(e.target.id==='confirm-overlay') closeConfirmModal();
+      });
+      document.getElementById('confirm-ok').addEventListener('click', ()=>{
+        if(pendingBet){ executeBet(pendingBet); }
+        closeConfirmModal();
+      });
 
       renderBetHistoryPage();
     };
