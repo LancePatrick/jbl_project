@@ -26,10 +26,14 @@ Route::view('horse', 'admin.horse')
 Route::view('pre-match', 'pre-match')
     ->name('pre-match');
 
-/* ✅ NEW: Drag Race page */
+
 Route::view('drag-race', 'drag-race')
     ->middleware(['auth', 'verified'])
     ->name('drag.race');
+
+    Route::view('teller-drag', 'teller-drag')
+    ->middleware(['auth', 'verified'])
+    ->name('teller.drag');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

@@ -28,5 +28,13 @@ class UserSeeder extends Seeder
             'role_id' => 2,
             'created_at' => now(),
         ]);
+  // Create teller
+        User::create([
+            'name' => 'uses teller',
+            'email' => 'test@teller.com',
+            'password' => Hash::make('password'),
+            'role_id' => 3,
+            'created_at' => now(),
+        ]);
     }
 }
