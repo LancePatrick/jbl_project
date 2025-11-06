@@ -70,8 +70,8 @@
     #confirm-ok{ background:#16a34a; border:1px solid rgba(255,255,255,.16); padding:.5rem .75rem; border-radius:.5rem; font-weight:700; }
   </style>
 
-  <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-4">
-    <div class="grid gap-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_360px]">
+  <main class="mx-auto lg:p-4">
+    <div class="grid gap-6 grid-cols-1 w-full lg:grid-cols-3">
 
       <!-- LEFT: VIDEO + (moved) SCAN CARD -->
       <section class="relative z-10 p-4 rounded-lg shadow-lg bg-white/5 border border-white/10">
@@ -298,7 +298,7 @@
       </aside>
 
       <!-- MOBILE STACK (kept) -->
-      <div class="md:hidden space-y-3 col-span-3">
+      <div class="md:hidden lg:hidden space-y-3">
         <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
