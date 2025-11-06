@@ -82,7 +82,7 @@
         </div>
     </nav>
 
-    <main class="relative z-10 pt-24 px-4 md:px-6 max-w-auto mx-auto">
+    <main class="relative z-10 pt-24 px-4 md:px-6 lg:max-w-7xl lg:mx-auto">
         {{ $slot }}
     </main>
     {{-- @include('components.notifications') --}}

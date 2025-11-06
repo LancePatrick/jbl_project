@@ -31,25 +31,25 @@
   <main class="mt-0 lg:ml-5">
     <!-- Hero -->
     <section
-      class="relative overflow-hidden rounded-lg p-5 bg-cover bg-center bg-no-repeat dark:text-emerald-50 lg:py-20"
+      class="relative overflow-hidden rounded-lg  p-3 lg:p-5 bg-cover bg-center bg-no-repeat dark:text-emerald-50 lg:py-20"
       style="background-image: url('{{ asset('images/snookerplayer.jpg') }}')">
       <div class="absolute inset-0 !dark:bg-black/60 !bg-gray-800/50"></div>
       <div class="relative z-10 grid items-center gap-8 md:grid-cols-2">
         <div>
-          <h1 class="text-2xl font-semibold text-white sm:text-4xl lg:text-5xl md:text-6xl">
+          <h1 class="text-lg font-semibold text-white sm:text-4xl lg:text-5xl md:text-6xl">
             Bet. Break. Win Big!
           </h1>
           <p class="mt-3 text-xs text-white/90 sm:text-base lg:text-lg md:text-2xl">
             Dive into the ultimate billiards betting experience — where every shot counts and every match could make you
             a winner.
           </p>
-          <div class="mt-5 flex flex-wrap gap-3 font-semibold text-black">
+          <div class="mt-5 flex flex-wrap gap-3 font-semibold text-black ">
             <a href="#"
-              class="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-4 py-2 text-[0.75rem] hover:bg-emerald-500 transition-colors duration-200 sm:text-sm lg:text-base md:px-6 md:py-3 md:text-lg">
+              class="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-4 py-2 text-[0.65rem]  hover:bg-emerald-500 transition-colors duration-200 sm:text-sm lg:text-lg md:px-6 md:py-3 md:text-lg">
               <i class="fa-solid fa-star"></i> Join now
             </a>
             <a href="#"
-              class="inline-flex items-center gap-2 rounded-full bg-yellow-300 px-4 py-2 text-[0.75rem] hover:bg-yellow-400 transition-colors duration-200 sm:text-sm lg:text-base md:px-6 md:py-3 md:text-lg">
+              class="inline-flex items-center gap-2 rounded-full bg-yellow-300 px-4 py-2 text-[0.65rem]  hover:bg-yellow-400 transition-colors duration-200 sm:text-sm lg:text-lg md:px-6 md:py-3 md:text-lg">
               <i class="fa-solid fa-sack-dollar"></i> Start Betting
             </a>
           </div>
@@ -62,7 +62,7 @@
       <div class="flex justify-center items-center gap-4 scale-90 md:scale-100 my-12 md:my-40">
         <!-- Card 1 -->
         <div
-          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] md:w-[25rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800"
+          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem]  hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800"
           style="background-image: url('images/BilliardVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 2xl:mt-[18.75rem]">
@@ -77,7 +77,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] md:w-[25rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.8)]
+        <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem]  hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.8)]
  dark:bg-gray-800" style="background-image: url('images/MotorVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] md:w-[25rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(234,179,8,0.8)]
+        <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem]  hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(234,179,8,0.8)]
  dark:bg-gray-800" style="background-image: url('images/HorseVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
