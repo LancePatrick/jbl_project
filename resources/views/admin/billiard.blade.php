@@ -11,7 +11,7 @@
     <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
 
       <!-- LEFT: Video + Logrohan (WIDER) -->
-      <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-17">
+      <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-2">
         <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
           <div id="event-date" class="text-left"></div>
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Video -->
-        <div class="mb-4 relative">
+        <div class="mb-3 relative max-w-[85%] mx-auto">
           <div class="relative aspect-video">
             <div class="absolute inset-0 rounded-xl overflow-hidden z-10">
               <div class="absolute inset-0 rounded-xl bg-gradient-to-tr from-red-500 via-yellow-500 to-blue-500 animate-[pulse_4s_infinite] mix-blend-overlay opacity-70"></div>
@@ -38,7 +38,7 @@
         </div>
 
         <!-- LOGROHAN -->
-        <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
+        <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone max-w-[85%] mx-auto">
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
             <div class="flex items-center gap-2 text-[10px]">
@@ -67,10 +67,10 @@
 
       <!-- RIGHT: Bet cards + Bet Amount (UNCHANGED) -->
       <aside>
-        <div class="sticky mt-12 space-y-3">
+        <div class="sticky mt-4 space-y-3">
 
           <!-- Bet Percentage Bar -->
-          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-5">
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-0">
             <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Bet Percentage</div>
             <div class="relative h-3 rounded-full bg-black/40 border border-white/10 overflow-hidden">
               <div id="pct-red"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:50%"></div>
@@ -84,7 +84,7 @@
           </div>
 
           <!-- Cards -->
-          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-3">
+          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-0">
             <!-- Meron -->
             <div class="bet-card red tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
@@ -118,7 +118,7 @@
           </div>
 
           <!-- Bet Amount + MINI ROAD -->
-          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-4.5">
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-2">
           @auth
             @if( auth()->user()->role_id == 2)
             <div class="flex items-center justify-between mb-2">
@@ -590,4 +590,3 @@ New Balance: ${currentBalance.toLocaleString()}.`);
   </script>
 </body>
 </x-layouts.app>
-  
