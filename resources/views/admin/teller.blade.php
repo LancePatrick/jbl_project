@@ -128,8 +128,8 @@
 
           <div class="mt-3 text-[12px] text-white/70 uppercase tracking-widest">Customer Details</div>
           <div class="mt-1 grid grid-cols-2 gap-2 text-[13px]">
-            <input id="cust-name"  class="bet-input bg-black/30 p-2" placeholder="Full name"/>
-            <input id="cust-user"  class="bet-input bg-black/30 p-2" placeholder="Username"/>
+            <input id="cust-name"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Full name"/>
+            <input id="cust-user"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Username"/>
             <input id="cust-email" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Email address"/>
             <input id="cust-phone" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Contact number"/>
           </div>
@@ -157,7 +157,7 @@
         </div>
 
         <!-- Bet Cards -->
-        <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-4">
+        <div id="bet-area" class="bet-area grid grid-cols-1 lg:grid-cols-2 gap-3 mt-0 mb-4">
           <!-- Meron -->
           <div class="bet-card red tilt text-center">
             <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
