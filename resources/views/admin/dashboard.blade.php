@@ -1,4 +1,30 @@
 {{-- resources/views/dashboard.blade.php --}}
+
+@push('style')
+<style>
+  /* 1) Set the page background */
+  html, body{
+    background: url('{{ asset('images/table.png') }}') center/cover no-repeat fixed;
+  }
+
+  /* 2) Hide ONLY the first fixed gradient layer from the layout on this page */
+  body > .fixed.inset-0:first-of-type{
+    background: transparent !important;
+  }
+
+  /* 3) (Optional) slightly soften the black overlay so the image shows more */
+  body > .fixed.inset-0:nth-of-type(2){
+    background-color: rgba(0,0,0,.75) !important; /* tweak as you like */
+  }
+
+  /* Mobile: avoid jank */
+  @media (max-width: 768px){
+    html, body{ background-attachment: scroll; }
+  }
+</style>
+@endpush
+
+
 <x-layouts.app :title="__('Dashboard')">
 
   <!-- ===== Main content ===== -->
