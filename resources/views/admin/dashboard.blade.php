@@ -1,37 +1,52 @@
 {{-- resources/views/dashboard.blade.php --}}
 
 @push('style')
-<style>
-  /* 1) Set the page background */
-  html, body{
-    background: url('{{ asset('images/table.png') }}') center/cover no-repeat fixed;
-  }
+  <style>
+    /* 1) Set the page background */
+    html,
+    body {
+      background: url('{{ asset('images/table.png') }}') center/cover no-repeat fixed;
+    }
 
-  /* 2) Hide ONLY the first fixed gradient layer from the layout on this page */
-  body > .fixed.inset-0:first-of-type{
-    background: transparent !important;
-  }
+    /* 2) Hide ONLY the first fixed gradient layer from the layout on this page */
+    body>.fixed.inset-0:first-of-type {
+      background: transparent !important;
+    }
 
-  /* 3) (Optional) slightly soften the black overlay so the image shows more */
-  body > .fixed.inset-0:nth-of-type(2){
-    background-color: rgba(0,0,0,.75) !important; /* tweak as you like */
-  }
+    /* 3) (Optional) slightly soften the black overlay so the image shows more */
+    body>.fixed.inset-0:nth-of-type(2) {
+      background-color: rgba(0, 0, 0, .75) !important;
+    }
 
-  /* Mobile: avoid jank */
-  @media (max-width: 768px){
-    html, body{ background-attachment: scroll; }
-  }
-</style>
+    /* Mobile: avoid jank */
+    @media (max-width: 768px) {
+
+      html,
+      body {
+        background-attachment: scroll;
+      }
+    }
+
+    /* hide scrollbars in the slider track */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 @endpush
 
 
 <x-layouts.app :title="__('Dashboard')">
 
   <!-- ===== Main content ===== -->
-  <main class="mt-0 lg:ml-5">
+  <main class="mt-0  lg:mx-80">
     <!-- Hero -->
     <section
-      class="relative overflow-hidden rounded-lg  p-3 lg:p-5 bg-cover bg-center bg-no-repeat dark:text-emerald-50 lg:py-20"
+      class="relative overflow-hidden rounded-lg p-3 lg:p-5 bg-cover bg-center bg-no-repeat dark:text-emerald-50 lg:py-20"
       style="background-image: url('{{ asset('images/snookerplayer.jpg') }}')">
       <div class="absolute inset-0 !dark:bg-black/60 !bg-gray-800/50"></div>
       <div class="relative z-10 grid items-center gap-8 md:grid-cols-2">
@@ -43,13 +58,13 @@
             Dive into the ultimate billiards betting experience — where every shot counts and every match could make you
             a winner.
           </p>
-          <div class="mt-5 flex flex-wrap gap-3 font-semibold text-black ">
+          <div class="mt-5 flex flex-wrap gap-3 font-semibold text-black">
             <a href="#"
-              class="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-4 py-2 text-[0.65rem]  hover:bg-emerald-500 transition-colors duration-200 sm:text-sm lg:text-lg md:px-6 md:py-3 md:text-lg">
+              class="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-4 py-2 text-[0.65rem] hover:bg-emerald-500 transition-colors duration-200 sm:text-sm lg:text-lg md:px-6 md:py-3 md:text-lg">
               <i class="fa-solid fa-star"></i> Join now
             </a>
             <a href="#"
-              class="inline-flex items-center gap-2 rounded-full bg-yellow-300 px-4 py-2 text-[0.65rem]  hover:bg-yellow-400 transition-colors duration-200 sm:text-sm lg:text-lg md:px-6 md:py-3 md:text-lg">
+              class="inline-flex items-center gap-2 rounded-full bg-yellow-300 px-4 py-2 text-[0.65rem] hover:bg-yellow-400 transition-colors duration-200 sm:text-sm lg:text-lg md:px-6 md:py-3 md:text-lg">
               <i class="fa-solid fa-sack-dollar"></i> Start Betting
             </a>
           </div>
@@ -57,12 +72,105 @@
       </div>
     </section>
 
-    <!-- Cards -->
-    <div>
-      <div class="flex justify-center items-center gap-4 scale-90 md:scale-100 my-12 md:my-40">
+    <!-- =========================================
+         CARDS
+         - Mobile: slider (md:hidden)
+         - Desktop: 3-up row (hidden md:flex)
+    ========================================== -->
+
+    <!-- Mobile Slider -->
+    <div x-data="{
+        i: 0, count: 3, autoplay: null,
+        next(){ this.i = (this.i + 1) % this.count; this.scrollToIndex(); },
+        scrollToIndex(){
+          const t = this.$refs.track;
+          if(!t) return;
+          t.scrollTo({ left: this.i * t.clientWidth, behavior: 'smooth' });
+        }
+      }" x-init="
+        // auto-advance
+        autoplay = setInterval(() => next(), 3000);
+        // pause on hover/touch
+        $el.addEventListener('mouseenter', () => clearInterval(autoplay));
+        $el.addEventListener('mouseleave', () => { autoplay = setInterval(() => next(), 3000); });
+        // keep slide position on resize
+        addEventListener('resize', () => scrollToIndex());
+      " class="md:hidden relative my-8 px-0">
+      <!-- track -->
+      <div x-ref="track" class="flex no-scrollbar snap-x snap-mandatory overflow-x-auto scroll-smooth w-full"
+        @scroll.passive="i = Math.round($event.target.scrollLeft / $event.target.clientWidth)"
+        style="-webkit-overflow-scrolling: touch;">
+        <!-- Slide 1 -->
+        <div class="w-full flex-shrink-0 snap-start px-3">
+          <div
+            class="relative rounded-xl bg-emerald-100 h-[12.5rem] bg-cover bg-center hover:scale-[1.01] transition duration-300 dark:bg-gray-800"
+            style="background-image: url('images/BilliardVisual.png')">
+            <div class="absolute inset-0 !bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
+              <div class="relative text-white p-3 pt-24">
+                <h1 class="font-semibold text-xl">Billiards</h1>
+                <p class="text-[0.65rem] py-2">Aim for precision and predict the winners in every cue match.</p>
+              </div>
+              <a href="{{ route('billiard') }}"
+                class="absolute left-3 bottom-3 bg-yellow-300 text-[0.75rem] rounded-full px-3 py-1 font-semibold hover:bg-yellow-400 text-black">
+                Bet Now
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="w-full flex-shrink-0 snap-start px-3">
+          <div
+            class="relative rounded-xl bg-emerald-100 h-[12.5rem] bg-cover bg-center hover:scale-[1.01] transition duration-300 dark:bg-gray-800"
+            style="background-image: url('images/MotorVisual.png')">
+            <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
+              <div class="relative text-white p-3 pt-24">
+                <h1 class="font-semibold text-xl whitespace-nowrap">Motor Racing</h1>
+                <p class="text-[0.65rem] py-2">Bet on the fastest machines and top drivers from leagues around the
+                  world.</p>
+              </div>
+              <a href="{{ route('drag.race') }}"
+                class="absolute left-3 bottom-3 bg-yellow-300 text-[0.75rem] rounded-full px-3 py-1 font-semibold hover:bg-yellow-400 text-black">
+                Bet Now
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="w-full flex-shrink-0 snap-start px-3">
+          <div
+            class="relative rounded-xl bg-emerald-100 h-[12.5rem] bg-cover bg-center hover:scale-[1.01] transition duration-300 dark:bg-gray-800"
+            style="background-image: url('images/HorseVisual.png')">
+            <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
+              <div class="relative text-white p-3 pt-24">
+                <h1 class="font-semibold text-xl whitespace-nowrap">Horse Racing</h1>
+                <p class="text-[0.65rem] py-2">Experience the thrill of the tracks with live odds and instant results.
+                </p>
+              </div>
+              <a href="{{ route('horse') }}"
+                class="absolute left-3 bottom-3 bg-yellow-300 text-[0.75rem] rounded-full px-3 py-1 font-semibold hover:bg-yellow-400 text-black">
+                Bet Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- dots -->
+      <div class="absolute left-1/2 -translate-x-1/2 bottom-2 flex gap-1.5">
+        <template x-for="idx in count" :key="idx">
+          <button @click="i = idx-1; scrollToIndex()" class="h-1.5 w-5 rounded-full transition"
+            :class="i === (idx-1) ? 'bg-white/90' : 'bg-white/40'">
+          </button>
+        </template>
+      </div>
+    </div>
+
+    <!-- Desktop / Tablet (unchanged look) -->
+    <div class="px-3 md:px-0">
+      <div class="hidden md:flex justify-center items-center gap-4 scale-90 md:scale-100 my-12 md:my-40">
         <!-- Card 1 -->
         <div
-          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem]  hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800"
+          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)] dark:bg-gray-800"
           style="background-image: url('images/BilliardVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 2xl:mt-[18.75rem]">
@@ -71,14 +179,16 @@
                 match.</p>
             </div>
             <a href="{{ route('billiard') }}"
-              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet
-              Now</a>
+              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">
+              Bet Now
+            </a>
           </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem]  hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.8)]
- dark:bg-gray-800" style="background-image: url('images/MotorVisual.png')">
+        <div
+          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.8)] dark:bg-gray-800"
+          style="background-image: url('images/MotorVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
               <h1 class="whitespace-nowrap shrink-0 font-semibold md:text-5xl">Motor Racing</h1>
@@ -86,14 +196,16 @@
                 around the world.</p>
             </div>
             <a href="{{ route('drag.race') }}"
-              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-6 translate-x-[4.25rem] lg:-translate-y-2 md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet
-              Now</a>
+              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-6 translate-x-[4.25rem] lg:-translate-y-2 md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">
+              Bet Now
+            </a>
           </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem]  hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(234,179,8,0.8)]
- dark:bg-gray-800" style="background-image: url('images/HorseVisual.png')">
+        <div
+          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(234,179,8,0.8)] dark:bg-gray-800"
+          style="background-image: url('images/HorseVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
               <h1 class="whitespace-nowrap shrink-0 font-semibold md:text-5xl">Horse Racing</h1>
@@ -101,8 +213,9 @@
                 instant results.</p>
             </div>
             <a href="{{ route('horse') }}"
-              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">Bet
-              Now</a>
+              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">
+              Bet Now
+            </a>
           </div>
         </div>
       </div>
@@ -182,78 +295,75 @@
       </div>
     </section>
 
-
-
-    <div class="mx-auto lg:my-24">
-      <h1 class="font-semibold text-emerald-100 my-2 ml-4 lg:text-4xl  lg:mb-6">
+    {{-- Sports News + Footer --}}
+    <div class="flex flex-col mx-auto lg:my-24 px-3">
+      <h1 class="font-semibold text-emerald-100 my-2 lg:text-4xl lg:mb-6 text-center lg:text-left">
         Sports News
       </h1>
-      <div class="flex space-x-3 justify-center lg:justify-center">
-        <!-- News Card -->
-        <div
-          class="flex-col bg-emerald-100 rounded-xl w-[7.25rem] overflow-hidden h-[7.90rem] text-xs lg:w-1/3 lg:h-[22.5rem] dark:bg-gray-800">
-          <img src="images/news1.jpg" class="w-full aspect-[16/9] object-cover block" alt="" />
 
+      <div class="flex flex-col items-center gap-3 lg:flex-row lg:gap-0 lg:space-x-3 lg:justify-center">
+        <!-- Card 1 -->
+        <div class="flex-col bg-emerald-100 rounded-xl w-11/12 sm:w-10/12 h-[16rem] overflow-hidden text-xs
+                lg:w-1/3 lg:h-[22.5rem] dark:bg-gray-800">
+          <img src="images/news1.jpg" class="w-full aspect-[16/9] object-cover block" alt="" />
           <div class="p-2">
-            <h1 class="font-semibold text-[0.5625rem] px-1 text-emerald-950 md:text-xl dark:text-emerald-50">
+            <h1 class="font-semibold text-[0.8125rem] px-1 text-emerald-950 md:text-xl dark:text-emerald-50">
               What is the best way to play Billiards?
             </h1>
-            <p class="line-clamp-3 text-[0.4375rem] mt-1 px-1 text-emerald-900 md:text-sm dark:text-gray-300">
+            <p class="line-clamp-3 text-[0.6875rem] mt-1 px-1 text-emerald-900 md:text-sm dark:text-gray-300">
               The best way to play Super Ace is to start with small bets...
             </p>
             <a href="#"
-              class="block text-center text-[0.5625rem] text-emerald-700 lg:text-sm md:my-2 dark:text-emerald-300 hover:underline">
+              class="block text-center text-[0.75rem] text-emerald-700 lg:text-sm md:my-2 dark:text-emerald-300 hover:underline">
               Read More
             </a>
           </div>
         </div>
 
-        <div
-          class="flex-col bg-emerald-100 rounded-xl w-[7.25rem] overflow-hidden h-[7.90rem] text-xs lg:w-1/3 lg:h-[22.5rem] dark:bg-gray-800">
+        <!-- Card 2 -->
+        <div class="flex-col bg-emerald-100 rounded-xl w-11/12 sm:w-10/12 h-[16rem] overflow-hidden text-xs
+                lg:w-1/3 lg:h-[22.5rem] dark:bg-gray-800">
           <img src="images/horsenews.jpg" class="w-full aspect-[16/9] object-cover block" alt="" />
           <div class="p-2">
-            <h1 class="font-semibold text-[0.5625rem] px-1 text-emerald-950 md:text-xl dark:text-emerald-50">
+            <h1 class="font-semibold text-[0.8125rem] px-1 text-emerald-950 md:text-xl dark:text-emerald-50">
               What is the best way to play Billiards?
             </h1>
-            <p class="line-clamp-3 text-[0.4375rem] mt-1 px-1 text-emerald-900 md:text-sm dark:text-gray-300">
+            <p class="line-clamp-3 text-[0.6875rem] mt-1 px-1 text-emerald-900 md:text-sm dark:text-gray-300">
               The best way to play Super Ace is to start with small bets...
             </p>
             <a href="#"
-              class="block text-center text-[0.5625rem] text-emerald-700 lg:text-sm md:my-2 dark:text-emerald-300 hover:underline">
+              class="block text-center text-[0.75rem] text-emerald-700 lg:text-sm md:my-2 dark:text-emerald-300 hover:underline">
               Read More
             </a>
           </div>
         </div>
 
-        <div
-          class="flex-col bg-emerald-100 rounded-xl w-[7.25rem] overflow-hidden h-[7.90rem] text-xs lg:w-1/3 lg:h-[22.5rem] dark:bg-gray-800">
+        <!-- Card 3 -->
+        <div class="flex-col bg-emerald-100 rounded-xl w-11/12 sm:w-10/12 h-[16rem] overflow-hidden text-xs
+                lg:w-1/3 lg:h-[22.5rem] dark:bg-gray-800">
           <img src="images/motornews.jpg" class="w-full aspect-[16/9] object-cover block" alt="" />
           <div class="p-2">
-            <h1 class="font-semibold text-[0.5625rem] px-1 text-emerald-950 md:text-xl dark:text-emerald-50">
+            <h1 class="font-semibold text-[0.8125rem] px-1 text-emerald-950 md:text-xl dark:text-emerald-50">
               What is the best way to play Billiards?
             </h1>
-            <p class="line-clamp-3 text-[0.4375rem] mt-1 px-1 text-emerald-900 md:text-sm dark:text-gray-300">
+            <p class="line-clamp-3 text-[0.6875rem] mt-1 px-1 text-emerald-900 md:text-sm dark:text-gray-300">
               The best way to play Super Ace is to start with small bets...
             </p>
             <a href="#"
-              class="block text-center text-[0.5625rem] text-emerald-700 lg:text-sm md:my-2 dark:text-emerald-300 hover:underline">
+              class="block text-center text-[0.75rem] text-emerald-700 lg:text-sm md:my-2 dark:text-emerald-300 hover:underline">
               Read More
             </a>
           </div>
         </div>
       </div>
     </div>
-    <!--Footer-->
+
+
     <footer
       class="flex bg-white/80 text-slate-950 dark:bg-slate-900/80 dark:text-slate-50 my-4 p-4 gap-3 rounded-lg lg:h-70 lg:gap-5">
       <div class="flex flex-col gap-1 w-1/2 lg:gap-2">
-        <!--Left-->
-        <h1 class="font-bold text-sm lg:text-xl">
-          We make betting easy, try all our games and bet now!
-        </h1>
-        <h1 class="text-xs lg:text-sm">
-          For our latest news, sign up to our newsletter.
-        </h1>
+        <h1 class="font-bold text-xs lg:text-xl">We make betting easy, try all our games and bet now!</h1>
+        <h1 class="text-xs lg:text-sm">For our latest news, sign up to our newsletter.</h1>
         <input type="text" class="p-1 border-b border-slate-900 dark:border-slate-200" placeholder="Email Address" />
         <div class="flex gap-2">
           <a href=""><i class="fa-brands fa-facebook hover:text-emerald"></i></a>
@@ -263,8 +373,7 @@
         </div>
         <h1 class="text-[10px]">BK2025. All rights reserved, 2025</h1>
       </div>
-      <div class="flex flex-col w-1/3 text-[12px] gap-2 lg:gap-4 lg:mt-4 font-semibold">
-        <!--Right-->
+      <div class="flex flex-col w-1/3 text-[8px] gap-2 lg:gap-4 lg:mt-4 font-semibold  lg:text-[12px]">
         <a href="" class="hover:underline underline-offset-2">Get in touch</a>
         <a href="" class="hover:underline underline-offset-2">Join our team</a>
         <a href="" class="hover:underline underline-offset-2">About</a>
@@ -272,8 +381,7 @@
         <a href="" class="hover:underline underline-offset-2">Terms of Use</a>
         <a href="" class="hover:underline underline-offset-2">Privacy</a>
       </div>
-      <div class="flex flex-col w-1/3 text-[12px] gap-2 lg:gap-4 lg:mt-4 font-semibold">
-        <!--Right-->
+      <div class="flex flex-col w-1/3 text-[8px] gap-2 lg:gap-4 lg:mt-4 font-semibold  lg:text-[12px]">
         <a href="" class="hover:underline underline-offset-2">Billiard Club</a>
         <a href="" class="hover:underline underline-offset-2">Promotions</a>
         <a href="" class="hover:underline underline-offset-2">Betting</a>
