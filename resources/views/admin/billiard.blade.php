@@ -3,6 +3,119 @@
   <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
+  <!-- ====== STYLE: isolate logrohan & road widths; keep video border steady ====== -->
+  <style>
+    :root{
+      --logro-bubble: 26px;   /* desktop logro cell size */
+      --logro-step: 3px;      /* faux 3D z-step */
+      --bead-bubble: 18px;    /* mini road dot size */
+      --col-gap: 6px;
+    }
+    @media (max-width: 768px){
+      :root{ --logro-bubble: 22px; --bead-bubble: 16px; }
+    }
+
+    /* Prevent siblings (like the video) from expanding when strips grow */
+    .main-panel{ min-width:0; }
+
+    /* ===== LOGRO ===== */
+    .logro-zone{ min-width:0; }
+    .logro-rail{
+      position:relative;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: stable both-edges;
+      padding-bottom: 2px;
+    }
+    .logro-rail::-webkit-scrollbar{ height:8px }
+    .logro-rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:8px }
+
+    .logro-strip-3d{
+      display:inline-grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      column-gap: var(--col-gap);
+      contain: layout paint;
+    }
+    .logro-col{
+      display:grid;
+      grid-auto-rows: var(--logro-bubble);
+      row-gap: 6px;
+      align-content:start;
+    }
+    .ring-gap{ width: var(--logro-bubble); height: var(--logro-bubble); opacity:.08; border:1px dashed rgba(255,255,255,.18); border-radius:999px; }
+
+    .ring-bubble{
+      width: var(--logro-bubble);
+      height: var(--logro-bubble);
+      border-radius:999px;
+      border:3px solid currentColor;
+      box-shadow:
+        0 2px 0 rgba(0,0,0,.35) inset,
+        0 0 0 2px rgba(255,255,255,.06) inset,
+        0 6px 16px rgba(0,0,0,.45);
+      transform-style: preserve-3d;
+    }
+    .ring-red{ color:#ef4444; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
+    .ring-blue{ color:#3b82f6; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
+
+    /* ===== MINI ROAD (BEAD) — now behaves like logrohan (horizontal scroll) ===== */
+    .bead-rail{
+      position:relative;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: stable both-edges;
+      padding-bottom: 2px;
+      min-width:0;
+    }
+    .bead-rail::-webkit-scrollbar{ height:8px }
+    .bead-rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:8px }
+
+    .bead-strip{
+      display:inline-grid;
+      grid-auto-flow:column;
+      grid-auto-columns:max-content;
+      column-gap:6px;
+      contain: layout paint;
+    }
+    .bead-col{
+      display:grid;
+      grid-auto-rows: var(--bead-bubble);
+      row-gap:4px;
+      align-content:start;
+    }
+    .bead,
+    .bead-solid{
+      width: var(--bead-bubble);
+      height: var(--bead-bubble);
+      border-radius: 999px;
+      border:2px solid rgba(255,255,255,.22);
+      display:grid; place-items:center;
+      font-size:10px; line-height:1; font-weight:600;
+      color:#0f172a;
+    }
+    .bead-solid.red{ background:#ef4444; border-color:#ef4444; color:white; }
+    .bead-solid.blue{ background:#3b82f6; border-color:#3b82f6; color:white; }
+
+    /* 3D badge/chips (existing hooks used by JS) */
+    .odds-ribbon{ background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.15); border-radius:8px; padding:.25rem .5rem; display:inline-block; }
+    .bet-card{ background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:.75rem; }
+    .bet-card.red{ box-shadow:0 10px 24px rgba(239,68,68,.15) }
+    .bet-card.blue{ box-shadow:0 10px 24px rgba(59,130,246,.15) }
+    .bet-btn{ border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+    .bet-btn.red:hover{ background:rgba(239,68,68,.25) }
+    .bet-btn.blue:hover{ background:rgba(59,130,246,.25) }
+
+    /* Name chip & amounts */
+    .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+    .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
+
+    /* Keep the video’s decorative borders unaffected by layout changes */
+    .video-shell{ contain: layout paint; }
+  </style>
+
   <!-- ========================================================
        MAIN: [video+logro | bets]
        NOTE: Left is wider than Right on md+ screens.
@@ -21,9 +134,9 @@
         </div>
 
         <!-- Video -->
-        <div class="mb-3 relative w-full md:max-w-[85%] mx-auto">
+        <div class="mb-3 relative w-full md:max-w-[85%] mx-auto video-shell">
           <div class="relative aspect-video">
-            <div class="absolute inset-0 rounded-xl overflow-hidden z-10">
+            <div class="absolute inset-0 rounded-xl overflow-hidden z-10 pointer-events-none select-none">
               <div class="absolute inset-0 rounded-xl bg-gradient-to-tr from-red-500 via-yellow-500 to-blue-500 animate-[pulse_4s_infinite] mix-blend-overlay opacity-70"></div>
               <div class="absolute inset-0 rounded-xl border-4 border-transparent bg-gradient-to-tr from-red-500/60 via-yellow-500/60 to-blue-500/60 mix-blend-overlay opacity-50 blur-sm"></div>
               <div class="absolute inset-0 border-[6px] border-transparent rounded-xl box-content bg-gradient-to-tr from-red-500/20 via-yellow-500/20 to-blue-500/20 mix-blend-overlay animate-[glow-border_2s_ease-in-out_infinite_alternate]"></div>
@@ -59,6 +172,7 @@
             @endif
           @endauth
 
+          <!-- The only element that grows; it scrolls inside, not outside -->
           <div id="logro-rail" class="logro-rail">
             <div id="logro-strip" class="logro-strip-3d"></div>
           </div>
@@ -153,7 +267,7 @@
                   <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
                 </div>
               </div>
-              <div class="bead-rail">
+              <div id="bead-rail" class="bead-rail">
                 <div id="bead-strip" class="bead-strip"></div>
               </div>
             </div>
@@ -396,8 +510,11 @@
         }
         strip.appendChild(colDiv);
       });
-      strip.scrollLeft = strip.scrollWidth;
+      // keep scrolled to the latest WITHOUT pushing siblings
+      const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth;
     }
+
+    // === ROAD (BEAD) now horizontally scrolls like logro ===
     function renderRoadStrictL(seq, stripId, maxRows = BEAD_MAX_ROWS){
       const cols = computeColumnsSequential(seq, maxRows);
       const strip = document.getElementById(stripId); if(!strip) return;
@@ -414,8 +531,9 @@
         }
         strip.appendChild(colDiv);
       });
-      strip.scrollLeft = strip.scrollWidth;
+      const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth; // <— scroll like logro
     }
+
     function renderAllRoads(seq){
       renderLogroContinuous(seq, 'logro-strip', BIGROAD_MAX_ROWS);
       renderLogroContinuous(seq, 'logro-strip-mob', BIGROAD_MAX_ROWS);
@@ -624,7 +742,7 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       if(wm) wm.addEventListener('click', ()=> pushResult('MERON'));
       if(ww) ww.addEventListener('click',  ()=> pushResult('WALA'));
       if(uu) uu.addEventListener('click',  undoResult);
-      if(cc) cc.addEventListener('click', clearResults);
+      if(cc) cc.addEventListener('click',  clearResults);
 
       results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
       renderAllRoads(results); renderBalance();
