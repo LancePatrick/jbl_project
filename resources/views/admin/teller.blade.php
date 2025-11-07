@@ -58,6 +58,19 @@
     .bead-rail{ background:#0f172a !important; border:1px dashed rgba(255,255,255,.12) !important; border-radius:.5rem; padding:.25rem; }
     main > .grid > section:nth-child(2) .h-3{ border:1px solid rgba(255,255,255,.16) !important; }
 
+    /* === Make Road same size as Logrohan === */
+    :root{ --rail-h: 220px; } /* adjust if needed */
+    .logro-zone #logro-rail-center,
+    .logro-zone #logro-rail-mob,
+    .bead-rail{
+      height: var(--rail-h) !important;
+    }
+    #logro-strip-center,
+    #logro-strip-mob,
+    #bead-strip-center{
+      height: 100% !important;
+    }
+
     /* Confirm modal */
     #confirm-overlay{ position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 60; }
     #confirm-modal{ width: 100%; max-width: 420px; background: #0f172a; color:#e5e7eb; border:1px solid rgba(255,255,255,.14); border-radius: .75rem; box-shadow: 0 20px 80px rgba(0,0,0,.6); overflow: hidden; }
@@ -71,10 +84,10 @@
   </style>
 
   <main class=" mx-auto lg:p-4">
-    <div class="grid gap-6 grid-cols-1 lg:grid-cols-3">
+    <div class="grid gap-6 grid-cols-1 lg:grid-cols-12">
 
-      <!-- LEFT: VIDEO + (moved) SCAN CARD -->
-      <section class="relative z-10 p-4 rounded-lg shadow-lg bg-white/5 border border-white/10">
+      <!-- LEFT: VIDEO + SCAN CARD -->
+      <section class="lg:col-span-2 relative z-10 p-4 rounded-lg shadow-lg bg-white/5 border border-white/10">
         <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
           <div id="event-date" class="text-left"></div>
@@ -94,7 +107,7 @@
           </button>
         </div>
 
-        <!-- Video (now on top of Scan/Enter) -->
+        <!-- Video -->
         <div id="video-wrap" class="mb-4 relative">
           <div class="relative aspect-video">
             <div class="absolute inset-0 rounded-xl overflow-hidden z-10">
@@ -112,7 +125,7 @@
           </div>
         </div>
 
-        <!-- Scan / Enter Card (moved below video) -->
+        <!-- Scan / Enter Card -->
         <div class="mb-0 rounded-lg border border-white/10 bg-black/30 p-3">
           <div class="text-[12px] uppercase tracking-widest text-white/70 mb-2">Scan / Enter Card</div>
           <form id="scan-form" class="space-y-2">
@@ -135,13 +148,11 @@
           </div>
           <div id="scan-status" class="mt-2 text-[12px] text-emerald-300"></div>
         </div>
-
-        <!-- (Removed the big Logrohan section here) -->
       </section>
       <!-- /LEFT -->
 
-      <!-- CENTER: BET SECTION + (kept) Logrohan & Road side-by-side -->
-      <section class="p-4 rounded-lg shadow-lg bg-white/5 border border-white/10">
+      <!-- CENTER: BET + Logrohan & Road -->
+      <section class="lg:col-span-8 p-4 rounded-lg shadow-lg bg-white/5 border border-white/10">
         <!-- Bet Percentage Bar -->
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-3">
           <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Bet Percentage</div>
@@ -190,7 +201,7 @@
           </div>
         </div>
 
-        <!-- Bet Amount + Chips -->
+        <!-- Bet Amount + Chips (RESTORED) -->
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-3">
         @auth
           @if( auth()->user()->role_id == 2)
@@ -242,10 +253,10 @@
         @endauth
         </div>
 
-        <!-- ✅ KEEP: Logrohan + Road (side-by-side, compact) -->
+        <!-- Logrohan + Road (same size) -->
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="grid md:grid-cols-2 gap-2">
-            <!-- Logrohan (center copy) -->
+            <!-- Logrohan -->
             <div class="logro-zone rounded-lg p-2">
               <div class="flex items-center justify-between mb-1">
                 <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
@@ -259,7 +270,7 @@
               </div>
             </div>
 
-            <!-- Road (center copy) -->
+            <!-- Road -->
             <div class="rounded-lg p-2 border border-white/10 bg-[#0b1223]">
               <div class="flex items-center justify-between mb-1">
                 <div class="text-[11px] uppercase tracking-widest text-white/70">Road</div>
@@ -275,12 +286,11 @@
           </div>
         </div>
 
-        <!-- (Removed the old Mini Road block) -->
       </section>
       <!-- /CENTER -->
 
       <!-- RIGHT: BET HISTORY -->
-      <aside id="history-wrap" class="p-0">
+      <aside id="history-wrap" class="lg:col-span-2 p-0">
         <div id="history-head" class="px-4 py-3">
           <div class="flex items-center justify-between">
             <h2 class="text-[17px] font-semibold text-white">Bet History</h2>
@@ -297,7 +307,7 @@
         </div>
       </aside>
 
-      <!-- MOBILE STACK (kept) -->
+      <!-- MOBILE STACK -->
       <div class="md:hidden space-y-3 ">
         <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
           <div class="flex items-center justify-between mb-1">
@@ -380,12 +390,12 @@
 
     /* ===== State & helpers ===== */
     const players=[
-      "Hagdang Bato","King Focus","LeBron James","Kid Molave",
-      "JBL","Autumn Blaze","Desert Sage","Hidden Hollow",
-      "Pony Punster","Santino","Panday","Hooves of Fury",
-      "Golden Hour","Sun Chaser"
+      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
+      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
+      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
+      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
     ];
-    const BIGROAD_MAX_ROWS=8, BEAD_MAX_ROWS=6;
+    const BIGROAD_MAX_ROWS=8, BEAD_MAX_ROWS=8; /* Road columns now 8 rows, same as Logrohan */
 
     let results=[];
     let meronAmount, walaAmount, meronOdds, walaOdds;
@@ -502,7 +512,7 @@
       strip.scrollLeft=strip.scrollWidth;
     }
     function renderAllRoads(seq){
-      // Removed big left logro & mini road; keep center + mobile
+      // Center + Mobile
       renderLogroContinuous(seq,'logro-strip-center',BIGROAD_MAX_ROWS);
       renderRoadStrictL(seq,'bead-strip-center',BEAD_MAX_ROWS);
       renderLogroContinuous(seq,'logro-strip-mob',BIGROAD_MAX_ROWS);
@@ -743,7 +753,7 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       updatePercentBar();
       document.querySelectorAll('.tilt').forEach(attachTilt);
 
-      // Admin controls existed in the removed left-logro; keep keyboard helpers if needed
+      // Admin controls (if present in DOM)
       const wm=document.getElementById('btn-win-meron');
       const ww=document.getElementById('btn-win-wala');
       const uu=document.getElementById('btn-undo');
