@@ -1,5 +1,5 @@
-{{-- resources/views/billiard.blade.php --}}
-<x-layouts.app :title="__('Billiard')">
+{{-- resources/views/teller.blade.php --}}
+<x-layouts.app :title="__('Teller')">
   <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
@@ -664,7 +664,11 @@ Possible payout: ${totalWinnings.toFixed(2)}.
 New Balance: ${currentBalance.toLocaleString()}.`);
     }
 
-    function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
+    function pushResult(side)
+    { 
+      results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); 
+      console.log(results);
+    }
     function undoResult(){ results.pop(); renderAllRoads(results); }
     function clearResults(){ results=[]; renderAllRoads(results); }
 
@@ -772,6 +776,7 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       if(cc) cc.addEventListener('click',clearResults);
 
       // results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
+
       renderAllRoads(results);
       renderBalance();
 
