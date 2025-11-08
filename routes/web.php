@@ -35,6 +35,10 @@ Route::view('drag-race', 'drag-race')
     ->middleware(['auth', 'verified'])
     ->name('drag.race');
 
+Route::view('teller-drag', 'teller-drag')
+    ->middleware(['auth', 'verified'])
+    ->name('teller-drag');
+
 Route::view('teller', 'admin.teller')
     ->middleware(['auth', 'verified'])
     ->name('teller');
