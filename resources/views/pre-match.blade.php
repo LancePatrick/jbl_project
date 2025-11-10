@@ -416,9 +416,9 @@
                 </div>
 
                 <!-- TABLE CARD -->
-                <div class="flex mx-4 xl:-ml-3 xl:py-2 xl:mb-20">
+                <div class="flex mx-4 xl:-ml-3 xl:-mt-7 xl:py-2 xl:mb-20">
                     <div
-                        class="w-full max-w-[1200px] rounded-lg overflow-hidden border border-slate-900/40 lg:scale-90
+                        class="w-full max-w-[1200px] rounded-lg overflow-hidden border border-slate-900/40 lg:scale-85
            bg-[linear-gradient(180deg,rgba(2,6,23,.75),rgba(15,23,42,.7))] backdrop-blur-md
            shadow-[inset_0_1px_0_rgba(255,255,255,.05),inset_0_-1px_0_rgba(0,0,0,.35),0_8px_28px_rgba(0,0,0,.45),0_0_0_1px_rgba(51,65,85,.8)]">
 
