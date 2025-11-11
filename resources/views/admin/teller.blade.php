@@ -403,7 +403,7 @@
       "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
       "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
     ];
-    const BIGROAD_MAX_ROWS=8, BEAD_MAX_ROWS=8; /* Road columns now 8 rows, same as Logrohan */
+    const BIGROAD_MAX_ROWS=6, BEAD_MAX_ROWS=6; /* Road columns now 8 rows, same as Logrohan */
 
     let results=[];
     let meronAmount, walaAmount, meronOdds, walaOdds;
