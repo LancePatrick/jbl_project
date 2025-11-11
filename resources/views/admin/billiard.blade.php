@@ -377,8 +377,8 @@
       "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
       "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
     ];
-    const BIGROAD_MAX_ROWS = 8;
-    const BEAD_MAX_ROWS    = 8; // <-- match rows to Logrohan for proportional height
+    const BIGROAD_MAX_ROWS = 6;
+    const BEAD_MAX_ROWS    = 6; // <-- match rows to Logrohan for proportional height
 
     // B) STATE
     let results = [];

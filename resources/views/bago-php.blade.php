@@ -146,7 +146,7 @@
   <style>
     :root{
       --logro-bubble: 26px; --logro-step: 3px; --bead-bubble: 26px; --col-gap: 6px; --row-gap: 6px;
-      --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
+      --rail-h: calc(var(--logro-bubble) * 9 + (var(--row-gap) * 7));
     }
     @media (max-width: 768px){
       :root{ --logro-bubble: 22px; --bead-bubble: 22px; --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7)); }
