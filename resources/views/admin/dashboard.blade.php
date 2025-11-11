@@ -43,7 +43,7 @@
 <x-layouts.app :title="__('Dashboard')">
 
   <!-- ===== Main content ===== -->
-  <main class="mt-0  lg:mx-80">
+  <main class="mt-0 lg:mx-20">
     <!-- Hero -->
     <section
       class="relative overflow-hidden rounded-lg p-3 lg:p-5 bg-cover bg-center bg-no-repeat dark:text-emerald-50 lg:py-20"
@@ -111,7 +111,7 @@
                 <p class="text-[0.65rem] py-2">Aim for precision and predict the winners in every cue match.</p>
               </div>
               <a href="{{ route('billiard') }}"
-                class="absolute left-3 bottom-3 bg-yellow-300 text-[0.75rem] rounded-full px-3 py-1 font-semibold hover:bg-yellow-400 text-black">
+                class="absolute left-3 bottom-3 bg-yellow-300 text-[0.75rem] xl:translate-x-20 rounded-full px-3 py-1 font-semibold hover:bg-yellow-400 text-black">
                 Bet Now
               </a>
             </div>
@@ -179,7 +179,7 @@
                 match.</p>
             </div>
             <a href="{{ route('billiard') }}"
-              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">
+              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[18rem] md:px-4 hover:bg-yellow-400 text-black">
               Bet Now
             </a>
           </div>
@@ -187,7 +187,8 @@
 
         <!-- Card 2 -->
         <div
-          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.8)] dark:bg-gray-800"
+          class="relative rounded-xl bg-emerald-100 w-1/3 h-[12.5rem] bg-cover bg-center md:h-[30rem] hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(59,130,246,0.8)]
+ dark:bg-gray-800"
           style="background-image: url('images/MotorVisual.png')">
           <div class="absolute inset-0 !bg-black/40 hover:!bg-black/70 duration-300 transition-colors rounded-xl">
             <div class="relative text-white mt-24 p-2 md:mt-[18.75rem]">
@@ -196,7 +197,7 @@
                 around the world.</p>
             </div>
             <a href="{{ route('drag.race') }}"
-              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-6 translate-x-[4.25rem] lg:-translate-y-2 md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">
+              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-6 translate-x-[4.25rem] lg:-translate-y-2 md:translate-x-[18rem] md:px-4 hover:bg-yellow-400 text-black">
               Bet Now
             </a>
           </div>
@@ -213,7 +214,7 @@
                 instant results.</p>
             </div>
             <a href="{{ route('horse') }}"
-              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[16.25rem] md:px-4 hover:bg-yellow-400 text-black">
+              class="absolute bg-yellow-300 text-[0.5rem] md:text-lg rounded-full p-1 font-semibold -translate-y-3 translate-x-[4.25rem] md:translate-x-[18rem] md:px-4 hover:bg-yellow-400 text-black">
               Bet Now
             </a>
           </div>

@@ -1,5 +1,5 @@
-{{-- resources/views/billiard.blade.php --}}
-<x-layouts.app :title="__('Billiard')">
+{{-- resources/views/teller.blade.php --}}
+<x-layouts.app :title="__('Teller')">
   <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
@@ -145,6 +145,14 @@
             <input id="cust-user"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Username"/>
             <input id="cust-email" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Email address"/>
             <input id="cust-phone" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Contact number"/>
+              @auth
+                @if( auth()->user()->role_id == 1)
+                  <button id="btn-win-meron" class="bet-input bg-black/30 p-2">Red Score</button>
+                  <button id="btn-win-wala" class="bet-input bg-black/30 p-2">Blue Score</button>
+                  <button id="btn-undo" class="bet-input bg-black/30 p-2">Undo</button>
+                  <button id="btn-clear" class="bet-input bg-black/30 p-2">Clear</button>
+                @endif
+              @endauth
           </div>
           <div id="scan-status" class="mt-2 text-[12px] text-emerald-300"></div>
         </div>
@@ -266,7 +274,7 @@
                 </div>
               </div>
               <div id="logro-rail-center" class="logro-rail">
-                <div id="logro-strip-center" class="logro-strip-3d"></div>
+                <div id="logro-strip-center" class="logro-strip-3d !overflow-x-auto !overflow-y-hidden !overflow-visible !max-w-[220px] lg:!max-w-full"></div>
               </div>
             </div>
 
@@ -279,8 +287,8 @@
                   <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
                 </div>
               </div>
-              <div class="bead-rail">
-                <div id="bead-strip-center" class="bead-strip"></div>
+              <div class="bead-rail !overflow-x-auto ">
+                <div id="bead-strip-center" class="bead-strip !overflow-x-auto !overflow-y-hidden !overflow-visible !max-w-[220px] lg:!max-w-full"></div>
               </div>
             </div>
           </div>
@@ -656,7 +664,11 @@ Possible payout: ${totalWinnings.toFixed(2)}.
 New Balance: ${currentBalance.toLocaleString()}.`);
     }
 
-    function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
+    function pushResult(side)
+    { 
+      results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); 
+      console.log(results);
+    }
     function undoResult(){ results.pop(); renderAllRoads(results); }
     function clearResults(){ results=[]; renderAllRoads(results); }
 
@@ -763,7 +775,8 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       if(uu) uu.addEventListener('click',undoResult);
       if(cc) cc.addEventListener('click',clearResults);
 
-      results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
+      // results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
+
       renderAllRoads(results);
       renderBalance();
 
