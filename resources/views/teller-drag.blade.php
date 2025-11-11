@@ -99,7 +99,7 @@
               <div class="rounded-[18px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-4 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)] flex flex-col items-center text-center">
                 <div class="flex items-center gap-2">
                   <div class="grid size-9 shrink-0 place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black">R</div>
-                  <div id="nameRed" class="truncate text-[13px] opacity-90">Ko Pin-Yi</div>
+                  
                 </div>
                 <div id="amtRed" class="mt-1 text-[44px] leading-[1.05] font-black tracking-[.5px]">0</div>
                 <div class="mt-2 grid place-items-center rounded-[12px] border border-white/30 bg-black/20 px-3 py-1.5 text-[12px] font-black">
@@ -114,7 +114,7 @@
               <div class="rounded-[18px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-4 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)] flex flex-col items-center text-center">
                 <div class="flex items-center gap-2">
                   <div class="grid size-9 shrink-0 place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black">B</div>
-                  <div id="nameBlue" class="truncate text-[13px] opacity-90">Wu Jiaqing</div>
+                 
                 </div>
                 <div id="amtBlue" class="mt-1 text-[44px] leading-[1.05] font-black tracking-[.5px]">0</div>
                 <div class="mt-2 grid place-items-center rounded-[12px] border border-white/30 bg-black/20 px-3 py-1.5 text-[12px] font-black">
