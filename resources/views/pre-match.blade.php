@@ -431,7 +431,7 @@
                                 <!-- Column widths (apply only from md up) -->
                                 <colgroup class="hidden md:table-column-group">
                                     <col class="w-[22%]" />
-                                    <col class="w-[11%]" />
+                                    <col class="w-[14%]" />
                                     <col class="w-[23%]" />
                                     <col class="w-[12%]" />
                                     <col class="w-[12%]" />
