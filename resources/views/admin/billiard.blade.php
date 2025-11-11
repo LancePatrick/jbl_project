@@ -15,7 +15,6 @@
       :root{ --logro-bubble: 22px; --bead-bubble: 16px; }
     }
 
-    /* Prevent siblings (like the video) from expanding when strips grow */
     .main-panel{ min-width:0; }
 
     /* ===== LOGRO ===== */
@@ -60,7 +59,7 @@
     .ring-red{ color:#ef4444; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
     .ring-blue{ color:#3b82f6; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
 
-    /* ===== MINI ROAD (BEAD) — now behaves like logrohan (horizontal scroll) ===== */
+    /* ===== MINI ROAD (BEAD) ===== */
     .bead-rail{
       position:relative;
       overflow-x:auto;
@@ -108,32 +107,26 @@
     .bet-btn.red:hover{ background:rgba(239,68,68,.25) }
     .bet-btn.blue:hover{ background:rgba(59,130,246,.25) }
 
-    /* Name chip & amounts */
     .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
     .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
 
-    /* Keep the video’s decorative borders unaffected by layout changes */
     .video-shell{ contain: layout paint; }
   </style>
 
   <!-- ========================================================
        MAIN: [video+logro | bets]
-       NOTE: Left is wider than Right on md+ screens.
-       Mobile: one clean stack, walang dobleng UI.
   ========================================================= -->
   <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-4">
     <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
 
       <!-- LEFT: Video + Logrohan -->
       <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-2">
-        <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
           <div id="event-date" class="text-left"></div>
           <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">—</span></div>
           <div id="event-time" class="text-right"></div>
         </div>
 
-        <!-- Video -->
         <div class="mb-3 relative w-full md:max-w-[85%] mx-auto video-shell">
           <div class="relative aspect-video">
             <div class="absolute inset-0 rounded-xl overflow-hidden z-10 pointer-events-none select-none">
@@ -151,7 +144,7 @@
           </div>
         </div>
 
-        <!-- LOGROHAN (desktop only para walang duplicate) -->
+        <!-- LOGROHAN (desktop only) -->
         <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone md:max-w-[85%] mx-auto hidden md:block">
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
@@ -172,15 +165,13 @@
             @endif
           @endauth
 
-          <!-- The only element that grows; it scrolls inside, not outside -->
           <div id="logro-rail" class="logro-rail">
             <div id="logro-strip" class="logro-strip-3d"></div>
           </div>
         </div>
-        <!-- /LOGROHAN -->
       </div>
 
-      <!-- RIGHT: Bet cards + Bet Amount (desktop/tablet only) -->
+      <!-- RIGHT: Bet cards + Bet Amount -->
       <aside class="hidden md:block">
         <div class="sticky mt-4 space-y-3">
 
@@ -200,7 +191,6 @@
 
           <!-- Cards -->
           <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-0">
-            <!-- Meron -->
             <div class="bet-card red tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
               <div class="mt-2 text-sm font-semibold opacity-90" id="player1-name"></div>
@@ -215,7 +205,6 @@
                 <div id="meron-result" class="mt-2 text-xs text-yellow-300 result-glow"></div>
               </div>
             </div>
-            <!-- Wala -->
             <div class="bet-card blue tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">B</span></div>
               <div class="mt-2 text-sm font-semibold opacity-90" id="player2-name"></div>
@@ -242,7 +231,6 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <!-- DESKTOP INPUT -->
               <input type="number" id="bet-amount-desktop" class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]" placeholder="Enter amount" inputmode="numeric" />
               <div class="balance-pill text-yellow-300">
                 <span id="mid-balance" class="amount text-base">5,000</span>
@@ -250,15 +238,14 @@
             </div>
 
             <div class="grid grid-cols-2 gap-1 mb-2">
-              <button class="chip3d chip-emerald chip-outline text-sm bet-chip" data-val="100">♦100</button>
-              <button class="chip3d chip-blue chip-outline text-sm bet-chip" data-val="200">♦200</button>
-              <button class="chip3d chip-black chip-outline text-sm bet-chip" data-val="500">♦500</button>
-              <button class="chip3d chip-amber chip-outline text-sm bet-chip" data-val="1000">♦1000</button>
+              <button class="chip3d chip-emerald chip-outline text-sm bet-chip" data-val="100" type="button">♦100</button>
+              <button class="chip3d chip-blue chip-outline text-sm bet-chip" data-val="200" type="button">♦200</button>
+              <button class="chip3d chip-black chip-outline text-sm bet-chip" data-val="500" type="button">♦500</button>
+              <button class="chip3d chip-amber chip-outline text-sm bet-chip" data-val="1000" type="button">♦1000</button>
             </div>
             @endif
           @endauth
 
-            <!-- MINI ROAD -->
             <div>
               <div class="flex items-center justify-between mb-1">
                 <div class="text-[11px] uppercase tracking-widest text-white/70">Road</div>
@@ -271,15 +258,12 @@
                 <div id="bead-strip" class="bead-strip"></div>
               </div>
             </div>
-            <!-- /MINI ROAD -->
           </div>
         </div>
       </aside>
 
       <!-- ===================== MOBILE STACK ===================== -->
       <div class="md:hidden space-y-3">
-
-        <!-- Bet Percentage Bar (MOBILE) -->
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="flex items-center justify-between">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Bet %</div>
@@ -295,7 +279,6 @@
           </div>
         </div>
 
-        <!-- Mobile bet cards -->
         <div class="bet-area grid grid-cols-2 gap-2">
           <div class="bet-card red text-center">
             <div class="name-chip text-lg">R</div>
@@ -321,7 +304,6 @@
           </div>
         </div>
 
-        <!-- Mobile Bet Amount + Chips -->
         @auth
           @if( auth()->user()->role_id == 2)
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
@@ -336,16 +318,15 @@
               </div>
             </div>
             <div class="grid grid-cols-4 gap-1">
-              <button class="chip3d chip-emerald chip-outline text-xs bet-chip" data-val="100">♦100</button>
-              <button class="chip3d chip-blue chip-outline text-xs bet-chip" data-val="200">♦200</button>
-              <button class="chip3d chip-black chip-outline text-xs bet-chip" data-val="500">♦500</button>
-              <button class="chip3d chip-amber chip-outline text-xs bet-chip" data-val="1000">♦1000</button>
+              <button class="chip3d chip-emerald chip-outline text-xs bet-chip" data-val="100" type="button">♦100</button>
+              <button class="chip3d chip-blue chip-outline text-xs bet-chip" data-val="200" type="button">♦200</button>
+              <button class="chip3d chip-black chip-outline text-xs bet-chip" data-val="500" type="button">♦500</button>
+              <button class="chip3d chip-amber chip-outline text-xs bet-chip" data-val="1000" type="button">♦1000</button>
             </div>
           </div>
           @endif
-        @endauth>
+        @endauth
 
-        <!-- Mobile logrohan -->
         <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
@@ -430,11 +411,30 @@
       el.addEventListener('mouseleave',()=>{ el.style.transform='rotateX(0) rotateY(0) translateY(0)'; });
     }
 
-    // Small helper: get visible bet input (mobile first)
+    // Pick the visible "Enter amount" input; also update both for consistency
     function getBetInput(){
       return document.querySelector('#bet-amount-mob') ||
              document.querySelector('#bet-amount-desktop') ||
-             document.querySelector('#bet-amount'); // fallback if any legacy id
+             document.querySelector('#bet-amount');
+    }
+    function setBetAmount(val){
+      const mob = document.getElementById('bet-amount-mob');
+      const desk = document.getElementById('bet-amount-desktop');
+      if(mob)  mob.value  = val;
+      if(desk) desk.value = val;
+
+      const active = getBetInput();
+      if(active){
+        active.focus();
+        // small flash feedback
+        active.style.transition = 'box-shadow 120ms ease';
+        const prev = active.style.boxShadow;
+        active.style.boxShadow = '0 0 0 3px rgba(250,204,21,.45)';
+        setTimeout(()=>{ active.style.boxShadow = prev; }, 160);
+        // fire input event in case listeners exist
+        active.dispatchEvent(new Event('input', { bubbles:true }));
+        active.dispatchEvent(new Event('change', { bubbles:true }));
+      }
     }
 
     // D) ROAD HELPERS
@@ -510,11 +510,9 @@
         }
         strip.appendChild(colDiv);
       });
-      // keep scrolled to the latest WITHOUT pushing siblings
       const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth;
     }
 
-    // === ROAD (BEAD) now horizontally scrolls like logro ===
     function renderRoadStrictL(seq, stripId, maxRows = BEAD_MAX_ROWS){
       const cols = computeColumnsSequential(seq, maxRows);
       const strip = document.getElementById(stripId); if(!strip) return;
@@ -531,7 +529,7 @@
         }
         strip.appendChild(colDiv);
       });
-      const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth; // <— scroll like logro
+      const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth;
     }
 
     function renderAllRoads(seq){
@@ -558,7 +556,6 @@
       if(head) head.textContent=Number(currentBalance).toLocaleString();
     }
 
-    // Update desktop + mobile percentage bars
     function updatePercentBar(){
       const red = meronAmount||0;
       const blue = walaAmount||0;
@@ -569,7 +566,6 @@
         bluePct = 100 - redPct;
       }
 
-      // Desktop
       const rEl = document.getElementById('pct-red');
       const bEl = document.getElementById('pct-blue');
       const rl  = document.getElementById('pct-red-label');
@@ -581,7 +577,6 @@
       if(bl){ bl.textContent = `Blue ${bluePct}%`; }
       if(tl){ tl.textContent = `Total: ₱${Number(total).toLocaleString('en-PH')}`; }
 
-      // Mobile
       const rEm = document.getElementById('pct-red-mob');
       const bEm = document.getElementById('pct-blue-mob');
       const rlm = document.getElementById('pct-red-label-mob');
@@ -753,11 +748,11 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       if(hBtn && hMenu){ hBtn.addEventListener('click',(e)=>{ e.stopPropagation(); hMenu.classList.toggle('hidden'); }); }
       if(hClear){ hClear.addEventListener('click',()=>{ betHistory.length=0; renderHeaderHistory(); const dot=document.getElementById('header-history-dot'); if(dot) dot.classList.add('hidden'); }); }
 
-      // Chips set value on the currently visible input (mobile/desktop)
+      // ✅ Bet chips: set the visible "Enter amount"
       document.querySelectorAll('.bet-chip').forEach(btn=>{
         btn.addEventListener('click',()=>{
           const raw=parseInt(btn.dataset.val||'0',10);
-          const amt=getBetInput(); if(amt) amt.value=raw;
+          setBetAmount(raw);
           btn.animate([{transform:'translateY(-3px)'},{transform:'translateY(0)'}],{duration:120});
         });
       });
