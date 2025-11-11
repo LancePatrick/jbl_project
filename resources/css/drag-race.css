@@ -1,0 +1,16 @@
+/* ===== External tokens / tweaks (plain CSS, built by Vite) ===== */
+:root{
+  --gutter: 12px;
+  --ring: 0 0 0 2px rgba(99,102,241,.45);
+}
+
+:focus-visible { outline: none; box-shadow: var(--ring); }
+html { scroll-behavior: smooth; }
+
+/* Optional: crisper scaling on big backgrounds */
+.bg-cover { image-rendering: -webkit-optimize-contrast; }
+
+/* Prefer no motion for AOS if user requests it */
+@media (prefers-reduced-motion: reduce){
+  [data-aos]{ transition:none !important; animation:none !important; }
+}
