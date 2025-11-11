@@ -205,7 +205,7 @@ $flash     = $_SESSION['flash']; $_SESSION['flash']=null;
 </head>
 <body class="m-0 min-h-dvh overflow-x-hidden bg-[#050a15] text-slate-100 font-[Inter,system-ui,-apple-system,Segoe_UI,Roboto,Helvetica,Arial]">
 
-  <!-- BACKGROUND like dati: blurred neon wash -->
+  <!-- BACKGROUND -->
   <div class="fixed inset-0 -z-30 bg-cover bg-center"
        style="background-image:url('https://i.ibb.co/mCnFZSCv/Chat-GPT-Image-Oct-7-2025-03-54-39-PM.png'); filter:blur(2px) brightness(.45) saturate(1.0); transform:scale(1.03)"></div>
   <div class="fixed inset-0 -z-20 bg-[radial-gradient(60%_40%_at_50%_20%,rgba(59,130,246,0.25),transparent),radial-gradient(40%_30%_at_20%_80%,rgba(16,185,129,0.18),transparent)]"></div>
@@ -221,33 +221,31 @@ $flash     = $_SESSION['flash']; $_SESSION['flash']=null;
 
     <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
 
-      <!-- LEFT: Video + Logrohan (desktop) -->
+      <!-- LEFT: Video + Logrohan -->
       <section class="relative z-10 min-w-0 rounded-2xl p-4 shadow-xl ring-1 ring-white/10 bg-white/5 backdrop-blur-sm">
 
-        <!-- Match header (dati layout) -->
+        <!-- Match header -->
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-slate-200">
           <div class="text-left"><?=htmlspecialchars(event_date_label())?></div>
           <div class="text-center font-bold text-yellow-400 text-lg tracking-widest">MATCH# <span><?=htmlspecialchars($matchNo)?></span></div>
           <div class="text-right"><?=htmlspecialchars(event_time_label())?></div>
         </div>
 
-        <!-- Video frame with gradient/glow border (dati) -->
+        <!-- Video frame with glow border -->
         <div class="mb-3 relative w-full md:max-w-[85%] mx-auto">
           <div class="relative aspect-video">
-            <!-- neon overlay layers -->
             <div class="pointer-events-none select-none absolute inset-0 rounded-2xl overflow-hidden">
               <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-red-500 via-yellow-500 to-blue-500 mix-blend-overlay opacity-70"></div>
               <div class="absolute inset-0 rounded-2xl border-4 border-transparent bg-gradient-to-tr from-red-500/60 via-yellow-500/60 to-blue-500/60 mix-blend-overlay opacity-50 blur-sm"></div>
               <div class="absolute inset-0 rounded-2xl box-content border-[6px] border-transparent bg-gradient-to-tr from-red-500/20 via-yellow-500/20 to-blue-500/20"></div>
             </div>
-            <!-- iframe -->
             <iframe class="absolute inset-0 w-full h-full rounded-xl relative z-10 border-4 border-white/10"
               src="https://www.youtube.com/embed/lefHUxQurhU?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
               frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
         </div>
 
-        <!-- LOGROHAN rail (desktop only to avoid duplicate UI) -->
+        <!-- LOGROHAN rail (desktop only) -->
         <div class="hidden md:block md:max-w-[85%] mx-auto rounded-2xl p-3 bg-black/30 border border-white/10">
           <div class="flex items-center justify-between mb-2">
             <div class="text-[11px] uppercase tracking-[0.2em] text-white/70">Logrohan</div>
@@ -290,62 +288,89 @@ $flash     = $_SESSION['flash']; $_SESSION['flash']=null;
           </div>
         </div>
 
-        <!-- Cards (Red/Blue) -->
+        <!-- ====== STRONGLY COLORED 3D BET CARDS (PURE TAILWIND LAYERS) ====== -->
         <div class="grid grid-cols-2 gap-3">
-          <!-- RED -->
-          <div class="text-center rounded-2xl p-3 border bg-red-500/10 border-red-400/30 shadow-[0_10px_24px_rgba(239,68,68,0.35)] ring-1 ring-red-400/20">
-            <div class="flex items-center justify-between">
-              <span class="grid place-items-center w-9 h-9 rounded-[12px] border border-white/16 bg-white/5 text-xl">R</span>
-            </div>
-            <div class="mt-2 text-sm font-semibold opacity-90"><?=$player1?></div>
-            <div class="drop-shadow-[0_2px_0_rgba(0,0,0,.4),0_10px_30px_rgba(0,0,0,.35)] text-4xl mt-1"><?=number_format($meronAmount)?></div>
-            <div class="mt-2">
-              <div class="inline-block rounded-lg px-2 py-1 border border-white/15 bg-gradient-to-b from-white/12 to-transparent text-xs">PAYOUT = <?=$meronOdds?></div>
+          <!-- RED CARD -->
+          <div class="relative overflow-hidden rounded-2xl p-3 border border-red-400/30 ring-1 ring-red-400/20 shadow-[0_18px_32px_rgba(185,28,28,.45),0_8px_18px_rgba(0,0,0,.45)]">
+            <!-- color + depth layers -->
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[linear-gradient(180deg,#ef4444_0%,#b91c1c_55%,#7f1d1d_100%)]"></div>
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[radial-gradient(120%_140%_at_100%_-10%,rgba(255,255,255,.10),transparent_60%)]"></div>
+            <div class="absolute inset-0 pointer-events-none rounded-2xl mix-blend-screen bg-[radial-gradient(100%_60%_at_-10%_-10%,rgba(255,255,255,.35),transparent_60%)]"></div>
+
+            <div class="relative">
+              <div class="flex items-center justify-between">
+                <span class="grid place-items-center w-9 h-9 rounded-[12px] border border-white/20 bg-white/10 text-xl font-black shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">R</span>
+              </div>
+              <div class="mt-2 text-sm font-semibold opacity-90"><?=$player1?></div>
+              <div class="text-4xl mt-1 font-black drop-shadow-[0_2px_0_rgba(0,0,0,.4),0_10px_30px_rgba(0,0,0,.35)]"><?=number_format($meronAmount)?></div>
+
+              <div class="mt-2">
+                <div class="inline-block rounded-lg px-2 py-1 border border-white/20 bg-gradient-to-b from-white/20 to-white/0 text-xs font-bold tracking-wide shadow-[inset_0_1px_2px_rgba(0,0,0,.25)]">PAYOUT = <?=$meronOdds?></div>
+              </div>
 
               <?php if($roleId===2): ?>
+                <!-- Chips row (each a small form) -->
+                <div class="grid grid-cols-4 gap-1 mt-2">
+                  <?php foreach([100,200,500,1000] as $chip): ?>
+                    <form method="post">
+                      <input type="hidden" name="action" value="chip">
+                      <input type="hidden" name="value" value="<?=$chip?>">
+                      <button class="w-full rounded-md border border-amber-300/40 bg-white/10 px-2 py-1 text-sm font-black tracking-wide hover:bg-white/15 shadow-[0_14px_28px_rgba(0,0,0,.45),inset_0_1px_2px_rgba(255,255,255,.25)]">♦<?=$chip?></button>
+                    </form>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Bet form -->
                 <form method="post" class="mt-2 flex flex-col gap-2">
                   <input type="number" name="bet_amount" value="<?=htmlspecialchars($lastAmount)?>" placeholder="Enter amount"
-                         class="p-2 text-sm text-white bg-black/30 w-[160px] rounded border border-white/10 focus:outline-none">
-                  <!-- Chips: separate mini-forms to set sticky amount -->
-                  <div class="grid grid-cols-4 gap-1">
-                    <?php foreach([100,200,500,1000] as $chip): ?>
-                      <form method="post">
-                        <input type="hidden" name="action" value="chip">
-                        <input type="hidden" name="value" value="<?=$chip?>">
-                        <button class="w-full rounded-md border border-white/15 bg-white/10 px-2 py-1 text-sm hover:bg-white/15">♦<?=$chip?></button>
-                      </form>
-                    <?php endforeach; ?>
-                  </div>
-                  <button name="action" value="place_meron" class="w-full px-3 py-2 text-sm rounded-[10px] border border-white/16 bg-white/5 hover:bg-red-600/25 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.4)]">BET</button>
+                        class="p-2 text-sm text-white bg-black/30 w-[160px] rounded border border-white/15 focus:outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">
+                  <button name="action" value="place_meron"
+                          class="w-full px-3 py-2 text-sm font-black rounded-[12px] border border-white/20 bg-white/10 hover:bg-red-600/25 hover:shadow-[0_0_20px_3px_rgba(239,68,68,0.45)]">
+                    BET
+                  </button>
                 </form>
               <?php endif; ?>
             </div>
           </div>
 
-          <!-- BLUE -->
-          <div class="text-center rounded-2xl p-3 border bg-blue-500/10 border-blue-400/30 shadow-[0_10px_24px_rgba(59,130,246,0.35)] ring-1 ring-blue-400/20">
-            <div class="flex items-center justify-between">
-              <span class="grid place-items-center w-9 h-9 rounded-[12px] border border-white/16 bg-white/5 text-xl">B</span>
-            </div>
-            <div class="mt-2 text-sm font-semibold opacity-90"><?=$player2?></div>
-            <div class="drop-shadow-[0_2px_0_rgba(0,0,0,.4),0_10px_30px_rgba(0,0,0,.35)] text-4xl mt-1"><?=number_format($walaAmount)?></div>
-            <div class="mt-2">
-              <div class="inline-block rounded-lg px-2 py-1 border border-white/15 bg-gradient-to-b from-white/12 to-transparent text-xs">PAYOUT = <?=$walaOdds?></div>
+          <!-- BLUE CARD -->
+          <div class="relative overflow-hidden rounded-2xl p-3 border border-blue-400/30 ring-1 ring-blue-400/20 shadow-[0_18px_32px_rgba(29,78,216,.45),0_8px_18px_rgba(0,0,0,.45)]">
+            <!-- color + depth layers -->
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[linear-gradient(180deg,#3b82f6_0%,#1d4ed8_55%,#1e3a8a_100%)]"></div>
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[radial-gradient(120%_140%_at_100%_-10%,rgba(255,255,255,.10),transparent_60%)]"></div>
+            <div class="absolute inset-0 pointer-events-none rounded-2xl mix-blend-screen bg-[radial-gradient(100%_60%_at_-10%_-10%,rgba(255,255,255,.35),transparent_60%)]"></div>
+
+            <div class="relative">
+              <div class="flex items-center justify-between">
+                <span class="grid place-items-center w-9 h-9 rounded-[12px] border border-white/20 bg-white/10 text-xl font-black shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">B</span>
+              </div>
+              <div class="mt-2 text-sm font-semibold opacity-90"><?=$player2?></div>
+              <div class="text-4xl mt-1 font-black drop-shadow-[0_2px_0_rgba(0,0,0,.4),0_10px_30px_rgba(0,0,0,.35)]"><?=number_format($walaAmount)?></div>
+
+              <div class="mt-2">
+                <div class="inline-block rounded-lg px-2 py-1 border border-white/20 bg-gradient-to-b from-white/20 to-white/0 text-xs font-bold tracking-wide shadow-[inset_0_1px_2px_rgba(0,0,0,.25)]">PAYOUT = <?=$walaOdds?></div>
+              </div>
 
               <?php if($roleId===2): ?>
+                <!-- Chips row -->
+                <div class="grid grid-cols-4 gap-1 mt-2">
+                  <?php foreach([100,200,500,1000] as $chip): ?>
+                    <form method="post">
+                      <input type="hidden" name="action" value="chip">
+                      <input type="hidden" name="value" value="<?=$chip?>">
+                      <button class="w-full rounded-md border border-amber-300/40 bg-white/10 px-2 py-1 text-sm font-black tracking-wide hover:bg-white/15 shadow-[0_14px_28px_rgba(0,0,0,.45),inset_0_1px_2px_rgba(255,255,255,.25)]">♦<?=$chip?></button>
+                    </form>
+                  <?php endforeach; ?>
+                </div>
+
+                <!-- Bet form -->
                 <form method="post" class="mt-2 flex flex-col gap-2">
                   <input type="number" name="bet_amount" value="<?=htmlspecialchars($lastAmount)?>" placeholder="Enter amount"
-                         class="p-2 text-sm text-white bg-black/30 w-[160px] rounded border border-white/10 focus:outline-none">
-                  <div class="grid grid-cols-4 gap-1">
-                    <?php foreach([100,200,500,1000] as $chip): ?>
-                      <form method="post">
-                        <input type="hidden" name="action" value="chip">
-                        <input type="hidden" name="value" value="<?=$chip?>">
-                        <button class="w-full rounded-md border border-white/15 bg-white/10 px-2 py-1 text-sm hover:bg-white/15">♦<?=$chip?></button>
-                      </form>
-                    <?php endforeach; ?>
-                  </div>
-                  <button name="action" value="place_wala" class="w-full px-3 py-2 text-sm rounded-[10px] border border-white/16 bg-white/5 hover:bg-blue-600/25 hover:shadow-[0_0_20px_3px_rgba(59,130,246,0.4)]">BET</button>
+                        class="p-2 text-sm text-white bg-black/30 w-[160px] rounded border border-white/15 focus:outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">
+                  <button name="action" value="place_wala"
+                          class="w-full px-3 py-2 text-sm font-black rounded-[12px] border border-white/20 bg-white/10 hover:bg-blue-600/25 hover:shadow-[0_0_20px_3px_rgba(59,130,246,0.45)]">
+                    BET
+                  </button>
                 </form>
               <?php endif; ?>
             </div>
@@ -383,79 +408,88 @@ $flash     = $_SESSION['flash']; $_SESSION['flash']=null;
           </div>
         </div>
 
-        <!-- Cards (mobile) -->
+        <!-- MOBILE CARDS with strong color -->
         <div class="grid grid-cols-2 gap-2">
           <!-- MERON -->
-          <div class="text-center rounded-2xl p-3 border bg-red-500/10 border-red-400/30 ring-1 ring-red-400/20">
-            <div class="grid place-items-center w-8 h-8 rounded-[10px] border border-white/16 bg-white/5 text-lg">R</div>
+          <div class="relative overflow-hidden rounded-2xl p-3 border border-red-400/30 ring-1 ring-red-400/20 shadow-[0_12px_24px_rgba(185,28,28,.45),0_6px_14px_rgba(0,0,0,.45)]">
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[linear-gradient(180deg,#ef4444_0%,#b91c1c_55%,#7f1d1d_100%)]"></div>
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[radial-gradient(120%_140%_at_100%_-10%,rgba(255,255,255,.10),transparent_60%)]"></div>
+            <div class="absolute inset-0 pointer-events-none rounded-2xl mix-blend-screen bg-[radial-gradient(100%_60%_at_-10%_-10%,rgba(255,255,255,.35),transparent_60%)]"></div>
+
+            <div class="grid place-items-center w-8 h-8 rounded-[10px] border border-white/20 bg-white/10 text-lg font-black shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">R</div>
             <div class="mt-1 text-xs font-semibold opacity-90 leading-tight"><?=$player1?></div>
-            <div class="text-2xl mt-0.5"><?=number_format($meronAmount)?></div>
-            <div class="mt-1"><span class="inline-block text-[10px] px-1 py-0.5 rounded-lg border border-white/15 bg-gradient-to-b from-white/12 to-transparent">PAYOUT = <?=$meronOdds?></span></div>
+            <div class="text-2xl mt-0.5 font-black"><?=number_format($meronAmount)?></div>
+            <div class="mt-1">
+              <span class="inline-block text-[10px] px-1 py-0.5 rounded-lg border border-white/20 bg-gradient-to-b from-white/20 to-white/0 font-bold">PAYOUT = <?=$meronOdds?></span>
+            </div>
+
             <?php if($roleId===2): ?>
+              <div class="grid grid-cols-4 gap-1 mt-2">
+                <?php foreach([100,200,500,1000] as $chip): ?>
+                  <form method="post">
+                    <input type="hidden" name="action" value="chip">
+                    <input type="hidden" name="value" value="<?=$chip?>">
+                    <button class="w-full rounded-md border border-amber-300/40 bg-white/10 px-2 py-1 text-xs font-black hover:bg-white/15 shadow-[0_10px_20px_rgba(0,0,0,.45),inset_0_1px_2px_rgba(255,255,255,.25)]">♦<?=$chip?></button>
+                  </form>
+                <?php endforeach; ?>
+              </div>
+
               <form method="post" class="mt-2 space-y-2">
                 <input type="number" name="bet_amount" value="<?=htmlspecialchars($lastAmount)?>" placeholder="Enter amount"
-                       class="p-2 text-sm text-white bg-black/30 w-full rounded border border-white/10 focus:outline-none">
-                <div class="grid grid-cols-4 gap-1">
-                  <?php foreach([100,200,500,1000] as $chip): ?>
-                    <form method="post">
-                      <input type="hidden" name="action" value="chip">
-                      <input type="hidden" name="value" value="<?=$chip?>">
-                      <button class="w-full rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs hover:bg-white/15">♦<?=$chip?></button>
-                    </form>
-                  <?php endforeach; ?>
-                </div>
-                <button name="action" value="place_meron" class="w-full px-3 py-2 text-xs rounded-[10px] border border-white/16 bg-white/5 hover:bg-red-600/25">BET</button>
+                       class="p-2 text-sm text-white bg-black/30 w-full rounded border border-white/15 focus:outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">
+                <button name="action" value="place_meron"
+                        class="w-full px-3 py-2 text-xs font-black rounded-[12px] border border-white/20 bg-white/10 hover:bg-red-600/25">
+                  BET
+                </button>
               </form>
             <?php endif; ?>
           </div>
 
           <!-- WALA -->
-          <div class="text-center rounded-2xl p-3 border bg-blue-500/10 border-blue-400/30 ring-1 ring-blue-400/20">
-            <div class="grid place-items-center w-8 h-8 rounded-[10px] border border-white/16 bg-white/5 text-lg">B</div>
+          <div class="relative overflow-hidden rounded-2xl p-3 border border-blue-400/30 ring-1 ring-blue-400/20 shadow-[0_12px_24px_rgba(29,78,216,.45),0_6px_14px_rgba(0,0,0,.45)]">
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[linear-gradient(180deg,#3b82f6_0%,#1d4ed8_55%,#1e3a8a_100%)]"></div>
+            <div class="absolute inset-0 -z-10 rounded-2xl bg-[radial-gradient(120%_140%_at_100%_-10%,rgba(255,255,255,.10),transparent_60%)]"></div>
+            <div class="absolute inset-0 pointer-events-none rounded-2xl mix-blend-screen bg-[radial-gradient(100%_60%_at_-10%_-10%,rgba(255,255,255,.35),transparent_60%)]"></div>
+
+            <div class="grid place-items-center w-8 h-8 rounded-[10px] border border-white/20 bg-white/10 text-lg font-black shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">B</div>
             <div class="mt-1 text-xs font-semibold opacity-90 leading-tight"><?=$player2?></div>
-            <div class="text-2xl mt-0.5"><?=number_format($walaAmount)?></div>
-            <div class="mt-1"><span class="inline-block text-[10px] px-1 py-0.5 rounded-lg border border-white/15 bg-gradient-to-b from-white/12 to-transparent">PAYOUT = <?=$walaOdds?></span></div>
+            <div class="text-2xl mt-0.5 font-black"><?=number_format($walaAmount)?></div>
+            <div class="mt-1">
+              <span class="inline-block text-[10px] px-1 py-0.5 rounded-lg border border-white/20 bg-gradient-to-b from-white/20 to-white/0 font-bold">PAYOUT = <?=$walaOdds?></span>
+            </div>
+
             <?php if($roleId===2): ?>
+              <div class="grid grid-cols-4 gap-1 mt-2">
+                <?php foreach([100,200,500,1000] as $chip): ?>
+                  <form method="post">
+                    <input type="hidden" name="action" value="chip">
+                    <input type="hidden" name="value" value="<?=$chip?>">
+                    <button class="w-full rounded-md border border-amber-300/40 bg-white/10 px-2 py-1 text-xs font-black hover:bg-white/15 shadow-[0_10px_20px_rgba(0,0,0,.45),inset_0_1px_2px_rgba(255,255,255,.25)]">♦<?=$chip?></button>
+                  </form>
+                <?php endforeach; ?>
+              </div>
+
               <form method="post" class="mt-2 space-y-2">
                 <input type="number" name="bet_amount" value="<?=htmlspecialchars($lastAmount)?>" placeholder="Enter amount"
-                       class="p-2 text-sm text-white bg-black/30 w-full rounded border border-white/10 focus:outline-none">
-                <div class="grid grid-cols-4 gap-1">
-                  <?php foreach([100,200,500,1000] as $chip): ?>
-                    <form method="post">
-                      <input type="hidden" name="action" value="chip">
-                      <input type="hidden" name="value" value="<?=$chip?>">
-                      <button class="w-full rounded-md border border-white/15 bg-white/10 px-2 py-1 text-xs hover:bg-white/15">♦<?=$chip?></button>
-                    </form>
-                  <?php endforeach; ?>
-                </div>
-                <button name="action" value="place_wala" class="w-full px-3 py-2 text-xs rounded-[10px] border border-white/16 bg-white/5 hover:bg-blue-600/25">BET</button>
+                       class="p-2 text-sm text-white bg-black/30 w-full rounded border border-white/15 focus:outline-none shadow-[inset_0_1px_2px_rgba(0,0,0,.35)]">
+                <button name="action" value="place_wala"
+                        class="w-full px-3 py-2 text-xs font-black rounded-[12px] border border-white/20 bg-white/10 hover:bg-blue-600/25">
+                  BET
+                </button>
               </form>
             <?php endif; ?>
           </div>
         </div>
 
-        <!-- LOGROHAN (mobile) -->
+        <!-- LOGRO / MINI ROAD / BALANCE -->
         <div class="rounded-2xl p-3 bg-white/5 border border-white/10">
-          <div class="flex items-center justify-between mb-2">
-            <div class="text-[11px] uppercase tracking-[0.2em] text-white/70">Logrohan</div>
-            <div class="flex items-center gap-3 text-[10px]">
-              <span class="inline-flex items-center gap-1"><i class="fa-solid fa-circle text-red-400 text-[8px]"></i> <span class="opacity-70">Red</span></span>
-              <span class="inline-flex items-center gap-1"><i class="fa-solid fa-circle text-blue-400 text-[8px]"></i> <span class="opacity-70">Blue</span></span>
-            </div>
+          <div class="flex items-center justify-between mb-1">
+            <div class="text-[11px] uppercase tracking-[0.2em] text-white/70">Road</div>
+            <div class="text-[11px] text-white/70">Bal: ₱<?=number_format($balance)?></div>
           </div>
-
-          <?php if($roleId===1): ?>
-            <form method="post" class="flex items-center gap-2 mb-2">
-              <button name="action" value="win_meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-[11px] font-bold hover:bg-red-700">+ Red win</button>
-              <button name="action" value="win_wala"  class="px-2 py-1 rounded bg-blue-700/70 border border-white/10 text-[11px] font-bold hover:bg-blue-700">+ Blue win</button>
-              <button name="action" value="undo"      class="px-2 py-1 rounded bg-slate-700/70 border border-white/10 text-[11px] hover:bg-slate-700">Undo</button>
-              <button name="action" value="clear"     class="px-2 py-1 rounded bg-slate-800/70 border border-white/10 text-[11px] hover:bg-slate-800">Clear</button>
-            </form>
-          <?php endif; ?>
-
           <div class="relative overflow-x-auto overflow-y-hidden pb-1 [scrollbar-gutter:stable_both-edges]">
-            <div class="inline-grid [grid-auto-flow:column] [grid-auto-columns:max-content] [column-gap:var(--col-gap)] [contain:layout_paint]">
-              <?=$logroHTML?>
+            <div class="inline-grid [grid-auto-flow:column] [grid-auto-columns:max-content] [column-gap:6px] [contain:layout_paint]">
+              <?=$beadHTML?>
             </div>
           </div>
         </div>
