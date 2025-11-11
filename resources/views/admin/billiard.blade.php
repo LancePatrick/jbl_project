@@ -4,18 +4,25 @@
   <div class="bg-animated"></div>
 
   <!-- ====== STYLE: isolate logrohan & road widths; keep video border steady ====== -->
-  <style>
+  <!-- <style>
     :root{
       --logro-bubble: 26px;   /* desktop logro cell size */
       --logro-step: 3px;      /* faux 3D z-step */
-      --bead-bubble: 18px;    /* mini road dot size */
+      --bead-bubble: 26px;    /* mini road dot size */
       --col-gap: 6px;
+      --row-gap: 6px;         /* vertical gap between rows */
+      /* Make Road same height as Logrohan (8 rows) */
+      --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
     }
     @media (max-width: 768px){
-      :root{ --logro-bubble: 22px; --bead-bubble: 16px; }
-    }
+      :root{
+        --logro-bubble: 22px;
+        --bead-bubble: 22px;
+        --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
+      }
+    } -->
 
-    .main-panel{ min-width:0; }
+    <!-- .main-panel{ min-width:0; }
 
     /* ===== LOGRO ===== */
     .logro-zone{ min-width:0; }
@@ -26,6 +33,7 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-gutter: stable both-edges;
       padding-bottom: 2px;
+      height: var(--rail-h);       /* <-- shared height */
     }
     .logro-rail::-webkit-scrollbar{ height:8px }
     .logro-rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:8px }
@@ -36,11 +44,12 @@
       grid-auto-columns: max-content;
       column-gap: var(--col-gap);
       contain: layout paint;
+      height: 100%;                /* <-- fill rail */
     }
     .logro-col{
       display:grid;
       grid-auto-rows: var(--logro-bubble);
-      row-gap: 6px;
+      row-gap: var(--row-gap);
       align-content:start;
     }
     .ring-gap{ width: var(--logro-bubble); height: var(--logro-bubble); opacity:.08; border:1px dashed rgba(255,255,255,.18); border-radius:999px; }
@@ -68,6 +77,7 @@
       scrollbar-gutter: stable both-edges;
       padding-bottom: 2px;
       min-width:0;
+      height: var(--rail-h);       /* <-- shared height */
     }
     .bead-rail::-webkit-scrollbar{ height:8px }
     .bead-rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:8px }
@@ -78,6 +88,7 @@
       grid-auto-columns:max-content;
       column-gap:6px;
       contain: layout paint;
+      height: 100%;                /* <-- fill rail */
     }
     .bead-col{
       display:grid;
@@ -110,7 +121,7 @@
     .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
     .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
 
-    .video-shell{ contain: layout paint; }
+    .video-shell{ contain: layout paint; } -->
   </style>
 
   <!-- ========================================================
@@ -247,7 +258,7 @@
           @endauth
 
             <div>
-              <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center justify-between mt-10">
                 <div class="text-[11px] uppercase tracking-widest text-white/70">Road</div>
                 <div class="flex items-center gap-2 text-[10px]">
                   <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
@@ -367,7 +378,7 @@
       "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
     ];
     const BIGROAD_MAX_ROWS = 8;
-    const BEAD_MAX_ROWS    = 6;
+    const BEAD_MAX_ROWS    = 8; // <-- match rows to Logrohan for proportional height
 
     // B) STATE
     let results = [];
