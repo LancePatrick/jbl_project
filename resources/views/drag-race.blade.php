@@ -1,14 +1,11 @@
-{{-- resources/views/drag-race.blade.php --}}
 <x-layouts.app :title="__('Drag Race')">
   <body class="min-h-dvh overflow-x-hidden font-[Inter,system-ui,-apple-system,Segoe_UI,Roboto,Helvetica,Arial] text-[13px] text-[color:var(--tw-text,inherit)]"
       style="--tw-text:#e8f0ff">
 
   @php
-    /** role_id: 1 = admin, 2 = user */
     $roleId = auth()->user()->role_id ?? 2;
   @endphp
 
-  <!-- BG -->
   <div
     class="fixed inset-0 -z-30 bg-cover bg-center"
     style="background-image:url('https://i.ibb.co/mCnFZSCv/Chat-GPT-Image-Oct-7-2025-03-54-39-PM.png'); filter:blur(2px) brightness(.45) saturate(1.0); transform:scale(1.03)"
@@ -23,24 +20,19 @@
       radial-gradient(900px 320px at 90% -30%, rgba(255,255,255,.05), transparent 70%)"
   ></div>
 
-  <!-- Page container -->
   <div class="w-full max-w-screen-2xl 2xl:max-w-[1500px] mx-auto grid gap-4 px-[var(--gutter,12px)] py-[18px] translate-x-1.5 md:translate-x-0 lg:translate-x-[24px] xl:translate-x-[40px]">
 
-    <!-- HEADER (placeholder for future use) -->
     <header class="sticky top-0 z-[1000] hidden flex-wrap items-center gap-3 bg-[linear-gradient(180deg,rgba(7,10,16,.58),rgba(7,10,16,.18))] backdrop-blur-[6px] border-b border-[rgb(208_219_255_/_.35)] px-[var(--gutter,12px)] py-2"></header>
 
-    <!-- ===== VIDEO + SIDE ===== -->
     <section
       class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),0_10px_30px_rgba(0,0,0,.25)]"
       style="--side:clamp(300px,32vw,420px);"
     >
-      <!-- Tabs + Admin Show Video -->
       <div class="flex items-center justify-between gap-3 border-b border-[rgb(208_219_255_/_0.35)] pb-2">
         <div class="flex gap-1 overflow-auto px-1 sm:px-2">
           <button class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)] px-3 py-2 font-black text-white shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
                   data-tab="odds">ODDS</button>
           <button class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap" data-tab="total">TOTAL</button>
-          <!-- New: HISTORY tab (shows the large Bet History section below via scroll) -->
           <a href="#historySection"
              class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap">HISTORY</a>
         </div>
@@ -53,26 +45,20 @@
         @endif
       </div>
 
-      <!-- Grid: stack on mobile, split at md+ -->
       <div class="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_var(--side)]">
-        <!-- Video -->
         <div data-video class="relative aspect-[16/9] overflow-hidden rounded-[16px] border border-[rgb(200_214_255_/_0.45)] bg-black shadow-[0_18px_40px_rgba(0,0,0,.45),0_6px_14px_rgba(0,0,0,.25),inset_0_0_0_1px_rgba(255,255,255,.05)]">
           <div class="pointer-events-none absolute inset-0 rounded-[16px] shadow-[inset_0_0_0_4px_#2a3d6a,inset_0_0_0_6px_rgba(255,255,255,.06)]"></div>
           <iframe id="yt" class="absolute inset-0 size-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           <div id="videoOverlay" class="absolute inset-0 hidden grid place-items-center bg-black/60 text-white text-sm">Video hidden by admin</div>
         </div>
 
-        <!-- Kiosk -->
         <div id="kioskSide"
              class="flex max-h-[unset] md:max-h-[60svh] lg:max-h-[calc(100svh-140px)] xl:max-h-[calc(100svh-160px)]
                     lg:sticky lg:top-16 xl:top-20
                     flex-col gap-2 overflow-auto rounded-[14px] border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] p-2">
 
-          <!-- ODDS VIEW -->
           <div id="oddsView" class="grid gap-2">
-            <!-- Two cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <!-- Red -->
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                   <div class="grid size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">R</div>
@@ -86,7 +72,6 @@
                 </div>
               </div>
 
-              <!-- Blue -->
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                   <div class="grid size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">B</div>
@@ -101,7 +86,6 @@
               </div>
             </div>
 
-            <!-- Slip -->
             <div class="grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1730] p-2">
               <input id="amount" type="number" min="1" placeholder="Enter amount"
                      class="h-[44px] w-full rounded-[12px] border border-[rgb(150_170_220_/_0.45)] bg-[#0a1122] px-3 font-extrabold text-[#e9f3ff] outline-none"/>
@@ -111,61 +95,31 @@
               </div>
             </div>
 
-            <!-- Chips -->
             <div id="chips" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <button class="h-[44px] rounded-[14px] border border-[#0f5c30] bg-[linear-gradient(180deg,#2a9d55,#187d3e)] font-black text-[#eef5ff] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦100</button>
               <button class="h-[44px] rounded-[14px] border border-[#163f8f] bg-[linear-gradient(180deg,#2f7cff,#1a4fb5)] font-black text-[#eef5ff] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦200</button>
               <button class="h-[44px] rounded-[14px] border border-[#0b0c0f] bg-[linear-gradient(180deg,#2c2f35,#15171b)] font-black text-[#eef5ff] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦500</button>
               <button class="h-[44px] rounded-[14px] border border-[#a76407] bg-[linear-gradient(180deg,#ffb23a,#d48112)] font-black text-[#1b1203]">♦1000</button>
             </div>
+<div id="totalsWidget"
+     class="hidden grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] p-2"
+     aria-hidden="true" inert>
+  <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1"></div>
+  <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1"></div>
+  <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1"></div>
 
-            <!-- Totals -->
-            <div id="totalsWidget" class="grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] p-2">
-              <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1">
-                <strong>POT</strong><strong id="pot2">0</strong>
-              </div>
-              <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1">
-                <span>Bets (Rider Red / Rider Blue)</span>
-                <strong><span id="tR2">0</span> / <span id="tB2">0</span></strong>
-              </div>
-              <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1">
-                <span>Est. Payout (x)</span>
-                <strong><span class="text-[#bcd1ff]">Rider Red</span> <span id="payoutR">× 1.88</span> • <span class="text-[#bcd1ff]">Rider Blue</span> <span id="payoutB">× 2.08</span></strong>
-              </div>
-              <div class="h-2 overflow-hidden rounded-full border border-[#263553] bg-[#0c1220]">
-                <span id="bar" class="block h-full bg-[linear-gradient(90deg,#ff3b30,#2f7cff)] w-0"></span>
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <button id="resetTotals" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630]">Reset Totals</button>
-                <button id="demoBets" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630]">Simulate</button>
-              </div>
-            </div>
+  <div class="h-2 overflow-hidden rounded-full border border-[#263553] bg-[#0c1220]">
+    <span id="bar" class="block h-full bg-[linear-gradient(90deg,#ff3b30,#2f7cff)] w-0"></span>
+  </div>
 
-            <!-- ========== MINI BET HISTORY (sidebar) ========== -->
-            <div id="historyWidget" class="grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] p-2">
-              <div class="flex items-center justify-between">
-                <strong>Bet History</strong>
-                <div class="flex gap-2">
-                  <button id="histExport" class="h-8 rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12px]">Export CSV</button>
-                  <button id="histClear" class="h-8 rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12px]">Clear</button>
-                </div>
-              </div>
-              <div class="rounded-[10px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33] max-h-[220px] overflow-auto">
-                <table class="w-full text-[12.5px]">
-                  <thead class="sticky top-0 bg-[#0f1a33]">
-                    <tr class="[&>th]:px-2 [&>th]:py-1 [&>th]:text-left text-[#bcd1ff]">
-                      <th>Time</th><th>Side</th><th>Amt</th><th>Odds</th><th>Est.Win</th>
-                    </tr>
-                  </thead>
-                  <tbody id="betHistory" class="[&>tr>td]:px-2 [&>tr>td]:py-1"></tbody>
-                </table>
-              </div>
-              <a href="#historySection" class="text-[12px] text-[#97b3ff] underline underline-offset-2">Open full Bet History »</a>
-            </div>
-            <!-- ========== /MINI BET HISTORY ========== -->
-          </div>
+  <div class="grid grid-cols-3 gap-2">
+    <button id="resetTotals" type="button" tabindex="-1" aria-hidden="true"></button>
+    <button id="demoBets"   type="button" tabindex="-1" aria-hidden="true"></button>
+  </div>
+</div>
 
-          <!-- TOTAL VIEW -->
+
+
           <div id="totalView" hidden class="grid gap-2">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
@@ -199,7 +153,6 @@
       </div>
     </section>
 
-    <!-- ===== RESULTS / ROADMAP ===== -->
     <section class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]">
       <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[#0e1426]/80 px-3 py-1 text-[12px] text-[#bcd1ff] backdrop-blur">Results / Roadmap</h2>
 
@@ -207,7 +160,6 @@
         <div class="flex flex-wrap items-center justify-between gap-2">
           <h3 class="m-0">Roadmap • Results</h3>
 
-          {{-- ADMIN-ONLY TOOLBAR --}}
           @if ($roleId === 1)
             <div class="flex gap-2 overflow-auto pb-1">
               <button id="winRed" class="h-10 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[#ffecec]">Record: Red Wins</button>
@@ -219,10 +171,6 @@
               <button id="exportCsv" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Export CSV</button>
             </div>
           @endif
-        </div>
-
-        <div class="mx-auto -mt-1 rounded-[10px] border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] px-3 py-1.5 text-center" id="roadOdds">
-          Red × 1.88 • Blue × 2.08
         </div>
 
         <div class="grid gap-3 md:grid-cols-2">
@@ -261,7 +209,6 @@
       </div>
     </section>
 
-    <!-- ===== DEDICATED BET HISTORY UI ===== -->
     <section id="historySection" class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.88)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <h2 class="m-0 text-[14px] font-bold text-[#bcd1ff]">Bet History</h2>
@@ -309,7 +256,6 @@
     </section>
   </div>
 
-  <!-- Sticky mobile quick-bet rail -->
   <div id="mbRail"
        class="fixed inset-x-0 bottom-0 z-[2000] hidden gap-2 border-t border-[rgb(200_214_255_/_0.45)] bg-[rgba(10,18,35,.9)] p-2 backdrop-blur-[8px] md:hidden"
   >
@@ -319,10 +265,8 @@
             class="h-[42px] rounded-[10px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-4 font-black text-white">BET</button>
   </div>
 
-  <!-- Toast -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
-  <!-- ===== Receipt Modal (admin) ===== -->
   <div id="receiptModal" class="fixed inset-0 z-[2200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
     <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-white text-slate-900 p-4">
       <div class="flex items-center justify-between">
@@ -368,7 +312,6 @@
     </div>
   </div>
 
-  <!-- ===== Modals (Edit/Cash/Withdraw) ===== -->
   <div id="modal-edit" class="modal fixed inset-0 z-[1200] hidden place-items-center bg-[rgba(0,0,0,.45)]" role="dialog" aria-hidden="true">
     <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-4">
       <h2 class="m-0 mb-2">Edit Profile</h2>
@@ -427,12 +370,9 @@
     </div>
   </div>
 
-  <!-- ===== JS ===== -->
   <script>
-  // Role
   const ROLE_ID = {{ $roleId }};
 
-  // YouTube
   (function(){
     const url='https://youtu.be/mzBv3fUDxRA?si=0X903bZ6UrB-v6UF';
     const embed=url.replace('https://youtu.be/','https://www.youtube.com/embed/').replace('watch?v=','embed/');
@@ -441,7 +381,6 @@
     iframe.addEventListener('load', syncSideHeight);
   })();
 
-  // Admin: Show/Hide Video
   (function(){
     const chk = document.getElementById('toggleVideo');
     const frameWrap = document.querySelector('[data-video]');
@@ -456,19 +395,14 @@
     apply();
   })();
 
-  // ===== Global State =====
   const state={ red:0, blue:0, oddsRed:1.88, oddsBlue:2.08, market:'—' };
   const el=id=>document.getElementById(id);
   const fmt=n=>Number(n).toLocaleString('en-PH',{maximumFractionDigits:0});
 
-  // Results log / pager
   const PAGE_SIZE=5; let curPage=1; let logs=[];
 
-  // Bet History (shared across mini + dedicated UI)
-  /** each entry: {ts, timeStr, side:'Red'|'Blue', amount:number, odds:number, est:number} */
   let history = [];
 
-  // Sounds/Haptics
   let SOUND_ON=true, HAPTIC_ON=false;
   function beep(type='click', dur=80, freq=440, vol=0.05){
     if(!SOUND_ON || typeof AudioContext==='undefined') return;
@@ -480,7 +414,6 @@
   }
   function vibe(ms=10){ if(HAPTIC_ON && navigator.vibrate) navigator.vibrate(ms); }
 
-  // Notifications (kept)
   let DESK_NOTIF=false;
   const notifs=[]; let unread=0;
   const notifUI={btn:el('notifBtn'),panel:el('notifPanel'),list:el('notifList'),badge:el('notifBadge')};
@@ -531,7 +464,6 @@
     }catch{}
   })();
 
-  // ===== UI Sync/Persist =====
   function sync(){
     const pot=state.red+state.blue;
     const r = pot? state.red/pot*100 : 0; const b=100-r;
@@ -553,7 +485,7 @@
     el('totalRed').textContent=fmt(state.red); el('totalBlue').textContent=fmt(state.blue);
 
     checkMilestones(pot); syncSideHeight(); saveAll();
-    renderHistorySidebar(); renderHistoryTable(); // refresh both UIs
+    renderHistorySidebar(); renderHistoryTable();
   }
   function saveAll(){
     try{
@@ -578,7 +510,6 @@
     }catch{}
   })();
 
-  // ===== Chips / Odds calc =====
   document.querySelectorAll('#chips button').forEach(b=>{
     b.addEventListener('click',()=>{ const amt=Number(b.textContent.replace(/[^\d]/g,''))||0; const input=el('amount'); input.value=Number(input.value||0)+amt; });
   });
@@ -595,7 +526,6 @@
     smoothOdds(tR,tB);
   }
 
-  // ===== Receipt (admin) =====
   function showReceipt({side, amount, odds}){
     const ref = 'BK' + Date.now().toString(36).toUpperCase().slice(-6) + '-' + Math.random().toString(36).slice(2,6).toUpperCase();
     const win = Math.round(amount * odds);
@@ -620,19 +550,17 @@
     document.getElementById('rc-close').onclick = () => { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); };
   }
 
-  // ===== Bet History helpers (shared) =====
   function addToHistory({side, amount, odds}){
     const ts = Date.now();
     const timeStr = new Date(ts).toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
     const est = Math.round(amount * odds);
     history.unshift({ ts, timeStr, side: side==='red'?'Red':'Blue', amount, odds: +Number(odds).toFixed(2), est });
-    if(history.length > 1000) history.length = 1000; // cap
+    if(history.length > 1000) history.length = 1000;
     saveAll();
     renderHistorySidebar();
     renderHistoryTable();
   }
 
-  // --- Mini sidebar renderer
   function renderHistorySidebar(){
     const tbody = el('betHistory');
     if(!tbody) return;
@@ -666,7 +594,6 @@
   el('histExport')?.addEventListener('click', ()=>exportHistoryCSV(history));
   el('histClear')?.addEventListener('click', ()=>{ history=[]; saveAll(); renderHistorySidebar(); renderHistoryTable(); toast('Bet history cleared'); });
 
-  // --- Dedicated History UI (filters + pagination)
   const HF_PAGE= { size: 12, now: 1 };
   function getHFFilters(){
     return {
@@ -714,7 +641,6 @@
     const sum = list.reduce((a,b)=>a+b.amount,0);
     el('hf-sum').textContent = fmt(sum);
   }
-  // filter controls
   el('hf-apply')?.addEventListener('click', ()=>{ HF_PAGE.now=1; renderHistoryTable(); });
   el('hf-reset')?.addEventListener('click', ()=>{ if(el('hf-side')) el('hf-side').value='all'; if(el('hf-min')) el('hf-min').value=0; HF_PAGE.now=1; renderHistoryTable(); });
   el('hf-first')?.addEventListener('click', ()=>{ HF_PAGE.now=1; renderHistoryTable(); });
@@ -724,7 +650,6 @@
   el('hf-export')?.addEventListener('click', ()=>exportHistoryCSV(filterHistory()));
   el('hf-clear') ?.addEventListener('click', ()=>{ history=[]; saveAll(); renderHistorySidebar(); renderHistoryTable(); toast('Bet history cleared'); });
 
-  // ===== Bets =====
   document.querySelectorAll('[data-bet]').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const side=btn.getAttribute('data-bet');
@@ -743,7 +668,6 @@
   el('reset').addEventListener('click',()=>{ el('amount').value=''; });
   el('maxAmt').addEventListener('click',()=>{ const v=Number(el('amount').value||0); if(v<1) el('amount').value=100; });
 
-  // Mobile quick rail
   (function(){
     const rail=el('mbRail');
     const isMobile=()=>matchMedia('(max-width:680px)').matches;
@@ -763,14 +687,11 @@
     });
   })();
 
-  // Totals
   el('resetTotals').addEventListener('click', ()=>{ state.red=0; state.blue=0; recalcOdds(); sync(); addNotif('Totals reset','All bet totals cleared','alert'); });
   el('demoBets').addEventListener('click', ()=>{ const inc=Math.floor(Math.random()*5+1)*50; if(Math.random()>0.5) state.red+=inc; else state.blue+=inc; recalcOdds(); sync(); toast('Simulated bet: ₱'+fmt(inc)); });
 
-  // Milestones
   let lastMilestone=0; function checkMilestones(pot){ const step=1000; const m=Math.floor(pot/step); if(m>lastMilestone){ lastMilestone=m; addNotif('Pot milestone', `Total pot hit ₱${fmt(m*step)}`, 'alert'); } }
 
-  // Roads / Results
   const seq=[]; const ROWS=6, COLS=36;
 
   function addLog(winner){
@@ -806,7 +727,6 @@
   document.getElementById('nextPage') ?.addEventListener('click', ()=>{ const t=Math.max(1, Math.ceil(logs.length/PAGE_SIZE)); if (curPage < t) { curPage++; renderLog(); } });
   document.getElementById('lastPage') ?.addEventListener('click', ()=>{ curPage = Math.max(1, Math.ceil(logs.length/PAGE_SIZE)); renderLog(); });
 
-  // Roads
   function cell(div, kind, hollow=false){
     div.className = 'flex items-center justify-center rounded-full text-[11px] font-black';
     div.style.width='calc(14px - 2px)'; div.style.height='calc(14px - 2px)';
@@ -855,7 +775,6 @@
   document.getElementById('winRed')?.addEventListener('click',()=>mark('R'));
   document.getElementById('winBlue')?.addEventListener('click',()=>mark('B'));
 
-  // Round Timer
   let tHandle=null, tLeft=0;
   const setTimerText = (txt)=> { const t=el('timer'); if(t) t.textContent=txt; };
   const formatSecs = (s)=> `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
@@ -868,7 +787,6 @@
   document.getElementById('startRound')?.addEventListener('click', ()=>startRound(60));
   document.getElementById('resetRound')?.addEventListener('click', resetRound);
 
-  // Tabs visual toggling for ODDS/TOTAL (kept)
   function showTab(name){
     document.querySelectorAll('[data-tab]').forEach(b=>{
       const active = b.dataset.tab===name;
@@ -886,7 +804,6 @@
   }
   document.querySelectorAll('[data-tab]').forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
 
-  // Toast + layout sync
   function toast(msg,ms=2200){
     const t=document.createElement('div');
     t.className='rounded-[12px] border border-[rgb(208_219_255_/_0.35)] bg-[rgba(11,18,34,0.85)] px-3 py-2 backdrop-blur-[8px] translate-y-[10px] opacity-0 transition-all duration-200';
@@ -905,7 +822,6 @@
   addEventListener('resize', syncSideHeight);
   addEventListener('load', syncSideHeight);
 
-  // Export/Clear results (admin)
   document.getElementById('exportCsv')?.addEventListener('click', ()=>{
     const rows=[['Time','Winner','Pot','Odds','Payout per 100']];
     logs.forEach(r => rows.push([r.time, r.winner, '₱'+fmt(r.pot), '× '+r.odds, '₱'+fmt(r.payout)]));
@@ -919,12 +835,10 @@
     toast('Logs cleared'); addNotif('Logs cleared','History table emptied','alert');
   });
 
-  // Init
   function init(){ renderBead(); renderBig(); renderLog(); renderHistorySidebar(); renderHistoryTable(); sync(); }
   init();
   </script>
 
-  <!-- Lazy-load QRCode lib -->
   <script>
   (function ensureQR(){
     if (window.QRCode) return;

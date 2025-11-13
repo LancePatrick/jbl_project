@@ -1,145 +1,22 @@
-{{-- resources/views/billiard.blade.php --}}
-@php
-  // ===== SERVER STATE (pure PHP, no JS) =====
-  if(session_status()===PHP_SESSION_NONE) session_start();
+<?php
 
-  $user   = auth()->user() ?? null;
-  $roleId = $user && isset($user->role_id) ? (int)$user->role_id : 2; // 1=teller/admin, 2=player
+use Livewire\Attributes\Url;
+use Livewire\WithPagination;
+use Livewire\Volt\Component;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Illuminate\Http\Request;
+use App\Models\Event;
+use Illuminate\Support\Facades\Storage;
 
-  date_default_timezone_set('Asia/Manila');
-  $now = new DateTime();
+new #[Layout('components.layouts.app.sidebar')]
+#[Title('BK 2025 | Teller')] 
+class extends Component 
+{
 
-  // Seed initial state once
-  if (!isset($_SESSION['__billiard_init'])) {
-    $_SESSION['players'] = [
-      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
-      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
-      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
-      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
-    ];
-    // random matchup
-    $_SESSION['player1'] = $_SESSION['players'][array_rand($_SESSION['players'])];
-    do { $_SESSION['player2'] = $_SESSION['players'][array_rand($_SESSION['players'])]; }
-    while ($_SESSION['player2'] === $_SESSION['player1']);
-    $_SESSION['match_no'] = rand(100,999);
+}; ?>
 
-    // starting pots
-    $_SESSION['meron_amount'] = rand(10000,50000);
-    $_SESSION['wala_amount']  = rand(10000,50000);
-
-    // odds
-    $m = number_format(mt_rand(150,200)/100,2);
-    $_SESSION['meron_odds'] = $m;
-    $_SESSION['wala_odds']  = number_format($m+0.20,2);
-
-    // roads + balance + last chip
-    $_SESSION['results'] = ['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
-    $_SESSION['current_balance'] = 500000.00;
-    $_SESSION['last_amount'] = 100;
-    $_SESSION['__billiard_init'] = true;
-  }
-
-  // --- helpers ---
-  function event_date_label(){ return 'EVENT - '.(new DateTime('now', new DateTimeZone('Asia/Manila')))->format('m/d/Y'); }
-  function event_time_label(){ return (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('D h:i:s A'); }
-
-  function streakRuns($seq){ $out=[]; foreach($seq as $t){ if(!$out || $out[count($out)-1]['t']!==$t) $out[]=['t'=>$t,'n'=>1]; else $out[count($out)-1]['n']++; } return $out; }
-  function buildBigRoadStrictL($seq,$maxRows=8){
-    $runs=streakRuns($seq); $grid=[]; $label=1; $prevStart=-1; $ensure=function(&$g,$c){ if(!isset($g[$c])) $g[$c]=[]; };
-    foreach($runs as $run){
-      $t=$run['t']; if($prevStart<0){$col=0;$row=0;} else { $col=$prevStart+1;$row=0; while(isset($grid[$col][$row])){$col++;$ensure($grid,$col);} }
-      $thisStart=$col; $placed=0;
-      while($placed<$run['n'] && $row<$maxRows && !isset($grid[$col][$row])){ $ensure($grid,$col); $grid[$col][$row]=['t'=>$t,'label'=>$label++]; $placed++; $row++; }
-      $lock=max(0,$row-1); $remain=$run['n']-$placed; $c=$col+1;
-      while($remain>0){ $ensure($grid,$c); if(!isset($grid[$c][$lock])){ $grid[$c][$lock]=['t'=>$t,'label'=>$label++]; $remain--; } $c++; }
-      $prevStart=$thisStart;
-    }
-    return $grid;
-  }
-  function computeColumnsSequential($seq,$maxRows){
-    $cols=[]; $col=[]; $label=1; foreach($seq as $t){ $col[]=['t'=>$t,'label'=>$label++]; if(count($col)===$maxRows){ $cols[]=$col; $col=[]; } } if($col) $cols[]=$col; return $cols;
-  }
-  function renderLogroHTML($seq,$maxRows=8){
-    $g=buildBigRoadStrictL($seq,$maxRows); $o='';
-    foreach($g as $col){
-      $o.='<div class="logro-col" style="grid-template-rows:repeat('.$maxRows.', var(--logro-bubble))">';
-      for($r=0;$r<$maxRows;$r++){
-        if(isset($col[$r])){
-          $t=$col[$r]['t']; $o.='<div class="ring-bubble '.($t==='R'?'ring-red':'ring-blue').'"></div>';
-        } else {
-          $o.='<div class="ring-gap"></div>';
-        }
-      }
-      $o.='</div>';
-    }
-    return $o;
-  }
-  function renderBeadHTML($seq,$maxRows=8){
-    $cols=computeColumnsSequential($seq,$maxRows); $o='';
-    foreach($cols as $col){
-      $o.='<div class="bead-col" style="grid-template-rows:repeat('.$maxRows.', var(--bead-bubble))">';
-      for($r=0;$r<$maxRows;$r++){
-        if(isset($col[$r])){ $t=$col[$r]['t']; $lab=$col[$r]['label']; $o.='<div class="bead-solid '.($t==='R'?'red':'blue').'">'.$lab.'</div>'; }
-        else { $o.='<div class="bead" style="opacity:.12;border:1px dashed rgba(255,255,255,.15)"></div>'; }
-      }
-      $o.='</div>';
-    }
-    return $o;
-  }
-  function computePercents(){
-    $r=(float)($_SESSION['meron_amount']??0); $b=(float)($_SESSION['wala_amount']??0); $t=$r+$b;
-    if($t<=0) return [50,50,0];
-    $rp=round(($r/$t)*100); return [$rp,100-$rp,$t];
-  }
-
-  // --- actions (replace JS with PHP forms) ---
-  if(request()->isMethod('post')){
-    $act = request('action','');
-
-    if($act==='chip'){
-      $_SESSION['last_amount'] = max(0, (int)request('value',0));
-    }
-
-    if($act==='place_meron' && $roleId===2){
-      $amt = (float)(request('bet_amount', $_SESSION['last_amount']));
-      if($amt>0 && $_SESSION['current_balance']-$amt >= 0){
-        $_SESSION['current_balance'] -= $amt;
-        $_SESSION['meron_amount']    += $amt;
-      }
-    }
-    if($act==='place_wala' && $roleId===2){
-      $amt = (float)(request('bet_amount', $_SESSION['last_amount']));
-      if($amt>0 && $_SESSION['current_balance']-$amt >= 0){
-        $_SESSION['current_balance'] -= $amt;
-        $_SESSION['wala_amount']     += $amt;
-      }
-    }
-
-    if($act==='win_meron' && $roleId===1) $_SESSION['results'][]='R';
-    if($act==='win_wala'  && $roleId===1) $_SESSION['results'][]='B';
-    if($act==='undo'      && $roleId===1) array_pop($_SESSION['results']);
-    if($act==='clear'     && $roleId===1) $_SESSION['results']=[];
-
-    return redirect()->current();
-  }
-
-  // view vars
-  $player1 = $_SESSION['player1'];
-  $player2 = $_SESSION['player2'];
-  $matchNo = $_SESSION['match_no'];
-  $meronAmount = (float)$_SESSION['meron_amount'];
-  $walaAmount  = (float)$_SESSION['wala_amount'];
-  $meronOdds = $_SESSION['meron_odds'];
-  $walaOdds  = $_SESSION['wala_odds'];
-  $balance   = (float)$_SESSION['current_balance'];
-  $lastAmount= (int)$_SESSION['last_amount'];
-  [$pctR,$pctB,$pctTotal] = computePercents();
-  $logroHTML = renderLogroHTML($_SESSION['results'],8);
-  $beadHTML  = renderBeadHTML($_SESSION['results'],8);
-@endphp
-
-<x-layouts.app :title="__('Billiard')">
-  <body class="text-white font-sans bg-black">
+<div class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
   <!-- ====== STYLE (kept as in file; still Tailwind-focused) ====== -->
@@ -178,9 +55,9 @@
       <!-- LEFT: Video + Logrohan -->
       <div class="relative z-10 main-panel p-4 rounded-lg shadow-lg mt-2">
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
-          <div id="event-date" class="text-left">{{ event_date_label() }}</div>
-          <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">{{ $matchNo }}</span></div>
-          <div id="event-time" class="text-right">{{ event_time_label() }}</div>
+          <div id="event-date" class="text-left">testing</div>
+          <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">testing</span></div>
+          <div id="event-time" class="text-right">testing</div>
         </div>
 
         <div class="mb-3 relative w-full md:max-w-[85%] mx-auto">
@@ -210,7 +87,7 @@
           </div>
 
           @auth
-          @if($roleId===1)
+          @if(auth()->user()->role_id == 1)
             <form method="post" class="flex items-center gap-2 mb-2">
               @csrf
               <button name="action" value="win_meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-xs font-bold hover:bg-red-700">+ Red win</button>
@@ -222,7 +99,7 @@
           @endauth
 
           <div id="logro-rail" class="logro-rail">
-            <div id="logro-strip" class="logro-strip-3d">{!! $logroHTML !!}</div>
+            <div id="logro-strip" class="logro-strip-3d">testing</div>
           </div>
         </div>
       </div>
@@ -235,13 +112,13 @@
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-0">
             <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Bet Percentage</div>
             <div class="relative h-3 rounded-full bg-black/40 border border-white/10 overflow-hidden">
-              <div id="pct-red"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:{{ $pctR }}%"></div>
-              <div id="pct-blue" class="absolute right-0 top-0 h-full bg-blue-600/80" style="width:{{ $pctB }}%"></div>
+              <div id="pct-red"  class="absolute left-0 top-0 h-full bg-red-600/80" style=""></div>
+              <div id="pct-blue" class="absolute right-0 top-0 h-full bg-blue-600/80" style=""></div>
             </div>
             <div class="mt-1 grid grid-cols-3 text-[11px] text-white/70">
-              <div id="pct-red-label"  class="text-left">Red {{ $pctR }}%</div>
-              <div id="pct-total-label" class="text-center text-white/50">Total: ₱{{ number_format($pctTotal) }}</div>
-              <div id="pct-blue-label" class="text-right">Blue {{ $pctB }}%</div>
+              <div id="pct-red-label"  class="text-left">Red test%</div>
+              <div id="pct-total-label" class="text-center text-white/50">Total: ₱test</div>
+              <div id="pct-blue-label" class="text-right">Blue test%</div>
             </div>
           </div>
 
@@ -249,12 +126,12 @@
           <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-0">
             <div class="bet-card red text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
-              <div class="mt-2 text-sm font-semibold opacity-90" id="player1-name">{{ $player1 }}</div>
-              <div class="amount-3d text-3xl md:text-4xl mt-1" id="meron-amount">{{ number_format($meronAmount) }}</div>
+              <div class="mt-2 text-sm font-semibold opacity-90" id="player1-name">testing</div>
+              <div class="amount-3d text-3xl md:text-4xl mt-1" id="meron-amount">testing</div>
               <div class="mt-2">
-                <span class="odds-ribbon" id="meron-odds">PAYOUT = {{ $meronOdds }}</span>
+                <span class="odds-ribbon" id="meron-odds">PAYOUT = testing</span>
                 @auth
-                @if($roleId===2)
+                @if(auth()->user()->role_id == 2)
                   <form method="post" class="mt-2">
                     @csrf
                     <input type="hidden" name="bet_amount" value="{{ $lastAmount }}">
@@ -268,12 +145,12 @@
 
             <div class="bet-card blue text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">B</span></div>
-              <div class="mt-2 text-sm font-semibold opacity-90" id="player2-name">{{ $player2 }}</div>
-              <div class="amount-3d text-3xl md:text-4xl mt-1" id="wala-amount">{{ number_format($walaAmount) }}</div>
+              <div class="mt-2 text-sm font-semibold opacity-90" id="player2-name">testing</div>
+              <div class="amount-3d text-3xl md:text-4xl mt-1" id="wala-amount">testing</div>
               <div class="mt-3">
-                <span class="odds-ribbon" id="wala-odds">PAYOUT = {{ $walaOdds }}</span>
+                <span class="odds-ribbon" id="wala-odds">PAYOUT = testing</span>
                 @auth
-                @if($roleId===2)
+                @if(auth()->user()->role_id == 2)
                   <form method="post" class="mt-2">
                     @csrf
                     <input type="hidden" name="bet_amount" value="{{ $lastAmount }}">
@@ -289,7 +166,7 @@
           <!-- Bet Amount + MINI ROAD -->
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-2">
           @auth
-          @if($roleId===2)
+          @if(auth()->user()->role_id == 2)
             <div class="flex items-center justify-between mb-2">
               <div class="text-[15px] uppercase tracking-widest text-white/70">Bet Amount</div>
               <div class="text-[15px] text-white/60">min ₱100</div>
@@ -299,7 +176,7 @@
               @csrf
               <input type="number" name="bet_amount" class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]" placeholder="Enter amount" value="{{ $lastAmount }}" />
               <div class="balance-pill text-yellow-300">
-                <span class="amount text-base">{{ number_format($balance) }}</span>
+                <span class="amount text-base">testing</span>
               </div>
             </form>
 
@@ -321,7 +198,7 @@
                 </div>
               </div>
               <div id="bead-rail" class="bead-rail">
-                <div id="bead-strip" class="bead-strip">{!! $beadHTML !!}</div>
+                <div id="bead-strip" class="bead-strip">testing</div>
               </div>
             </div>
           </div>
@@ -333,25 +210,25 @@
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="flex items-center justify-between">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Bet %</div>
-            <div id="pct-total-label-mob" class="text-[11px] text-white/60">Total: ₱{{ number_format($pctTotal) }}</div>
+            <div id="pct-total-label-mob" class="text-[11px] text-white/60">Total: ₱testing</div>
           </div>
           <div class="relative h-2.5 rounded-full bg-black/40 border border-white/10 overflow-hidden mt-1.5">
-            <div id="pct-red-mob"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:{{ $pctR }}%"></div>
-            <div id="pct-blue-mob" class="absolute right-0 top-0 h-full bg-blue-600/80" style="width:{{ $pctB }}%"></div>
+            <div id="pct-red-mob"  class="absolute left-0 top-0 h-full bg-red-600/80" style=""></div>
+            <div id="pct-blue-mob" class="absolute right-0 top-0 h-full bg-blue-600/80" style=""></div>
           </div>
           <div class="mt-1.5 flex items-center justify-between text-[10px] text-white/70">
-            <div id="pct-red-label-mob">Red {{ $pctR }}%</div>
-            <div id="pct-blue-label-mob">Blue {{ $pctB }}%</div>
+            <div id="pct-red-label-mob">Red %</div>
+            <div id="pct-blue-label-mob">Blue %</div>
           </div>
         </div>
 
         <div class="bet-area grid grid-cols-2 gap-2">
           <div class="bet-card red text-center">
             <div class="name-chip text-lg">R</div>
-            <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player1-name-mob">{{ $player1 }}</div>
-            <div class="amount-3d text-2xl mt-0.5" id="meron-amount-mob">{{ number_format($meronAmount) }}</div>
-            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob">PAYOUT = {{ $meronOdds }}</span></div>
-            @if($roleId===2)
+            <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player1-name-mob">test</div>
+            <div class="amount-3d text-2xl mt-0.5" id="meron-amount-mob">test</div>
+            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob">PAYOUT = test</span></div>
+            @if(auth()->user()->role_id == 2)
               <form method="post" class="mt-2">@csrf
                 <input type="hidden" name="bet_amount" value="{{ $lastAmount }}">
                 <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" name="action" value="place_meron" id="bet-meron-mob">BET</button>
@@ -361,10 +238,10 @@
 
           <div class="bet-card blue text-center">
             <div class="name-chip text-lg">B</div>
-            <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player2-name-mob">{{ $player2 }}</div>
-            <div class="amount-3d text-2xl mt-0.5" id="wala-amount-mob">{{ number_format($walaAmount) }}</div>
-            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob">PAYOUT = {{ $walaOdds }}</span></div>
-            @if($roleId===2)
+            <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player2-name-mob">test</div>
+            <div class="amount-3d text-2xl mt-0.5" id="wala-amount-mob">test</div>
+            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob">PAYOUT = test</span></div>
+            @if(auth()->user()->role_id == 2)
               <form method="post" class="mt-2">@csrf
                 <input type="hidden" name="bet_amount" value="{{ $lastAmount }}">
                 <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" name="action" value="place_wala" id="bet-wala-mob">BET</button>
@@ -373,7 +250,7 @@
           </div>
         </div>
 
-        @if($roleId===2)
+        @if(auth()->user()->role_id == 2)
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="flex items-center justify-between mb-2">
             <div class="text-[12px] uppercase tracking-widest text-white/70">Bet Amount</div>
@@ -381,7 +258,7 @@
           </div>
           <form method="post" class="flex items-center gap-2 mb-2">@csrf
             <input type="number" name="bet_amount" class="bet-input p-2 text-sm text-white bg-black/30 w-full" placeholder="Enter amount" value="{{ $lastAmount }}" />
-            <div class="balance-pill text-yellow-300 shrink-0"><span class="amount text-sm">{{ number_format($balance) }}</span></div>
+            <div class="balance-pill text-yellow-300 shrink-0"><span class="amount text-sm">test</span></div>
           </form>
           <div class="grid grid-cols-4 gap-1">
             <form method="post">@csrf <input type="hidden" name="action" value="chip"><input type="hidden" name="value" value="100"><button class="chip3d chip-emerald chip-outline text-xs" type="submit">♦100</button></form>
@@ -401,7 +278,7 @@
             </div>
           </div>
 
-          @if($roleId===1)
+          @if(auth()->user()->role_id == 1)
             <form method="post" class="flex items-center gap-2 mb-2">
               @csrf
               <button name="action" value="win_meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-[11px] font-bold hover:bg-red-700">+ Red win</button>
@@ -412,13 +289,11 @@
           @endif
 
           <div id="logro-rail-mob" class="logro-rail">
-            <div id="logro-strip-mob" class="logro-strip-3d">{!! $logroHTML !!}</div>
+            <div id="logro-strip-mob" class="logro-strip-3d">test</div>
           </div>
         </div>
       </div>
       <!-- =================== /MOBILE STACK =================== -->
-
     </div>
   </main>
-</body>
-</x-layouts.app>
+</div>

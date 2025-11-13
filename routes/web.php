@@ -43,9 +43,13 @@ Route::view('teller', 'admin.teller')
     ->middleware(['auth', 'verified'])
     ->name('teller');
 
-// Route::middleware(['auth', 'verified',])->group(function () {
-//     Volt::route('/teller', 'logrohan-board');
-// });
+Route::view('bago', 'bago-php')
+    ->middleware(['auth', 'verified'])
+    ->name('bago');
+
+Route::middleware(['auth', 'verified',])->group(function () {
+    Volt::route('/logrohan', 'admin.logrohan-board');
+});
 
     // Route::view('teller-drag', 'teller-drag')
     // ->middleware(['auth', 'verified'])
