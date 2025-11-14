@@ -38,10 +38,7 @@
             data-tab="odds"
             class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)] px-3 py-2 font-black text-white shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
           >ODDS</button>
-          <button
-            data-tab="total"
-            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap"
-          >TOTAL</button>
+          
           <a
             href="#historySection"
             class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap"
@@ -84,7 +81,7 @@
 
           <!-- ODDS VIEW -->
           <div id="oddsView" class="grid gap-2">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div class="grid grid-cols-2 gap-2">
               <!-- RED CARD -->
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
                 <div class="flex items-center justify-between gap-2 min-w-0">
@@ -101,13 +98,10 @@
                     data-bet="red"
                     class="h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
                   >BET</button>
-                  <div class="text-[12px] opacity-85 hidden">
-                    <span id="payR100"></span>
-                  </div>
                 </div>
 
                 {{-- CURRENT BET / POTENTIAL PAYOUT (RED) --}}
-                <div class="mt-2 rounded-[14px] border border-white/25 bg-black/20 px-3 py-1.5 text-[12px]">
+                <div class="mt-2 hidden md:block rounded-[14px] border border-white/25 bg-black/20 px-3 py-1.5 text-[12px]">
                   <div class="flex items-center justify-between gap-2">
                     <span class="opacity-80">Current bet</span>
                     <span id="curBetRed" class="font-extrabold text-[#ffe95b] text-right truncate">—</span>
@@ -135,13 +129,10 @@
                     data-bet="blue"
                     class="h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
                   >BET</button>
-                  <div class="text-[12px] opacity-85 hidden">
-                    <span id="payB100"></span>
-                  </div>
                 </div>
 
                 {{-- CURRENT BET / POTENTIAL PAYOUT (BLUE) --}}
-                <div class="mt-2 rounded-[14px] border border-white/25 bg-black/20 px-3 py-1.5 text-[12px]">
+                <div class="mt-2 hidden md:block rounded-[14px] border border-white/25 bg-black/20 px-3 py-1.5 text-[12px]">
                   <div class="flex items-center justify-between gap-2">
                     <span class="opacity-80">Current bet</span>
                     <span id="curBetBlue" class="font-extrabold text-[#ffe95b] text-right truncate">—</span>
@@ -177,7 +168,7 @@
               <button class="h-[44px] rounded-[14px] border border-[#a76407] bg-[linear-gradient(180deg,#ffb23a,#d48112)] font-black text-[#1b1203]">♦1000</button>
             </div>
 
-            <!-- LAST BET (NEW) -->
+            <!-- LAST BET -->
             <div
               id="lastBet"
               class="mt-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] px-3 py-2 text-[12.5px] text-[#bcd1ff]"
@@ -188,39 +179,19 @@
                   <span data-lb-side class="ml-1 text-[#ffecec]">—</span>
                 </span>
                 <span>Amount:
-                  <span data-lb-amt class="payB100">—</span>
+                  <span data-lb-amt>—</span>
                 </span>
                 <span>Est. Winning:
-                  <span data-lb-win class="payB100">—</span>
+                  <span data-lb-win>—</span>
                 </span>
               </div>
             </div>
 
-            <!-- HIDDEN TOTALS WIDGET (for teller helpers) -->
-            <div
-              id="totalsWidget"
-              class="hidden grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] p-2"
-              aria-hidden="true"
-              inert
-            >
-              <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1"></div>
-              <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1"></div>
-              <div class="flex items-center justify-between border-b border-dashed border-[rgb(47_71_122_/_0.8)] py-1"></div>
-
-              <div class="h-2 overflow-hidden rounded-full border border-[#263553] bg-[#0c1220]">
-                <span id="bar" class="block h-full bg-[linear-gradient(90deg,#ff3b30,#2f7cff)] w-0"></span>
-              </div>
-
-              <div class="grid grid-cols-3 gap-2">
-                <button id="resetTotals" type="button" tabindex="-1" aria-hidden="true"></button>
-                <button id="demoBets"   type="button" tabindex="-1" aria-hidden="true"></button>
-              </div>
-            </div>
           </div>
 
-          <!-- TOTAL VIEW -->
+          <!-- TOTAL VIEW (for TOTAL tab kung gusto mo sa future) -->
           <div id="totalView" hidden class="grid gap-2">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div class="grid grid-cols-1 gap-1">
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
                 <div class="text-[13px] opacity-90">Total Bets — Red</div>
                 <div id="totalRed" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
@@ -238,15 +209,14 @@
                 </div>
               </div>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div class="grid grid-cols-1 gap-1">
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
                 <div class="text-[13px] opacity-90">Odds (x) — Red</div>
                 <div id="txRed" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">1.76</div>
               </div>
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3">
                 <div class="text-[13px] opacity-90">Odds (x) — Blue</div>
-                <div id="txBlue" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">1.47</div>
+                <div id="txBlue" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.2px]">1.47</div>
               </div>
             </div>
           </div>
@@ -429,24 +399,6 @@
     </section>
   </div>
 
-  <!-- MOBILE QUICK BET -->
-  <div
-    id="mbRail"
-    class="fixed inset-x-0 bottom-0 z-[2000] hidden gap-2 border-t border-[rgb(200_214_255_/_0.45)] bg-[rgba(10,18,35,.9)] p-2 backdrop-blur-[8px] md:hidden"
-  >
-    <input
-      id="mbAmount"
-      type="number"
-      min="1"
-      placeholder="₱ Amount"
-      class="h-[42px] w-full rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0a1122] px-2 text-[#e9f3ff]"
-    />
-    <button
-      id="mbBet"
-      class="h-[42px] rounded-[10px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-4 font-black text-white"
-    >BET</button>
-  </div>
-
   <!-- TOASTS -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
@@ -540,112 +492,7 @@
   let logs = [];
   let history = [];
 
-  let SOUND_ON = true, HAPTIC_ON = false;
-  function beep(type = 'click', dur = 80, freq = 440, vol = 0.05) {
-    if (!SOUND_ON || typeof AudioContext === 'undefined') return;
-    const ctx = beep.ctx || (beep.ctx = new (window.AudioContext || window.webkitAudioContext)());
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = (type === 'low' ? 'square' : 'sine');
-    o.frequency.value = freq;
-    g.gain.value = vol;
-    o.connect(g); g.connect(ctx.destination); o.start();
-    setTimeout(() => {
-      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.02);
-      o.stop(ctx.currentTime + 0.03);
-    }, dur);
-  }
-  function vibe(ms = 10) { if (HAPTIC_ON && navigator.vibrate) navigator.vibrate(ms); }
-
-  let DESK_NOTIF = false;
-  const notifs = [];
-  let unread = 0;
-  const notifUI = { btn: el('notifBtn'), panel: el('notifPanel'), list: el('notifList'), badge: el('notifBadge') };
-
-  function renderNotifs() {
-    if (!notifUI.list) return;
-    notifUI.list.innerHTML = '';
-    if (!notifs.length) {
-      const d = document.createElement('div');
-      d.className = 'rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1730] p-3';
-      d.innerHTML = '<div class="font-bold">No notifications</div><div class="text-sm opacity-80">You are all caught up.</div>';
-      notifUI.list.appendChild(d);
-    } else {
-      notifs.slice().reverse().forEach(n => {
-        const d = document.createElement('div');
-        d.className = 'rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1730] p-3';
-        if (!n.read) { d.style.outline = '2px solid rgba(64,185,255,.35)'; }
-        d.innerHTML = `
-          <div class="font-bold">${n.title}</div>
-          <div class="text-sm">${n.body || ''}</div>
-          <div class="text-xs opacity-70">${new Date(n.ts).toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'})}</div>`;
-        notifUI.list.appendChild(d);
-      });
-    }
-    if (notifUI.badge) {
-      notifUI.badge.style.display = unread > 0 ? 'grid' : 'none';
-      notifUI.badge.textContent = unread > 99 ? '99+' : String(unread);
-    }
-    try {
-      localStorage.setItem('dr_notifs', JSON.stringify(notifs));
-      localStorage.setItem('dr_unread', String(unread));
-    } catch {}
-  }
-  function panelShow(node, show) { if (node) node.dataset.show = show ? 'true' : 'false'; }
-  function addNotif(title, body = '', type = 'info', deskTry = true) {
-    const n = {
-      id: crypto.randomUUID?.() || Math.random().toString(36).slice(2),
-      title,
-      body,
-      type,
-      ts: Date.now(),
-      read: false
-    };
-    notifs.push(n);
-    unread++;
-    renderNotifs();
-    toast(title + (body ? ` • ${body}` : ''), 2400);
-    beep(type === 'win' ? 'click' : 'low', 90, type === 'win' ? 820 : 520, 0.06);
-    vibe(10);
-
-    if (deskTry && DESK_NOTIF && 'Notification' in window) {
-      if (Notification.permission === 'granted') {
-        new Notification(title, { body, silent: true });
-      } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then(p => {
-          DESK_NOTIF = (p === 'granted');
-          localStorage.setItem('deskn', DESK_NOTIF ? '1' : '0');
-          if (p === 'granted') addNotif(title, body, type, false);
-        });
-      }
-    }
-  }
-  (function() {
-    notifUI.btn?.addEventListener('click', e => {
-      e.stopPropagation();
-      const show = notifUI.panel?.dataset.show !== 'true';
-      panelShow(notifUI.panel, show);
-      if (show) {
-        notifs.forEach(n => n.read = true);
-        unread = 0;
-        renderNotifs();
-      }
-    });
-    document.addEventListener('click', e => {
-      if (notifUI.panel && !notifUI.panel.contains(e.target) && !notifUI.btn?.contains(e.target)) {
-        panelShow(notifUI.panel, false);
-      }
-    });
-    try {
-      const s = JSON.parse(localStorage.getItem('dr_notifs') || '[]');
-      const u = Number(localStorage.getItem('dr_unread') || '0');
-      if (Array.isArray(s)) notifs.push(...s);
-      unread = u || 0;
-      renderNotifs();
-      DESK_NOTIF = localStorage.getItem('deskn') === '1';
-    } catch {}
-  })();
-
-  /* odds helpers (logrohan) */
+  /* odds helpers */
   function smoothOdds(tR, tB, rate = 0.25) {
     state.oddsRed = +(state.oddsRed + (tR - state.oddsRed) * rate).toFixed(2);
     state.oddsBlue = +(state.oddsBlue + (tB - state.oddsBlue) * rate).toFixed(2);
@@ -660,7 +507,7 @@
     smoothOdds(tR, tB);
   }
 
-  /* CURRENT BET PANELS under each card */
+  /* CURRENT BET PANELS (desktop only) */
   function updateCurrentBetPanels() {
     const input = el('amount');
     if (!input) return;
@@ -724,7 +571,7 @@
     const m = Math.floor(pot / step);
     if (m > lastMilestone) {
       lastMilestone = m;
-      addNotif('Pot milestone', `Total pot hit ₱${fmt(m * step)}`, 'alert');
+      toast(`Pot milestone • Total pot hit ₱${fmt(m * step)}`);
     }
   }
 
@@ -741,26 +588,16 @@
     el('amtBlue').textContent = fmt(state.blue);
     el('oddsRed').textContent = state.oddsRed.toFixed(2);
     el('oddsBlue').textContent = state.oddsBlue.toFixed(2);
-    el('payR100').textContent = (100 * state.oddsRed).toFixed(0);
-    el('payB100').textContent = (100 * state.oddsBlue).toFixed(0);
-
-    const ro = document.getElementById('roadOdds');
-    if (ro) ro.textContent = `Red × ${state.oddsRed.toFixed(2)} • Blue × ${state.oddsBlue.toFixed(2)}`;
-
-    if (el('pot2')) el('pot2').textContent = fmt(pot);
-    if (el('tR2')) el('tR2').textContent = fmt(state.red);
-    if (el('tB2')) el('tB2').textContent = fmt(state.blue);
-    if (el('bar')) el('bar').style.width = (100 - r) + '%';
 
     if (el('payoutR')) el('payoutR').textContent = '× ' + state.oddsRed.toFixed(2);
     if (el('payoutB')) el('payoutB').textContent = '× ' + state.oddsBlue.toFixed(2);
 
-    el('shareRed').textContent = (r || 0).toFixed(1) + '%';
-    el('shareBlue').textContent = (b || 0).toFixed(1) + '%';
-    el('txRed').textContent = state.oddsRed.toFixed(2);
-    el('txBlue').textContent = state.oddsBlue.toFixed(2);
-    el('totalRed').textContent = fmt(state.red);
-    el('totalBlue').textContent = fmt(state.blue);
+    if (el('shareRed')) el('shareRed').textContent = (r || 0).toFixed(1) + '%';
+    if (el('shareBlue')) el('shareBlue').textContent = (b || 0).toFixed(1) + '%';
+    if (el('txRed')) el('txRed').textContent = state.oddsRed.toFixed(2);
+    if (el('txBlue')) el('txBlue').textContent = state.oddsBlue.toFixed(2);
+    if (el('totalRed')) el('totalRed').textContent = fmt(state.red);
+    if (el('totalBlue')) el('totalBlue').textContent = fmt(state.blue);
 
     checkMilestones(pot);
     syncSideHeight();
@@ -768,7 +605,6 @@
     renderHistorySidebar();
     renderHistoryTable();
 
-    /* update preview text sa ilalim ng BET buttons */
     updateCurrentBetPanels();
   }
 
@@ -1111,7 +947,7 @@
     renderBead();
     renderBig();
     addLog(v === 'R' ? 'Red' : 'Blue');
-    addNotif('Round result', `${v === 'R' ? 'Red' : 'Blue'} wins`, 'win');
+    toast(`Round result • ${v === 'R' ? 'Red' : 'Blue'} wins`);
   }
   function undo() {
     if (!seq.length) return;
@@ -1136,7 +972,7 @@
     clearInterval(tHandle);
     tLeft = seconds;
     setTimerText(formatSecs(tLeft));
-    addNotif('Round started', `${seconds} seconds`, 'alert');
+    toast(`Round started • ${seconds} seconds`);
     tHandle = setInterval(() => {
       tLeft--;
       setTimerText(formatSecs(Math.max(tLeft, 0)));
@@ -1144,7 +980,7 @@
         clearInterval(tHandle);
         tHandle = null;
         setTimerText('00:00');
-        addNotif('Round ended', 'Place bets closed', 'alert');
+        toast('Round ended • Place bets closed');
       }
     }, 1000);
   }
@@ -1153,7 +989,7 @@
     tHandle = null;
     tLeft = 0;
     setTimerText('—');
-    addNotif('Timer reset', 'Round timer cleared', 'info');
+    toast('Timer reset • Round timer cleared');
   }
   document.getElementById('startRound')?.addEventListener('click', () => startRound(60));
   document.getElementById('resetRound')?.addEventListener('click', resetRound);
@@ -1211,7 +1047,7 @@
   addEventListener('resize', syncSideHeight);
   addEventListener('load', syncSideHeight);
 
-  /* desktop BET buttons */
+  /* BET buttons */
   document.querySelectorAll('[data-bet]').forEach(btn => {
     btn.addEventListener('click', () => {
       const side = btn.getAttribute('data-bet');
@@ -1223,7 +1059,7 @@
       recalcOdds();
       sync();
       updateCurrentBetPanels();
-      addNotif('Bet placed', `${side.toUpperCase()} • ₱${fmt(val)}`, 'bet');
+      toast(`Bet placed • ${side.toUpperCase()} • ₱${fmt(val)}`);
 
       const odds = side === 'red' ? state.oddsRed : state.oddsBlue;
       updateLastBet(side, val, odds);
@@ -1245,48 +1081,6 @@
     updateCurrentBetPanels();
   });
 
-  /* mobile quick bet */
-  (function() {
-    const rail = el('mbRail');
-    const isMobile = () => matchMedia('(max-width:680px)').matches;
-    const toggle = () => { rail.style.display = isMobile() ? 'flex' : 'none'; };
-    toggle();
-    addEventListener('resize', toggle);
-    el('mbBet').addEventListener('click', () => {
-      const v = Number(el('mbAmount').value || 0);
-      if (v < 10) { toast('Minimum bet is ₱10'); return; }
-      const side = state.oddsRed > state.oddsBlue ? 'red' : 'blue';
-      state[side] += v;
-      el('mbAmount').value = '';
-      recalcOdds();
-      sync();
-      addNotif('Quick Bet', `${side.toUpperCase()} • ₱${fmt(v)}`, 'bet');
-
-      const odds = side === 'red' ? state.oddsRed : state.oddsBlue;
-      updateLastBet(side, v, odds);
-      addToHistory({ side, amount: v, odds });
-
-      if (ROLE_ID === 1) showReceipt({ side, amount: v, odds });
-    });
-  })();
-
-  /* totals widget demo/reset (teller tools) */
-  el('resetTotals').addEventListener('click', () => {
-    state.red = 0;
-    state.blue = 0;
-    recalcOdds();
-    sync();
-    addNotif('Totals reset', 'All bet totals cleared', 'alert');
-  });
-  el('demoBets').addEventListener('click', () => {
-    const inc = Math.floor(Math.random() * 5 + 1) * 50;
-    if (Math.random() > 0.5) state.red += inc;
-    else state.blue += inc;
-    recalcOdds();
-    sync();
-    toast('Simulated bet: ₱' + fmt(inc));
-  });
-
   /* CSV export for main results */
   document.getElementById('exportCsv')?.addEventListener('click', () => {
     const rows = [['Time', 'Winner', 'Pot', 'Odds', 'Payout per 100']];
@@ -1299,7 +1093,6 @@
     a.click();
     URL.revokeObjectURL(a.href);
     toast('CSV exported');
-    addNotif('CSV exported', 'Results saved locally', 'info');
   });
 
   document.getElementById('clearLog')?.addEventListener('click', () => {
@@ -1307,8 +1100,7 @@
     el('logBody') && (el('logBody').innerHTML = '');
     curPage = 1;
     renderLog();
-    toast('Logs cleared');
-    addNotif('Logs cleared', 'History table emptied', 'alert');
+    toast('Logs cleared • History table emptied');
   });
 
   function init() {
