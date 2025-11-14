@@ -75,6 +75,7 @@
     .bet-card::after { content:""; position:absolute; left:8%; right:8%; bottom:0; height:2px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent); filter:blur(.5px); transform:translateZ(22px); opacity:.7; }
     .bet-card:hover { transform:translateY(-6px) scale(1.01); filter:saturate(110%); }
     .bet-card.red { background: radial-gradient(120% 140% at 100% -10%, rgba(255,255,255,.10), rgba(255,255,255,0) 60%), linear-gradient(180deg,#ef4444 0%,#b91c1c 55%,#7f1d1d 100%); box-shadow:0 18px 32px rgba(185,28,28,.45), 0 8px 18px rgba(0,0,0,.45); }
+    .bet-card.green { background: radial-gradient(120% 140% at 100% -10%, rgba(255,255,255,.10), rgba(255,255,255,0) 60%), linear-gradient(180deg,#22c55e 0%,#16a34a 55%,#166534 100%); box-shadow:0 18px 32px rgba(22,163,74,.45), 0 8px 18px rgba(0,0,0,.45);}
     .bet-card.blue{ background: radial-gradient(120% 140% at 100% -10%, rgba(255,255,255,.10), rgba(255,255,255,0) 60%), linear-gradient(180deg,#3b82f6 0%,#1d4ed8 55%,#1e3a8a 100%); box-shadow:0 18px 32px rgba(29,78,216,.45), 0 8px 18px rgba(0,0,0,.45); }
     .name-chip { display:inline-block; padding:6px 12px; border-radius:9999px; font-weight:900; letter-spacing:.3px; background:rgba(0,0,0,.25); box-shadow:var(--inner-shadow); transform:translateZ(24px); }
     .amount-3d { font-weight:900; text-shadow:0 2px 0 rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.35); transform:translateZ(26px); }

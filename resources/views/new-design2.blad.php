@@ -3,8 +3,8 @@
   <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
-  <!-- ====== STYLE: isolate logrohan & road widths; keep video border steady ====== -->
-  <!-- <style>
+  <!-- ====== STYLE: logrohan + road + bet cards ====== -->
+  <style>
     :root{
       --logro-bubble: 26px;   /* desktop logro cell size */
       --logro-step: 3px;      /* faux 3D z-step */
@@ -20,9 +20,9 @@
         --bead-bubble: 22px;
         --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
       }
-    } -->
+    }
 
-    <!-- .main-panel{ min-width:0; }
+    .main-panel{ min-width:0; }
 
     /* ===== LOGRO ===== */
     .logro-zone{ min-width:0; }
@@ -52,7 +52,13 @@
       row-gap: var(--row-gap);
       align-content:start;
     }
-    .ring-gap{ width: var(--logro-bubble); height: var(--logro-bubble); opacity:.08; border:1px dashed rgba(255,255,255,.18); border-radius:999px; }
+    .ring-gap{
+      width: var(--logro-bubble);
+      height: var(--logro-bubble);
+      opacity:.08;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:999px;
+    }
 
     .ring-bubble{
       width: var(--logro-bubble);
@@ -65,8 +71,23 @@
         0 6px 16px rgba(0,0,0,.45);
       transform-style: preserve-3d;
     }
-    .ring-red{ color:#ef4444; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
-    .ring-blue{ color:#3b82f6; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
+    .ring-red{
+      color:#ef4444;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%);
+    }
+    .ring-blue{
+      color:#3b82f6;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%);
+    }
+    .ring-green{
+      color:#22c55e;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%);
+    }
+    /* gray bubble for cancelled fight */
+    .ring-gray{
+      color:#9ca3af;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%);
+    }
 
     /* ===== MINI ROAD (BEAD) ===== */
     .bead-rail{
@@ -108,20 +129,51 @@
     }
     .bead-solid.red{ background:#ef4444; border-color:#ef4444; color:white; }
     .bead-solid.blue{ background:#3b82f6; border-color:#3b82f6; color:white; }
+    .bead-solid.green{ background:#22c55e; border-color:#22c55e; color:white; }
+    /* gray bead for cancelled fight */
+    .bead-solid.gray{ background:#9ca3af; border-color:#9ca3af; color:white; }
 
     /* 3D badge/chips (existing hooks used by JS) */
-    .odds-ribbon{ background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.15); border-radius:8px; padding:.25rem .5rem; display:inline-block; }
-    .bet-card{ background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:.75rem; }
+    .odds-ribbon{
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0));
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:8px;
+      padding:.25rem .5rem;
+      display:inline-block;
+    }
+    .bet-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:.75rem;
+    }
     .bet-card.red{ box-shadow:0 10px 24px rgba(239,68,68,.15) }
     .bet-card.blue{ box-shadow:0 10px 24px rgba(59,130,246,.15) }
-    .bet-btn{ border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+    .bet-card.green{ box-shadow:0 10px 24px rgba(16,185,129,.18) }
+
+    .bet-btn{
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.05);
+    }
     .bet-btn.red:hover{ background:rgba(239,68,68,.25) }
     .bet-btn.blue:hover{ background:rgba(59,130,246,.25) }
+    .bet-btn.green:hover{ background:rgba(16,185,129,.25) }
 
-    .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
-    .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
+    .name-chip{
+      display:inline-grid;
+      place-items:center;
+      width:2.2rem;
+      height:2.2rem;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.05);
+    }
+    .amount-3d{
+      text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+    }
 
-    .video-shell{ contain: layout paint; } -->
+    .video-shell{ contain: layout paint; }
   </style>
 
   <!-- ========================================================
@@ -134,7 +186,9 @@
       <div class="relative z-10 main-panel mt-2 rounded-lg shadow-lg p-0 md:p-4">
         <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
           <div id="event-date" class="text-left"></div>
-          <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">—</span></div>
+          <div class="text-center font-bold text-yellow-400 text-lg">
+            MATCH# <span id="match-no">—</span>
+          </div>
           <div id="event-time" class="text-right"></div>
         </div>
 
@@ -160,16 +214,33 @@
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
             <div class="flex items-center gap-2 text-[10px]">
-              <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
-              <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid red inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                <span class="opacity-70">Red</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid blue inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                <span class="opacity-70">Blue</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid green inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                <span class="opacity-70">Draw</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid gray inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                <span class="opacity-70">Cancelled</span>
+              </div>
             </div>
           </div>
 
           @auth
             @if( auth()->user()->role_id == 1)
-              <div class="flex items-center gap-2 mb-2">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
                 <button id="btn-win-meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-xs font-bold hover:bg-red-700">+ Red win</button>
                 <button id="btn-win-wala"  class="px-2 py-1 rounded bg-blue-700/70 border border-white/10 text-xs font-bold hover:bg-blue-700">+ Blue win</button>
+                <button id="btn-draw"      class="px-2 py-1 rounded bg-emerald-700/70 border border-white/10 text-xs font-bold hover:bg-emerald-600">+ Draw</button>
+                <!-- gray cancel button -->
+                <button id="btn-cancel"    class="px-2 py-1 rounded bg-gray-400 text-gray-900 border border-white/10 text-xs font-semibold hover:bg-gray-300">Cancel fight</button>
                 <button id="btn-undo"      class="px-2 py-1 rounded bg-gray-700/70 border border-white/10 text-xs hover:bg-gray-700">Undo</button>
                 <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70 border border-white/10 text-xs hover:bg-gray-800">Clear</button>
               </div>
@@ -200,14 +271,45 @@
             </div>
           </div>
 
+          <!-- GREEN DRAW CARD: width = two bet cards, small height -->
+          <div class="mt-1">
+            <div class="bet-card green tilt text-center py-2 px-3">
+              <div class="flex items-center justify-between">
+                <span class="name-chip text-lg md:text-xl">D</span>
+                <span class="text-xs uppercase tracking-widest text-emerald-300/90">Draw</span>
+              </div>
+              <div class="mt-1 text-xs font-semibold opacity-80">
+                Any tie / same score result
+              </div>
+              <div class="amount-3d text-2xl mt-1" id="draw-amount"></div>
+              <div class="mt-1">
+                <span class="odds-ribbon text-xs" id="draw-odds"></span>
+              </div>
+              @auth
+                @if( auth()->user()->role_id == 2)
+                  <button
+                    class="bet-btn green mt-2 w-full px-3 py-1.5 text-xs font-semibold"
+                    id="bet-draw"
+                  >
+                    BET DRAW
+                  </button>
+                @endif
+              @endauth
+            </div>
+          </div>
+
           <!-- Cards -->
           <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-0">
             <div class="bet-card red tilt text-center">
-              <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
+              <div class="flex items-center justify-between">
+                <span class="name-chip text-xl md:text-2xl">R</span>
+              </div>
               <div class="mt-2 text-sm font-semibold opacity-90" id="player1-name"></div>
               <div class="amount-3d text-3xl md:text-4xl mt-1" id="meron-amount"></div>
               <div class="mt-">
-                <div class="mt-2"><span class="odds-ribbon" id="meron-odds"></span></div>
+                <div class="mt-2">
+                  <span class="odds-ribbon" id="meron-odds"></span>
+                </div>
                 @auth
                   @if( auth()->user()->role_id == 2)
                     <button class="bet-btn red mt-2 w-full px-3 py-2 text-sm" id="bet-meron">BET</button>
@@ -227,11 +329,15 @@
               </div>
             </div>
             <div class="bet-card blue tilt text-center">
-              <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">B</span></div>
+              <div class="flex items-center justify-between">
+                <span class="name-chip text-xl md:text-2xl">B</span>
+              </div>
               <div class="mt-2 text-sm font-semibold opacity-90" id="player2-name"></div>
               <div class="amount-3d text-3xl md:text-4xl mt-1" id="wala-amount"></div>
               <div class="mt-3">
-                <div class="mt-2"><span class="odds-ribbon" id="wala-odds"></span></div>
+                <div class="mt-2">
+                  <span class="odds-ribbon" id="wala-odds"></span>
+                </div>
                 @auth
                   @if( auth()->user()->role_id == 2)
                     <button class="bet-btn blue mt-2 w-full px-3 py-2 text-sm" id="bet-wala">BET</button>
@@ -262,7 +368,13 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <input type="number" id="bet-amount-desktop" class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]" placeholder="Enter amount" inputmode="numeric" />
+              <input
+                type="number"
+                id="bet-amount-desktop"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
               <div class="balance-pill text-yellow-300">
                 <span id="mid-balance" class="amount text-base">5,000</span>
               </div>
@@ -281,8 +393,22 @@
               <div class="flex items-center justify-between mt-2">
                 <div class="text-[11px] uppercase tracking-widest text-white/70">Road</div>
                 <div class="flex items-center gap-2 text-[10px]">
-                  <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
-                  <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
+                  <div class="flex items-center gap-1">
+                    <span class="bead-solid red inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                    <span class="opacity-70">Red</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <span class="bead-solid blue inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                    <span class="opacity-70">Blue</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <span class="bead-solid green inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                    <span class="opacity-70">Draw</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <span class="bead-solid gray inline-block" style="width:12px;height:12px;border-width:2px"></span>
+                    <span class="opacity-70">Cancelled</span>
+                  </div>
                 </div>
               </div>
               <div id="bead-rail" class="bead-rail">
@@ -310,12 +436,42 @@
           </div>
         </div>
 
+        <!-- ✅ MOBILE DRAW CARD ABOVE R/B CARDS -->
+        <div class="mt-1">
+          <div class="bet-card green text-center py-2 px-3">
+            <div class="flex items-center justify-between">
+              <span class="name-chip text-base">D</span>
+              <span class="text-[10px] uppercase tracking-widest text-emerald-300/90">Draw</span>
+            </div>
+            <div class="mt-1 text-[11px] font-semibold opacity-80 leading-tight">
+              Any tie / same score result
+            </div>
+            <div class="amount-3d text-xl mt-1" id="draw-amount-mob"></div>
+            <div class="mt-1">
+              <span class="odds-ribbon text-[10px] px-1 py-0.5" id="draw-odds-mob"></span>
+            </div>
+            @auth
+              @if( auth()->user()->role_id == 2)
+                <button
+                  class="bet-btn green mt-2 w-full px-3 py-1.5 text-[11px] font-semibold"
+                  id="bet-draw-mob"
+                >
+                  BET DRAW
+                </button>
+              @endif
+            @endauth
+          </div>
+        </div>
+
+        <!-- RED / BLUE CARDS (MOBILE) -->
         <div class="bet-area grid grid-cols-2 gap-2">
           <div class="bet-card red text-center">
             <div class="name-chip text-lg">R</div>
             <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player1-name-mob"></div>
             <div class="amount-3d text-2xl mt-0.5" id="meron-amount-mob"></div>
-            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob"></span></div>
+            <div class="mt-1">
+              <span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob"></span>
+            </div>
             @auth
               @if( auth()->user()->role_id == 2)
                 <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" id="bet-meron-mob">BET</button>
@@ -337,7 +493,9 @@
             <div class="name-chip text-lg">B</div>
             <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player2-name-mob"></div>
             <div class="amount-3d text-2xl mt-0.5" id="wala-amount-mob"></div>
-            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob"></span></div>
+            <div class="mt-1">
+              <span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob"></span>
+            </div>
             @auth
               @if( auth()->user()->role_id == 2)
                 <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" id="bet-wala-mob">BET</button>
@@ -365,7 +523,13 @@
               <div class="text-[12px] text-white/60">min ₱100</div>
             </div>
             <div class="flex items-center gap-2 mb-2">
-              <input type="number" id="bet-amount-mob" class="bet-input p-2 text-sm text-white bg-black/30 w-full" placeholder="Enter amount" inputmode="numeric" />
+              <input
+                type="number"
+                id="bet-amount-mob"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-full"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
               <div class="balance-pill text-yellow-300 shrink-0">
                 <span id="mid-balance" class="amount text-sm">5,000</span>
               </div>
@@ -384,15 +548,32 @@
           <div class="flex items-center justify-between mb-1">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
             <div class="flex items-center gap-2 text-[10px]">
-              <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:10px;height:10px;border-width:2px"></span><span class="opacity-70">Red</span></div>
-              <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:10px;height:10px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid red inline-block" style="width:10px;height:10px;border-width:2px"></span>
+                <span class="opacity-70">Red</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid blue inline-block" style="width:10px;height:10px;border-width:2px"></span>
+                <span class="opacity-70">Blue</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid green inline-block" style="width:10px;height:10px;border-width:2px"></span>
+                <span class="opacity-70">Draw</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="bead-solid gray inline-block" style="width:10px;height:10px;border-width:2px"></span>
+                <span class="opacity-70">Cancelled</span>
+              </div>
             </div>
           </div>
           @auth
             @if( auth()->user()->role_id == 1)
-              <div class="flex items-center gap-2 mb-2">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
                 <button id="btn-win-meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-[11px] font-bold hover:bg-red-700">+ Red win</button>
                 <button id="btn-win-wala"  class="px-2 py-1 rounded bg-blue-700/70 border border-white/10 text-[11px] font-bold hover:bg-blue-700">+ Blue win</button>
+                <button id="btn-draw"      class="px-2 py-1 rounded bg-emerald-700/70 border border-white/10 text-[11px] font-bold hover:bg-emerald-600">+ Draw</button>
+                <!-- gray cancel button (mobile) -->
+                <button id="btn-cancel"    class="px-2 py-1 rounded bg-gray-400 text-gray-900 border border-white/10 text-[11px] font-semibold hover:bg-gray-300">Cancel fight</button>
                 <button id="btn-undo"      class="px-2 py-1 rounded bg-gray-700/70 border border-white/10 text-[11px] hover:bg-gray-700">Undo</button>
                 <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70 border border-white/10 text-[11px] hover:bg-gray-800">Clear</button>
               </div>
@@ -424,7 +605,8 @@
 
     // B) STATE
     let results = [];
-    let meronAmount, walaAmount, meronOdds, walaOdds;
+    let meronAmount, walaAmount, drawAmount;
+    let meronOdds, walaOdds, drawOdds;
     let currentBalance = 500000;
     const betHistory = [];
 
@@ -550,7 +732,12 @@
           const cell = col && col[r];
           if(cell){
             const b=document.createElement('div');
-            b.className=`ring-bubble ${cell.t==='R'?'ring-red':'ring-blue'}`;
+            let ringClass =
+              cell.t === 'R' ? 'ring-red' :
+              cell.t === 'B' ? 'ring-blue' :
+              cell.t === 'D' ? 'ring-green' :
+              'ring-gray';
+            b.className=`ring-bubble ${ringClass}`;
             const depth=Math.min(r,maxRows-1);
             b.style.setProperty('--z',`calc(var(--logro-step) * ${depth})`);
             b.style.transform=`translateZ(var(--z))`;
@@ -576,8 +763,19 @@
         for(let r=0;r<maxRows;r++){
           const cell=col[r];
           const dot=document.createElement('div');
-          if(cell){ dot.className='bead-solid '+(cell.t==='R'?'red':'blue'); dot.textContent=cell.label; }
-          else { dot.className='bead'; dot.style.opacity='0.12'; dot.style.border='1px dashed rgba(255,255,255,.15)'; }
+          if(cell){
+            let beadClass =
+              cell.t === 'R' ? 'red' :
+              cell.t === 'B' ? 'blue' :
+              cell.t === 'D' ? 'green' :
+              'gray';
+            dot.className='bead-solid '+beadClass;
+            dot.textContent=cell.label;
+          } else {
+            dot.className='bead';
+            dot.style.opacity='0.12';
+            dot.style.border='1px dashed rgba(255,255,255,.15)';
+          }
           colDiv.appendChild(dot);
         }
         strip.appendChild(colDiv);
@@ -595,12 +793,16 @@
     function computeOdds(){
       meronOdds=(Math.random()*(2.0-1.5)+1.5).toFixed(2);
       walaOdds=(parseFloat(meronOdds)+0.20).toFixed(2);
+      drawOdds=(Math.random()*(3.0-2.2)+2.2).toFixed(2);
     }
     function renderOddsEverywhere(){
       const m=document.getElementById('meron-odds'); if(m) m.textContent='PAYOUT = '+meronOdds;
       const w=document.getElementById('wala-odds');  if(w) w.textContent='PAYOUT = '+walaOdds;
+      const d=document.getElementById('draw-odds');  if(d) d.textContent='PAYOUT = '+drawOdds;
+
       const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent='PAYOUT = '+meronOdds;
       const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent='PAYOUT = '+walaOdds;
+      const dm=document.getElementById('draw-odds-mob'); if(dm) dm.textContent='PAYOUT = '+drawOdds;
     }
     function renderBalance(){
       const mid=document.getElementById('mid-balance');
@@ -611,6 +813,8 @@
 
     // 🔹 Update current bet display per side (desktop + mobile)
     function updateSideCurrentBet(side, playerName, betAmount, odds, totalWinnings){
+      if(side === 'DRAW') return; // no per-card summary for draw
+
       const key = side === 'MERON' ? 'meron' : 'wala';
 
       const labelDesktop = document.getElementById(key + '-current-bet');
@@ -624,7 +828,6 @@
         maximumFractionDigits: 2
       });
 
-      // ✅ Current bet: amount + odds lang
       const labelText = `${amtStr} @ ${odds}x`;
 
       if(labelDesktop) labelDesktop.textContent = labelText;
@@ -636,7 +839,7 @@
     function updatePercentBar(){
       const red = meronAmount||0;
       const blue = walaAmount||0;
-      const total = red + blue;
+      const total = red + blue; // draw intentionally not included in percentage bar
       let redPct = 50, bluePct = 50;
       if(total > 0){
         redPct  = Math.round((red / total) * 100);
@@ -676,7 +879,10 @@
 
     // G) HISTORY UI
     function sideBadgeHTML(side){
-      const cls=side==='MERON'?'side-badge side-meron':'side-badge side-wala';
+      let cls = 'side-badge ';
+      if(side === 'MERON') cls += 'side-meron';
+      else if(side === 'WALA') cls += 'side-wala';
+      else cls += 'side-draw';
       return `<span class="side-3d"><span class="${cls}">${side}</span></span>`;
     }
     function badgeClassByStatus(s){
@@ -706,7 +912,10 @@
           <div class="py-2 px-2 text-xs">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">${sideChip}</div>
-              <div class="flex items-center gap-2">${badge}<div class="text-white/50">${item.time}</div></div>
+              <div class="flex items-center gap-2">
+                ${badge}
+                <div class="text-white/50">${item.time}</div>
+              </div>
             </div>
             <div class="text-white/80 mt-1">${item.player} • Match #${item.matchId}</div>
             <div class="mt-0.5">
@@ -714,7 +923,10 @@
               @ <span class="font-semibold">${item.odds}</span>
               = <span class="text-yellow-300 font-bold">${Number(item.payout).toLocaleString()}</span>
             </div>
-            <div class="text-white/50 mt-0.5">Bal: ${Number(item.balanceBefore).toLocaleString()} → <span class="text-white/80 font-semibold">${Number(item.balanceAfter).toLocaleString()}</span></div>
+            <div class="text-white/50 mt-0.5">
+              Bal: ${Number(item.balanceBefore).toLocaleString()} →
+              <span class="text-white/80 font-semibold">${Number(item.balanceAfter).toLocaleString()}</span>
+            </div>
           </div>`;
       }).join('');
     }
@@ -724,6 +936,10 @@
       const idx=betHistory.findIndex(b=>b.status==='PENDING');
       if(idx===-1) return;
       const bet=betHistory[idx];
+      if(winSide === 'CANCEL'){
+        // ignore, no win/lose resolution when fight cancelled
+        return;
+      }
       if(bet.side===winSide){
         bet.status='WIN';
         adjustBalance(parseFloat(bet.payout));
@@ -734,6 +950,7 @@
       }
       renderHeaderHistory();
     }
+
     function placeBet(betType){
       const input = getBetInput();
       let betAmount = input ? parseFloat(input.value) : NaN;
@@ -743,36 +960,62 @@
       }
       let odds, chosenPlayer;
       if(betType==='MERON'){
-        odds=meronOdds; chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
+        odds=meronOdds;
+        chosenPlayer=(document.getElementById('player1-name')?.textContent ||
+                      document.getElementById('player1-name-mob')?.textContent);
+      } else if(betType==='WALA'){
+        odds=walaOdds;
+        chosenPlayer=(document.getElementById('player2-name')?.textContent ||
+                      document.getElementById('player2-name-mob')?.textContent);
       } else {
-        odds=walaOdds;  chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
+        odds=drawOdds;
+        chosenPlayer='Draw';
       }
+
       const balanceBefore=currentBalance;
-      if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; }
+      if(!adjustBalance(-betAmount)){
+        alert('Insufficient balance.');
+        return;
+      }
 
       if(betType==='MERON'){
         meronAmount+=betAmount;
         const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
         const elm=document.getElementById('meron-amount-mob'); if(elm) elm.textContent=meronAmount.toLocaleString();
-      } else {
+      } else if(betType==='WALA'){
         walaAmount+=betAmount;
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
         const elm=document.getElementById('wala-amount-mob'); if(elm) elm.textContent=walaAmount.toLocaleString();
+      } else { // DRAW
+        drawAmount+=betAmount;
+        const el=document.getElementById('draw-amount'); if(el) el.textContent=drawAmount.toLocaleString();
+        const elm=document.getElementById('draw-amount-mob'); if(elm) elm.textContent=drawAmount.toLocaleString();
       }
       updatePercentBar();
 
       const totalWinnings = betAmount * parseFloat(odds);
-      const playerName = chosenPlayer || (betType==='MERON' ? 'Red' : 'Blue');
+      const playerName = chosenPlayer || (
+        betType==='MERON' ? 'Red' :
+        betType==='WALA' ? 'Blue' :
+        'Draw'
+      );
 
-      // 🔹 Update per-card current bet display
+      // 🔹 Update per-card current bet display (only for Meron/Wala)
       updateSideCurrentBet(betType, playerName, betAmount, odds, totalWinnings);
 
       const matchId=document.getElementById('match-no')?.textContent||'—';
       const time=new Date().toLocaleString('en-PH',{hour12:true});
       addToHistory({
-        side:betType, player:playerName,
-        matchId, amount:betAmount, odds:odds, payout:totalWinnings.toFixed(2),
-        time, balanceBefore, balanceAfter:currentBalance, status:'PENDING'
+        side:betType,
+        player:playerName,
+        matchId,
+        amount:betAmount,
+        odds:odds,
+        payout:totalWinnings.toFixed(2),
+        time,
+        balanceBefore,
+        balanceAfter:currentBalance,
+        status:'PENDING'
       });
 
       alert(
@@ -781,21 +1024,84 @@
         `New Balance: ₱${currentBalance.toLocaleString('en-PH')}.`
       );
     }
-    function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
-    function undoResult(){ results.pop(); renderAllRoads(results); }
-    function clearResults(){ results=[]; renderAllRoads(results); }
+
+    function pushResult(side){
+      if(side === 'MERON'){
+        results.push('R');
+      } else if(side === 'WALA'){
+        results.push('B');
+      } else if(side === 'DRAW'){
+        results.push('D');
+      }
+      renderAllRoads(results);
+      resolveLatestBet(side);
+    }
+    function undoResult(){
+      results.pop();
+      renderAllRoads(results);
+    }
+    function clearResults(){
+      results=[];
+      renderAllRoads(results);
+    }
+
+    function cancelFight(){
+      // add gray cancelled marker to roads
+      results.push('C');
+      renderAllRoads(results);
+
+      // reset bet pools for next fight
+      meronAmount = 0;
+      walaAmount  = 0;
+      drawAmount  = 0;
+
+      const ma=document.getElementById('meron-amount'); if(ma) ma.textContent='0';
+      const wa=document.getElementById('wala-amount');  if(wa) wa.textContent='0';
+      const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent='0';
+      const wam=document.getElementById('wala-amount-mob');  if(wam) wam.textContent='0';
+      const da=document.getElementById('draw-amount'); if(da) da.textContent='0';
+      const dam=document.getElementById('draw-amount-mob'); if(dam) dam.textContent='0';
+
+      // clear per-card current bet summaries
+      const resetCurrentBet = (id) => {
+        const el = document.getElementById(id);
+        if(el) el.textContent = '—';
+      };
+      [
+        'meron-current-bet','meron-current-payout',
+        'wala-current-bet','wala-current-payout',
+        'meron-current-bet-mob','meron-current-payout-mob',
+        'wala-current-bet-mob','wala-current-payout-mob'
+      ].forEach(resetCurrentBet);
+
+      updatePercentBar();
+      resolveLatestBet('CANCEL');
+      // no alert/confirmation on cancel
+    }
 
     // I) INIT
     window.onload = () => {
-      setDateTime(); setRandomMatch();
+      setDateTime();
+      setRandomMatch();
+
       let meronAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
       let walaAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
-      meronAmount=meronAmountInit; walaAmount=walaAmountInit;
-      computeOdds(); renderOddsEverywhere();
+      let drawAmountInit=Math.floor(Math.random()*(20000-5000+1))+5000;
+
+      meronAmount=meronAmountInit;
+      walaAmount=walaAmountInit;
+      drawAmount=drawAmountInit;
+
+      computeOdds();
+      renderOddsEverywhere();
+
       const ma=document.getElementById('meron-amount'); if(ma) ma.textContent=meronAmount.toLocaleString();
       const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
       const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
       const wam=document.getElementById('wala-amount-mob'); if(wam) wam.textContent=walaAmount.toLocaleString();
+      const da=document.getElementById('draw-amount'); if(da) da.textContent=drawAmount.toLocaleString();
+      const dam=document.getElementById('draw-amount-mob'); if(dam) dam.textContent=drawAmount.toLocaleString();
+
       updatePercentBar();
       document.querySelectorAll('.tilt').forEach(attachTilt);
 
@@ -812,22 +1118,39 @@
 
       const wm=document.getElementById('btn-win-meron');
       const ww=document.getElementById('btn-win-wala');
+      const wd=document.getElementById('btn-draw');
       const uu=document.getElementById('btn-undo');
       const cc=document.getElementById('btn-clear');
+      const cf=document.getElementById('btn-cancel');
+
       if(wm) wm.addEventListener('click', ()=> pushResult('MERON'));
       if(ww) ww.addEventListener('click',  ()=> pushResult('WALA'));
+      if(wd) wd.addEventListener('click',  ()=> pushResult('DRAW'));
       if(uu) uu.addEventListener('click',  undoResult);
       if(cc) cc.addEventListener('click',  clearResults);
+      if(cf) cf.addEventListener('click',  cancelFight);
 
       results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
-      renderAllRoads(results); 
+      renderAllRoads(results);
       renderBalance();
 
       const hBtn=document.getElementById('header-history-btn');
       const hMenu=document.getElementById('header-history-menu');
       const hClear=document.getElementById('header-history-clear');
-      if(hBtn && hMenu){ hBtn.addEventListener('click',(e)=>{ e.stopPropagation(); hMenu.classList.toggle('hidden'); }); }
-      if(hClear){ hClear.addEventListener('click',()=>{ betHistory.length=0; renderHeaderHistory(); const dot=document.getElementById('header-history-dot'); if(dot) dot.classList.add('hidden'); }); }
+      if(hBtn && hMenu){
+        hBtn.addEventListener('click',(e)=>{
+          e.stopPropagation();
+          hMenu.classList.toggle('hidden');
+        });
+      }
+      if(hClear){
+        hClear.addEventListener('click',()=>{
+          betHistory.length=0;
+          renderHeaderHistory();
+          const dot=document.getElementById('header-history-dot');
+          if(dot) dot.classList.add('hidden');
+        });
+      }
 
       // ✅ Bet chips: set the visible "Enter amount"
       document.querySelectorAll('.bet-chip').forEach(btn=>{
@@ -841,14 +1164,18 @@
       // Desktop bet buttons
       const bm=document.getElementById('bet-meron');
       const bw=document.getElementById('bet-wala');
+      const bd=document.getElementById('bet-draw');
       if(bm) bm.addEventListener('click', ()=> placeBet('MERON'));
       if(bw) bw.addEventListener('click',  ()=> placeBet('WALA'));
+      if(bd) bd.addEventListener('click',  ()=> placeBet('DRAW'));
 
       // Mobile bet buttons
       const bmm=document.getElementById('bet-meron-mob');
       const bwm=document.getElementById('bet-wala-mob');
+      const bdm=document.getElementById('bet-draw-mob');
       if(bmm) bmm.addEventListener('click', ()=> placeBet('MERON'));
       if(bwm) bwm.addEventListener('click',  ()=> placeBet('WALA'));
+      if(bdm) bdm.addEventListener('click',  ()=> placeBet('DRAW'));
     };
   </script>
 </body>

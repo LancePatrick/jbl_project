@@ -141,10 +141,11 @@
 
           <div class="mt-3 text-[12px] text-white/70 uppercase tracking-widest">Customer Details</div>
           <div class="mt-1 grid grid-cols-2 gap-2 text-[13px]">
-            <input id="cust-name"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Full name"/>
-            <input id="cust-user"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Username"/>
-            <input id="cust-email" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Email address"/>
-            <input id="cust-phone" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Contact number"/>
+            <!-- 4 fields repurposed as requested -->
+            <input id="cust-name"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Bet" readonly/>
+            <input id="cust-user"  class="bet-input bg-black/30 p-2 col-span-2 lg:col-span-1" placeholder="Total Payout" readonly/>
+            <input id="cust-email" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Time & date" readonly/>
+            <input id="cust-phone" class="bet-input bg-black/30 p-2 col-span-2" placeholder="Player bet" readonly/>
               @auth
                 @if( auth()->user()->role_id == 1)
                   <button id="btn-win-meron" class="bet-input bg-black/30 p-2">Red Score</button>
@@ -274,7 +275,7 @@
                 </div>
               </div>
               <div id="logro-rail-center" class="logro-rail">
-                <div id="logro-strip-center" class="logro-strip-3d !overflow-x-auto !overflow-y-hidden !overflow-visible !max-w-[220px] lg:!max-w-full"></div>
+                <div id="logro-strip-center" class="logro-strip-3d !overflow-x-auto !overflow-y-hidden !overflow-visible !max-w-[220px] lg:!max-w/full"></div>
               </div>
             </div>
 
@@ -288,7 +289,7 @@
                 </div>
               </div>
               <div class="bead-rail !overflow-x-auto ">
-                <div id="bead-strip-center" class="bead-strip !overflow-x-auto !overflow-y-hidden !overflow-visible !max-w-[220px] lg:!max-w-full"></div>
+                <div id="bead-strip-center" class="bead-strip !overflow-x-auto !overflow-y-hidden !overflow-visible !max-w-[220px] lg:!max-w/full"></div>
               </div>
             </div>
           </div>
@@ -520,7 +521,6 @@
       strip.scrollLeft=strip.scrollWidth;
     }
     function renderAllRoads(seq){
-      // Center + Mobile
       renderLogroContinuous(seq,'logro-strip-center',BIGROAD_MAX_ROWS);
       renderRoadStrictL(seq,'bead-strip-center',BEAD_MAX_ROWS);
       renderLogroContinuous(seq,'logro-strip-mob',BIGROAD_MAX_ROWS);
@@ -619,6 +619,14 @@
       if(holder && wrap){ holder.innerHTML = html; wrap.classList.remove('hidden'); window.print(); setTimeout(()=>wrap.classList.add('hidden'), 300); }
     }
 
+    /* ====== CUSTOMER DETAILS HELPER ====== */
+    function updateCustomerDetails({ amount, payout, time, who }){
+      const betEl   = document.getElementById('cust-name');   if(betEl)   betEl.value   = `₱${Number(amount||0).toLocaleString('en-PH')}`;
+      const payEl   = document.getElementById('cust-user');   if(payEl)   payEl.value   = `₱${Number(payout||0).toLocaleString('en-PH')}`;
+      const timeEl  = document.getElementById('cust-email');  if(timeEl)  timeEl.value  = time || '';
+      const whoEl   = document.getElementById('cust-phone');  if(whoEl)   whoEl.value   = who || '';
+    }
+
     /* Confirm helpers */
     function openConfirmModal(details){
       pendingBet = details;
@@ -654,6 +662,15 @@
       if(betType==='MERON'){ const r=document.getElementById('meron-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`; const c=document.getElementById('wala-result'); if(c) c.textContent=""; }
       else { const r=document.getElementById('wala-result'); if(r) r.textContent=`${chosenPlayer} • Winnings: ${totalWinnings.toFixed(2)}`; const c=document.getElementById('meron-result'); if(c) c.textContent=""; }
       const time=new Date().toLocaleString('en-PH',{hour12:true});
+
+      /* >>> Update Customer Details after successful bet <<< */
+      updateCustomerDetails({
+        amount: betAmount,
+        payout: totalWinnings,
+        time,
+        who: `${betType} — ${chosenPlayer}`
+      });
+
       const entry = { side:betType, player:chosenPlayer, matchId, amount:betAmount, odds, payout:totalWinnings.toFixed(2), time, balanceBefore, balanceAfter:currentBalance, status:'PENDING' };
       addToHistory(entry);
       const ticketId = buildTicketId(matchId, betType, betAmount);
@@ -664,10 +681,8 @@ Possible payout: ${totalWinnings.toFixed(2)}.
 New Balance: ${currentBalance.toLocaleString()}.`);
     }
 
-    function pushResult(side)
-    { 
+    function pushResult(side){ 
       results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); 
-      console.log(results);
     }
     function undoResult(){ results.pop(); renderAllRoads(results); }
     function clearResults(){ results=[]; renderAllRoads(results); }
@@ -736,15 +751,15 @@ New Balance: ${currentBalance.toLocaleString()}.`);
           e.preventDefault();
           const code = (input?.value || '').trim();
           if(!code){ status.textContent = 'Please enter a card code.'; return; }
-          document.getElementById('cust-name').value  = 'BK Guest';
-          document.getElementById('cust-user').value  = 'guest_'+code.slice(-4);
-          document.getElementById('cust-email').value = 'guest@example.com';
-          document.getElementById('cust-phone').value = '09XXXXXXXXX';
+          // No overwrite of Customer Details; status only
           status.textContent = 'Card accepted: '+code;
         });
       }
       reset?.addEventListener('click', ()=>{
-        input.value=''; ['cust-name','cust-user','cust-email','cust-phone'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+        input.value='';
+        ['cust-name','cust-user','cust-email','cust-phone'].forEach(id=>{
+          const el=document.getElementById(id); if(el) el.value='';
+        });
         status.textContent='';
       });
     })();
@@ -774,8 +789,6 @@ New Balance: ${currentBalance.toLocaleString()}.`);
       if(ww) ww.addEventListener('click',()=>pushResult('WALA'));
       if(uu) uu.addEventListener('click',undoResult);
       if(cc) cc.addEventListener('click',clearResults);
-
-      // results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
 
       renderAllRoads(results);
       renderBalance();
