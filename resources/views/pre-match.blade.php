@@ -77,6 +77,22 @@
                 filter: brightness(1.2)
             }
         }
+
+        /* Prevent image dragging/selection/context-callout on mobile */
+        .no-drag {
+            -webkit-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Hint mobile to treat taps as clicks (no 300ms delay) */
+        .no-drag-btn {
+            touch-action: manipulation;
+        }
     </style>
 
     <!-- (Optional) Backend can override the sample data by defining window.TABLE_DATA before Alpine runs -->
@@ -103,144 +119,144 @@
 
                 data: window.TABLE_DATA ?? {
                     billiards: [{
-                            event: 'World Billiards Final',
-                            venue: 'Manila',
-                            participants: 'Strickland vs. Reyes',
-                            status: 'Upcoming',
-                            odds: [1.8, 2.0],
-                            href: '#'
-                        },
-                        {
-                            event: 'Philippine Open QF',
-                            venue: 'Cebu',
-                            participants: 'Orcullo vs. Ko',
-                            status: 'Upcoming',
-                            odds: [1.9, 1.9],
-                            href: '#'
-                        },
-                        {
-                            event: 'City Invitational',
-                            venue: 'Davao',
-                            participants: 'Filler vs. Ouschan',
-                            status: 'Upcoming',
-                            odds: [1.85, 2.05],
-                            href: '#'
-                        },
-                        {
-                            event: 'Legends Showdown',
-                            venue: 'Quezon City',
-                            participants: 'Bustamante vs. Parica',
-                            status: 'Upcoming',
-                            odds: [1.75, 2.20],
-                            href: '#'
-                        },
-                        {
-                            event: 'Doubles Masters',
-                            venue: 'Baguio',
-                            participants: 'Gomez/Moritz vs. Ko/Woodward',
-                            status: 'Upcoming',
-                            odds: [2.30, 1.65],
-                            href: '#'
-                        },
-                        // add more to see pagination in action
-                        {
-                            event: 'Regional Classic',
-                            venue: 'Cavite',
-                            participants: 'Van Boening vs. Orcollo',
-                            status: 'Upcoming',
-                            odds: [1.80, 2.10],
-                            href: '#'
-                        },
-                        {
-                            event: 'Night Cup',
-                            venue: 'Makati',
-                            participants: 'Shaw vs. Chua',
-                            status: 'Upcoming',
-                            odds: [2.00, 1.90],
-                            href: '#'
-                        },
+                        event: 'World Billiards Final',
+                        venue: 'Manila',
+                        participants: 'Strickland vs. Reyes',
+                        status: 'Upcoming',
+                        odds: [1.8, 2.0],
+                        href: '#'
+                    },
+                    {
+                        event: 'Philippine Open QF',
+                        venue: 'Cebu',
+                        participants: 'Orcullo vs. Ko',
+                        status: 'Upcoming',
+                        odds: [1.9, 1.9],
+                        href: '#'
+                    },
+                    {
+                        event: 'City Invitational',
+                        venue: 'Davao',
+                        participants: 'Filler vs. Ouschan',
+                        status: 'Upcoming',
+                        odds: [1.85, 2.05],
+                        href: '#'
+                    },
+                    {
+                        event: 'Legends Showdown',
+                        venue: 'Quezon City',
+                        participants: 'Bustamante vs. Parica',
+                        status: 'Upcoming',
+                        odds: [1.75, 2.20],
+                        href: '#'
+                    },
+                    {
+                        event: 'Doubles Masters',
+                        venue: 'Baguio',
+                        participants: 'Gomez/Moritz vs. Ko/Woodward',
+                        status: 'Upcoming',
+                        odds: [2.30, 1.65],
+                        href: '#'
+                    },
+                    // add more to see pagination in action
+                    {
+                        event: 'Regional Classic',
+                        venue: 'Cavite',
+                        participants: 'Van Boening vs. Orcollo',
+                        status: 'Upcoming',
+                        odds: [1.80, 2.10],
+                        href: '#'
+                    },
+                    {
+                        event: 'Night Cup',
+                        venue: 'Makati',
+                        participants: 'Shaw vs. Chua',
+                        status: 'Upcoming',
+                        odds: [2.00, 1.90],
+                        href: '#'
+                    },
                     ],
                     motor: [{
-                            event: 'Grand Prix – Heat 1',
-                            venue: 'Clark International',
-                            participants: 'Team Apex vs. Velocity',
-                            status: 'Upcoming',
-                            odds: [1.90, 1.95],
-                            href: '#'
-                        },
-                        {
-                            event: 'Street Circuit Sprint',
-                            venue: 'Subic',
-                            participants: 'Santos vs. Nakamura',
-                            status: 'Upcoming',
-                            odds: [2.10, 1.75],
-                            href: '#'
-                        },
-                        {
-                            event: 'Time Attack Series',
-                            venue: 'Batangas Racing',
-                            participants: 'Rivera vs. Kim',
-                            status: 'Upcoming',
-                            odds: [1.85, 2.05],
-                            href: '#'
-                        },
-                        {
-                            event: 'Drag Night Finals',
-                            venue: 'Cebu SRP',
-                            participants: 'Hayabusa vs. ZX-14R',
-                            status: 'Upcoming',
-                            odds: [1.70, 2.20],
-                            href: '#'
-                        },
-                        {
-                            event: 'Endurance 200',
-                            venue: 'BRC',
-                            participants: 'TorqueWorks vs. RapidX',
-                            status: 'Upcoming',
-                            odds: [2.30, 1.65],
-                            href: '#'
-                        },
+                        event: 'Grand Prix – Heat 1',
+                        venue: 'Clark International',
+                        participants: 'Team Apex vs. Velocity',
+                        status: 'Upcoming',
+                        odds: [1.90, 1.95],
+                        href: '#'
+                    },
+                    {
+                        event: 'Street Circuit Sprint',
+                        venue: 'Subic',
+                        participants: 'Santos vs. Nakamura',
+                        status: 'Upcoming',
+                        odds: [2.10, 1.75],
+                        href: '#'
+                    },
+                    {
+                        event: 'Time Attack Series',
+                        venue: 'Batangas Racing',
+                        participants: 'Rivera vs. Kim',
+                        status: 'Upcoming',
+                        odds: [1.85, 2.05],
+                        href: '#'
+                    },
+                    {
+                        event: 'Drag Night Finals',
+                        venue: 'Cebu SRP',
+                        participants: 'Hayabusa vs. ZX-14R',
+                        status: 'Upcoming',
+                        odds: [1.70, 2.20],
+                        href: '#'
+                    },
+                    {
+                        event: 'Endurance 200',
+                        venue: 'BRC',
+                        participants: 'TorqueWorks vs. RapidX',
+                        status: 'Upcoming',
+                        odds: [2.30, 1.65],
+                        href: '#'
+                    },
                     ],
                     horse: [{
-                            event: 'San Lazaro Cup',
-                            venue: 'San Lazaro',
-                            participants: 'Thunderstrike vs. Golden Dusk',
-                            status: 'Upcoming',
-                            odds: [2.40, 1.60],
-                            href: '#'
-                        },
-                        {
-                            event: 'Manila Derby Trial',
-                            venue: 'MetroTurf',
-                            participants: 'Blue Comet vs. Night Ember',
-                            status: 'Upcoming',
-                            odds: [1.95, 1.95],
-                            href: '#'
-                        },
-                        {
-                            event: 'Weekend Handicap',
-                            venue: 'Santa Ana Park',
-                            participants: 'Silver Arrow vs. Red Lantern',
-                            status: 'Upcoming',
-                            odds: [1.80, 2.05],
-                            href: '#'
-                        },
-                        {
-                            event: 'Night Sprint Series',
-                            venue: 'MetroTurf',
-                            participants: 'Jade Runner vs. Iron Fog',
-                            status: 'Upcoming',
-                            odds: [2.20, 1.70],
-                            href: '#'
-                        },
-                        {
-                            event: 'Metro Stakes',
-                            venue: 'San Lazaro',
-                            participants: 'Star Harbor vs. Quicksilver',
-                            status: 'Upcoming',
-                            odds: [1.65, 2.30],
-                            href: '#'
-                        },
+                        event: 'San Lazaro Cup',
+                        venue: 'San Lazaro',
+                        participants: 'Thunderstrike vs. Golden Dusk',
+                        status: 'Upcoming',
+                        odds: [2.40, 1.60],
+                        href: '#'
+                    },
+                    {
+                        event: 'Manila Derby Trial',
+                        venue: 'MetroTurf',
+                        participants: 'Blue Comet vs. Night Ember',
+                        status: 'Upcoming',
+                        odds: [1.95, 1.95],
+                        href: '#'
+                    },
+                    {
+                        event: 'Weekend Handicap',
+                        venue: 'Santa Ana Park',
+                        participants: 'Silver Arrow vs. Red Lantern',
+                        status: 'Upcoming',
+                        odds: [1.80, 2.05],
+                        href: '#'
+                    },
+                    {
+                        event: 'Night Sprint Series',
+                        venue: 'MetroTurf',
+                        participants: 'Jade Runner vs. Iron Fog',
+                        status: 'Upcoming',
+                        odds: [2.20, 1.70],
+                        href: '#'
+                    },
+                    {
+                        event: 'Metro Stakes',
+                        venue: 'San Lazaro',
+                        participants: 'Star Harbor vs. Quicksilver',
+                        status: 'Upcoming',
+                        odds: [1.65, 2.30],
+                        href: '#'
+                    },
                     ]
                 },
 
@@ -381,32 +397,36 @@
                     <!-- Billiards -->
                     <div class="rounded-xl" :class="sport === 'billiards' ? 'neon neon-slate' : ''">
                         <button
-                            class="relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
+                            class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='billiards'" :aria-pressed="sport === 'billiards'">
                             <img src="images/billiardscard.png" alt="Billiards"
-                                class="block w-full h-full object-contain" />
+                                class="no-drag block w-full h-full object-contain" draggable="false"
+                                ondragstart="return false;">
                         </button>
                     </div>
 
                     <!-- Motor -->
                     <div class="rounded-xl" :class="sport === 'motor' ? 'neon neon-blue' : ''">
                         <button
-                            class="relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
+                            class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='motor'" :aria-pressed="sport === 'motor'">
                             <img src="images/motorcard.png" alt="Motor"
-                                class="block w-full h-full object-contain -translate-y-2 2xl:-translate-y-5" />
+                                class="no-drag block w-full h-full object-contain -translate-y-2 2xl:-translate-y-5"
+                                draggable="false" ondragstart="return false;">
                         </button>
                     </div>
 
                     <!-- Horse -->
                     <div class="rounded-xl" :class="sport === 'horse' ? 'neon neon-amber' : ''">
                         <button
-                            class="relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
+                            class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='horse'" :aria-pressed="sport === 'horse'">
                             <img src="images/horsecard.png" alt="Horse"
-                                class="block w-full h-full object-contain -translate-y-2 2xl:-translate-y-8" />
+                                class="no-drag block w-full h-full object-contain -translate-y-2 2xl:-translate-y-8"
+                                draggable="false" ondragstart="return false;">
                         </button>
                     </div>
+
                 </div>
 
                 <div class="flex items-center">
@@ -424,8 +444,7 @@
 
                         <!-- MOBILE SCROLL WRAPPER -->
                         <div class="relative overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0
-             [scrollbar-width:thin] [scrollbar-color:#10b98166_transparent]"
-                            style="-webkit-overflow-scrolling:touch">
+             [scrollbar-width:thin] [scrollbar-color:#10b98166_transparent]" style="-webkit-overflow-scrolling:touch">
                             <table
                                 class="min-w-[840px] md:min-w-0 w-full md:table-fixed border-separate border-spacing-0 text-center">
                                 <!-- Column widths (apply only from md up) -->
@@ -472,8 +491,7 @@
                                             <!-- Status chip (NO WRAP) -->
                                             <td
                                                 class="px-2 py-3 text-white border-t border-slate-500/20 border-r whitespace-nowrap">
-                                                <span
-                                                    class="inline-flex items-center gap-1 rounded-full px-2 py-1 border text-[.92em] leading-none
+                                                <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 border text-[.92em] leading-none
                          text-white border-blue-500/60 whitespace-nowrap
                          bg-gradient-to-b from-[#0b2545] to-[#071a35]
                          shadow-[0_0_12px_rgba(59,130,246,.18),inset_0_1px_0_rgba(255,255,255,.06)]">
@@ -486,8 +504,7 @@
                                             <!-- Odds chip (NO WRAP, TABULAR NUMS) -->
                                             <td
                                                 class="px-2 py-3 text-white border-t border-slate-500/20 border-r whitespace-nowrap">
-                                                <span
-                                                    class="inline-flex items-center gap-1 rounded-full px-2 py-1 border text-[.92em] leading-none
+                                                <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 border text-[.92em] leading-none
                          text-white border-blue-500/60 whitespace-nowrap tabular-nums
                          bg-gradient-to-b from-[#0b2545] to-[#071a35]
                          shadow-[0_0_12px_rgba(59,130,246,.18),inset_0_1px_0_rgba(255,255,255,.06)]">
@@ -500,8 +517,7 @@
                                             <!-- Action -->
                                             <td
                                                 class="px-2 py-3 text-white border-t border-slate-500/20 whitespace-nowrap">
-                                                <a :href="row.href || '#'"
-                                                    class="inline-block rounded-full font-bold
+                                                <a :href="row.href || '#'" class="inline-block rounded-full font-bold
                           bg-gradient-to-b from-yellow-300 to-yellow-600 text-slate-900
                           border border-yellow-500/70 px-3 py-1 text-[.92em]
                           shadow-[0_2px_10px_rgba(234,179,8,.25),0_0_0_1px_rgba(234,179,8,.35)_inset,0_-2px_0_rgba(0,0,0,.25)_inset]
@@ -620,8 +636,7 @@
                             <div class="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
                                 <div
                                     class="flex items-center gap-2 rounded-xl bg-slate-900/60 border border-slate-700/50 px-2.5 py-2">
-                                    <i
-                                        class="fa-solid fa-coins text-yellow-300 text-slate-300/90 text-sm sm:text-base"></i>
+                                    <i class="fa-solid fa-coins text-yellow-300 text-slate-300/90 text-sm sm:text-base"></i>
                                     <div>
                                         <p class="text-[10px] sm:text-xs text-slate-300/80"> Total Staked </p>
                                         <p class="font-bold text-slate-100 text-sm sm:text-base"> ₱ 12,500 </p>
@@ -647,7 +662,7 @@
                             </div>
                         </div>
                         <div
-                            class="max-h-64 sm:max-h-80 2xl:max-h-[520px] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#10b98133_transparent]">
+                            class="max-h-64 sm:max-h-80 2xl:max-h-[520px] overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#10b98133_transparent] pr-3">
                             <ul class="divide-y divide-slate-800/50">
                                 <li class="px-3 sm:px-4 py-2.5 hover:bg-slate-900/40 transition">
                                     <div class="grid grid-cols-12 items-center gap-2 text-xs sm:text-sm">
