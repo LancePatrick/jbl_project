@@ -39,8 +39,8 @@ Route::view('teller-drag', 'teller-drag')
     ->middleware(['auth', 'verified'])
     ->name('teller-drag');
 
-Route::view('teller', 'admin.teller')
-    ->middleware(['auth', 'verified'])
+Route::view('teller-billiard', 'teller.teller-billiard')
+    ->middleware(['auth', 'verified', 'role:3'])
     ->name('teller');
 
 Route::view('bago', 'bago-php')
