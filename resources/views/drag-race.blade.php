@@ -25,29 +25,41 @@
       radial-gradient(900px 320px at 90% -30%, rgba(255,255,255,.05), transparent 70%)"
   ></div>
 
-  <div class="w-full max-w-screen-2xl 2xl:max-w-[1500px] mx-auto grid gap-4 px-[var(--gutter,12px)] py-[18px] translate-x-1.5 md:translate-x-0 lg:translate-x-[24px] xl:translate-x-[40px]">
+  <!-- PAGE GRID -->
+  <div
+    class="w-full max-w-screen-2xl 2xl:max-w-[1500px] mx-auto grid gap-4 justify-center
+           px-2 sm:px-[var(--gutter,12px)] py-3 sm:py-[18px]"
+  >
 
     <!-- MAIN PANEL -->
     <section
-      class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
+      class="w-full max-w-[380px] sm:max-w-none mx-auto
+             rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)]
+             p-2.5 sm:p-4 lg:p-5 backdrop-blur-[10px]
+             shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
       style="--side:clamp(300px,32vw,420px);"
     >
       <div class="flex items-center justify-between gap-3 border-b border-[rgb(208_219_255_/_0.35)] pb-2">
         <div class="flex gap-1 overflow-auto px-1 sm:px-2">
           <button
             data-tab="odds"
-            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)] px-3 py-2 font-black text-white shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
+            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)]
+                   bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]
+                   px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
+                   shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
           >ODDS</button>
-          
+
           <a
             href="#historySection"
-            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934] px-3 py-2 font-black text-white whitespace-nowrap"
+            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934]
+                   px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
+                   whitespace-nowrap"
           >HISTORY</a>
         </div>
 
         @if ($roleId === 1)
-        <label class="flex items-center gap-2 text-[12.5px] text-[#bcd1ff]">
-          <input id="toggleVideo" type="checkbox" class="size-[16px]" checked>
+        <label class="flex items-center gap-2 text-[11px] sm:text-[12.5px] text-[#bcd1ff]">
+          <input id="toggleVideo" type="checkbox" class="size-[14px] sm:size-[16px]" checked>
           <span>Show Video</span>
         </label>
         @endif
@@ -57,16 +69,19 @@
         <!-- VIDEO -->
         <div
           data-video
-          class="relative aspect-[16/9] overflow-hidden rounded-[16px] border border-[rgb(200_214_255_/_0.45)] bg-black shadow-[0_18px_40px_rgba(0,0,0,.45),0_6px_14px_rgba(0,0,0,.25),inset_0_0_0_1px_rgba(255,255,255,.05)]"
+          class="relative aspect-[16/9] overflow-hidden rounded-[16px]
+                 border border-[rgb(200_214_255_/_0.45)] bg-black
+                 shadow-[0_18px_40px_rgba(0,0,0,.45),0_6px_14px_rgba(0,0,0,.25),inset_0_0_0_1px_rgba(255,255,255,.05)]"
         >
-          <div class="pointer-events-none absolute inset-0 rounded-[16px] shadow-[inset_0_0_0_4px_#2a3d6a,inset_0_0_0_6px_rgba(255,255,255,.06)]"></div>
+          <div class="pointer-events-none absolute inset-0 rounded-[16px]
+                      shadow-[inset_0_0_0_4px_#2a3d6a,inset_0_0_0_6px_rgba(255,255,255,.06)]"></div>
           <iframe
             id="yt"
             class="absolute inset-0 size-full border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
           ></iframe>
-          <div id="videoOverlay" class="absolute inset-0 hidden grid place-items-center bg-black/60 text-white text-sm">
+          <div id="videoOverlay" class="absolute inset-0 hidden grid place-items-center bg-black/60 text-white text-xs sm:text-sm">
             Video hidden by admin
           </div>
         </div>
@@ -76,27 +91,33 @@
           id="kioskSide"
           class="flex max-h-[unset] md:max-h-[60svh] lg:max-h-[calc(100svh-140px)] xl:max-h-[calc(100svh-160px)]
                  lg:sticky lg:top-16 xl:top-20
-                 flex-col gap-2 overflow-auto rounded-[14px] border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] p-2"
+                 flex-col gap-2 overflow-auto rounded-[14px]
+                 border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] p-2"
         >
 
           <!-- ODDS VIEW -->
           <div id="oddsView" class="grid gap-2">
             <div class="grid grid-cols-2 gap-2">
               <!-- RED CARD -->
-              <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
+              <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-2.5 sm:p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
                 <div class="flex items-center justify-between gap-2 min-w-0">
-                  <div class="grid size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">R</div>
-                  <div id="nameRed" class="text-[13px] opacity-90 truncate">Rider Red</div>
+                  <div class="grid size-[30px] sm:size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">R</div>
+                  <div id="nameRed" class="text-[11px] sm:text-[13px] opacity-90 truncate">Rider Red</div>
                 </div>
-                <div id="amtRed" class="mt-1 leading-[1.05] text-[clamp(28px,6.8vw,38px)] font-black tracking-[.5px]">0</div>
-                <div class="mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-3 py-1.5 text-[13px] font-black">
+                <div
+                  id="amtRed"
+                  class="mt-1 leading-[1.05] text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black tracking-[.5px]"
+                >
+                  0
+                </div>
+                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
                   PAYOUT =
                   <span id="oddsRed" class="ml-1">1.76</span>
                 </div>
-                <div class="mt-2 grid gap-2">
+                <div class="mt-1.5 sm:mt-2 grid gap-2">
                   <button
                     data-bet="red"
-                    class="h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
+                    class="h-[38px] sm:h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white text-[11px] sm:text-[13px] shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
                   >BET</button>
                 </div>
 
@@ -114,20 +135,25 @@
               </div>
 
               <!-- BLUE CARD -->
-              <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
+              <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-2.5 sm:p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
                 <div class="flex items-center justify-between gap-2 min-w-0">
-                  <div class="grid size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">B</div>
-                  <div id="nameBlue" class="text-[13px] opacity-90 truncate">Rider Blue</div>
+                  <div class="grid size-[30px] sm:size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">B</div>
+                  <div id="nameBlue" class="text-[11px] sm:text-[13px] opacity-90 truncate">Rider Blue</div>
                 </div>
-                <div id="amtBlue" class="mt-1 leading-[1.05] text-[clamp(28px,6.8vw,38px)] font-black tracking-[.5px]">0</div>
-                <div class="mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-3 py-1.5 text-[13px] font-black">
+                <div
+                  id="amtBlue"
+                  class="mt-1 leading-[1.05] text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black tracking-[.5px]"
+                >
+                  0
+                </div>
+                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
                   PAYOUT =
                   <span id="oddsBlue" class="ml-1">1.47</span>
                 </div>
-                <div class="mt-2 grid gap-2">
+                <div class="mt-1.5 sm:mt-2 grid gap-2">
                   <button
                     data-bet="blue"
-                    class="h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
+                    class="h-[38px] sm:h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white text-[11px] sm:text-[13px] shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
                   >BET</button>
                 </div>
 
@@ -152,26 +178,26 @@
                 type="number"
                 min="1"
                 placeholder="Enter amount"
-                class="h-[44px] w-full rounded-[12px] border border-[rgb(150_170_220_/_0.45)] bg-[#0a1122] px-3 font-extrabold text-[#e9f3ff] outline-none"
+                class="h-[40px] sm:h-[44px] w-full rounded-[12px] border border-[rgb(150_170_220_/_0.45)] bg-[#0a1122] px-3 font-extrabold text-[#e9f3ff] text-[12px] sm:text-[13px] outline-none"
               />
               <div class="grid grid-cols-2 gap-2">
-                <button id="reset" class="h-[42px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630]">Reset</button>
-                <button id="maxAmt" class="h-[42px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630]">Max</button>
+                <button id="reset" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] text-[12px]">Reset</button>
+                <button id="maxAmt" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] text-[12px]">Max</button>
               </div>
             </div>
 
             <!-- CHIPS -->
             <div id="chips" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <button class="h-[44px] rounded-[14px] border border-[#0f5c30] bg-[linear-gradient(180deg,#2a9d55,#187d3e)] font-black text-[#eef5ff] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦100</button>
-              <button class="h-[44px] rounded-[14px] border border-[#163f8f] bg-[linear-gradient(180deg,#2f7cff,#1a4fb5)] font-black text-[#eef5ff] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦200</button>
-              <button class="h-[44px] rounded-[14px] border border-[#0b0c0f] bg-[linear-gradient(180deg,#2c2f35,#15171b)] font-black text-[#eef5ff] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦500</button>
-              <button class="h-[44px] rounded-[14px] border border-[#a76407] bg-[linear-gradient(180deg,#ffb23a,#d48112)] font-black text-[#1b1203]">♦1000</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0f5c30] bg-[linear-gradient(180deg,#2a9d55,#187d3e)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦100</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#163f8f] bg-[linear-gradient(180deg,#2f7cff,#1a4fb5)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦200</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0b0c0f] bg-[linear-gradient(180deg,#2c2f35,#15171b)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦500</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#a76407] bg-[linear-gradient(180deg,#ffb23a,#d48112)] font-black text-[#1b1203] text-[12px]">♦1000</button>
             </div>
 
             <!-- LAST BET -->
             <div
               id="lastBet"
-              class="mt-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] px-3 py-2 text-[12.5px] text-[#bcd1ff]"
+              class="mt-1.5 sm:mt-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] px-3 py-2 text-[11.5px] sm:text-[12.5px] text-[#bcd1ff]"
             >
               <div class="mb-1 font-semibold uppercase tracking-wide opacity-90">Current Bet</div>
               <div class="flex flex-wrap gap-x-4 gap-y-1 font-bold">
@@ -189,21 +215,21 @@
 
           </div>
 
-          <!-- TOTAL VIEW (for TOTAL tab kung gusto mo sa future) -->
+          <!-- TOTAL VIEW -->
           <div id="totalView" hidden class="grid gap-2">
             <div class="grid grid-cols-1 gap-1">
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
-                <div class="text-[13px] opacity-90">Total Bets — Red</div>
-                <div id="totalRed" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
-                <div class="mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-3 py-1.5 text-[13px] font-black">
+                <div class="text-[11px] sm:text-[13px] opacity-90">Total Bets — Red</div>
+                <div id="totalRed" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
+                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
                   Pool Share —
                   <span id="shareRed" class="ml-1">0%</span>
                 </div>
               </div>
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3">
-                <div class="text-[13px] opacity-90">Total Bets — Blue</div>
-                <div id="totalBlue" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
-                <div class="mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-3 py-1.5 text-[13px] font-black">
+                <div class="text-[11px] sm:text-[13px] opacity-90">Total Bets — Blue</div>
+                <div id="totalBlue" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
+                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
                   Pool Share —
                   <span id="shareBlue" class="ml-1">0%</span>
                 </div>
@@ -211,12 +237,12 @@
             </div>
             <div class="grid grid-cols-1 gap-1">
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
-                <div class="text-[13px] opacity-90">Odds (x) — Red</div>
-                <div id="txRed" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">1.76</div>
+                <div class="text-[11px] sm:text-[13px] opacity-90">Odds (x) — Red</div>
+                <div id="txRed" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">1.76</div>
               </div>
               <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3">
-                <div class="text-[13px] opacity-90">Odds (x) — Blue</div>
-                <div id="txBlue" class="mt-1 text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.2px]">1.47</div>
+                <div class="text-[11px] sm:text-[13px] opacity-90">Odds (x) — Blue</div>
+                <div id="txBlue" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.2px]">1.47</div>
               </div>
             </div>
           </div>
@@ -226,42 +252,54 @@
     </section>
 
     <!-- RESULTS / ROADMAP -->
-    <section class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]">
-      <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[#0e1426]/80 px-3 py-1 text-[12px] text-[#bcd1ff] backdrop-blur">
+    <section
+      class="w-full max-w-[380px] sm:max-w-none mx-auto
+             rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)]
+             p-2.5 sm:p-4 lg:p-5 backdrop-blur-[10px]
+             shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
+    >
+      <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[#0e1426]/80 px-3 py-1 text-[11px] sm:text-[12px] text-[#bcd1ff] backdrop-blur">
         Results / Roadmap
       </h2>
 
-      <div class="grid gap-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-3">
+      <div class="grid gap-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-2.5 sm:p-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <h3 class="m-0">Roadmap • Results</h3>
+          <h3 class="m-0 text-[13px] sm:text-[14px]">Roadmap • Results</h3>
 
           @if ($roleId === 1)
           <div class="flex gap-2 overflow-auto pb-1">
-            <button id="winRed" class="h-10 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[#ffecec]">
+            <button id="winRed" class="h-9 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[11px] sm:text-[12px] text-[#ffecec]">
               Record: Red Wins
             </button>
-            <button id="winBlue" class="h-10 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-[#e6f0ff]">
+            <button id="winBlue" class="h-9 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-[11px] sm:text-[12px] text-[#e6f0ff]">
               Record: Blue Wins
             </button>
-            <button id="undo" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Undo</button>
-            <button id="startRound" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Start Round</button>
-            <button id="resetRound" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">Reset Round</button>
-            <button id="clearLog" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Clear Log</button>
-            <button id="exportCsv" class="h-10 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3">Export CSV</button>
+            <button id="undo" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+              Undo
+            </button>
+            <button id="startRound" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+              Start Round
+            </button>
+            <button id="resetRound" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+              Reset Round
+            </button>
+            <button id="clearLog" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3 text-[11px] sm:text-[12px]">
+              Clear Log
+            </button>
           </div>
           @endif
         </div>
 
         <div class="grid gap-3 md:grid-cols-2">
           <div>
-            <div class="mb-2">Bead Road</div>
+            <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Bead Road</div>
             <div
               id="bead"
               class="grid max-h-[calc(6*14px+12px)] grid-rows-[repeat(6,14px)] auto-cols-[14px] auto-flow-col gap-0 overflow-auto rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33] p-1.5 md:max-h-[calc(6*18px+16px)] md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
             ></div>
           </div>
           <div>
-            <div class="mb-2">Big Road</div>
+            <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Big Road</div>
             <div
               id="big"
               class="grid max-h-[calc(6*14px+12px)] grid-rows-[repeat(6,14px)] auto-cols-[14px] auto-flow-col gap-0 overflow-auto rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33] p-1.5 md:max-h-[calc(6*18px+16px)] md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
@@ -270,9 +308,9 @@
         </div>
 
         <div class="overflow-auto">
-          <table class="w-full border-separate border-spacing-0">
+          <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
             <thead>
-              <tr class="[&>th]:px-2 [&>th]:text-left [&>th]:text-[12px] [&>th]:text-[#bcd1ff]">
+              <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#bcd1ff]">
                 <th>Time</th>
                 <th>Winner</th>
                 <th>Pot</th>
@@ -282,24 +320,24 @@
             </thead>
             <tbody
               id="logBody"
-              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(200_214_255_/_0.45)] [&>tr]:bg-[#0f1a33] [&>tr>td]:px-3 [&>tr>td]:py-2 [&>tr>td]:whitespace-nowrap"
+              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(200_214_255_/_0.45)] [&>tr]:bg-[#0f1a33] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
             ></tbody>
           </table>
 
-          <div class="flex items-center justify-end gap-2 py-2 text-[#bcd1ff]">
-            <button id="firstPage" class="h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+          <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#bcd1ff]">
+            <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               « First
             </button>
-            <button id="prevPage" class="h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+            <button id="prevPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               ‹ Prev
             </button>
             <span class="font-extrabold">
               <span id="pageNow">1</span> / <span id="pageTotal">1</span>
             </span>
-            <button id="nextPage" class="h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+            <button id="nextPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               Next ›
             </button>
-            <button id="lastPage" class="h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+            <button id="lastPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               Last »
             </button>
           </div>
@@ -310,56 +348,53 @@
     <!-- BET HISTORY -->
     <section
       id="historySection"
-      class="rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.88)] p-3 sm:p-4 lg:p-5 backdrop-blur-[10px] shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
+      class="w-full max-w-[380px] sm:max-w-none mx-auto
+             rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.88)]
+             p-2.5 sm:p-4 lg:p-5 backdrop-blur-[10px]
+             shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
     >
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <h2 class="m-0 text-[14px] font-bold text-[#bcd1ff]">Bet History</h2>
-        <div class="flex flex-wrap items-center gap-2">
-          <label class="text-[12px] text-[#bcd1ff]/90">
+      <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+        <h2 class="m-0 text-[13px] sm:text-[14px] font-bold text-[#bcd1ff]">Bet History</h2>
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <label class="text-[11px] sm:text-[12px] text-[#bcd1ff]/90">
             Side
             <select
               id="hf-side"
-              class="ml-1 rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1"
+              class="ml-1 rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1 text-[11px] sm:text-[12px]"
             >
               <option value="all">All</option>
               <option value="red">Red</option>
               <option value="blue">Blue</option>
             </select>
           </label>
-          <label class="text-[12px] text-[#bcd1ff]/90">
+          <label class="text-[11px] sm:text-[12px] text-[#bcd1ff]/90">
             Min ₱
             <input
               id="hf-min"
               type="number"
               min="0"
               value="0"
-              class="ml-1 w-[90px] rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1"
+              class="ml-1 w-[80px] sm:w-[90px] rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1 text-[11px] sm:text-[12px]"
             />
           </label>
-          <button id="hf-apply" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">
+          <button id="hf-apply" class="h-8 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
             Apply
           </button>
-          <button id="hf-reset" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3">
+          <button id="hf-reset" class="h-8 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
             Reset
           </button>
           <button
-            id="hf-export"
-            class="h-9 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-white"
-          >
-            Export CSV
-          </button>
-          <button
             id="hf-clear"
-            class="h-9 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[#ffecec]"
+            class="h-8 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[11px] sm:text-[12px] text-[#ffecec]"
           >
             Clear
           </button>
         </div>
       </div>
 
-      <div class="mt-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-2">
+      <div class="mt-2.5 sm:mt-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-2">
         <div class="overflow-auto rounded-[10px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33]">
-          <table class="w-full border-separate border-spacing-0 text-[13px]">
+          <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
             <thead class="sticky top-0 bg-[#0f1a33]">
               <tr class="[&>th]:px-3 [&>th]:py-2 [&>th]:text-left text-[#bcd1ff]">
                 <th>Time</th>
@@ -373,24 +408,24 @@
           </table>
         </div>
 
-        <div class="mt-2 flex items-center justify-between text-[#bcd1ff]">
+        <div class="mt-2 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between text-[11.5px] sm:text-[12.5px] text-[#bcd1ff]">
           <div>
             Total: <span id="hf-count">0</span> bets • Sum ₱<span id="hf-sum">0</span>
           </div>
-          <div class="flex items-center gap-2">
-            <button id="hf-first" class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <button id="hf-first" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               « First
             </button>
-            <button id="hf-prev" class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+            <button id="hf-prev" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               ‹ Prev
             </button>
             <span class="font-extrabold">
               <span id="hf-page-now">1</span> / <span id="hf-page-total">1</span>
             </span>
-            <button id="hf-next" class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+            <button id="hf-next" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               Next ›
             </button>
-            <button id="hf-last" class="h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2 text-[12.5px]">
+            <button id="hf-last" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
               Last »
             </button>
           </div>
@@ -723,28 +758,6 @@
     });
   }
 
-  function exportHistoryCSV(list) {
-    const rows = [['Time', 'Side', 'Amount', 'Odds', 'Est.Win']];
-    list.forEach(h => rows.push([h.timeStr, h.side, h.amount, h.odds, h.est]));
-    const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'bet-history.csv';
-    a.click();
-    URL.revokeObjectURL(a.href);
-    toast('Bet history exported');
-  }
-
-  el('histExport')?.addEventListener('click', () => exportHistoryCSV(history));
-  el('histClear')?.addEventListener('click', () => {
-    history = [];
-    saveAll();
-    renderHistorySidebar();
-    renderHistoryTable();
-    toast('Bet history cleared');
-  });
-
   const HF_PAGE = { size: 12, now: 1 };
 
   function getHFFilters() {
@@ -818,7 +831,6 @@
     HF_PAGE.now = Math.max(1, Math.ceil(filterHistory().length / HF_PAGE.size));
     renderHistoryTable();
   });
-  el('hf-export')?.addEventListener('click', () => exportHistoryCSV(filterHistory()));
   el('hf-clear')?.addEventListener('click', () => {
     history = [];
     saveAll();
@@ -1079,20 +1091,6 @@
     const v = Number(el('amount').value || 0);
     if (v < 1) el('amount').value = 100;
     updateCurrentBetPanels();
-  });
-
-  /* CSV export for main results */
-  document.getElementById('exportCsv')?.addEventListener('click', () => {
-    const rows = [['Time', 'Winner', 'Pot', 'Odds', 'Payout per 100']];
-    logs.forEach(r => rows.push([r.time, r.winner, '₱' + fmt(r.pot), '× ' + r.odds, '₱' + fmt(r.payout)]));
-    const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'drag-race-results.csv';
-    a.click();
-    URL.revokeObjectURL(a.href);
-    toast('CSV exported');
   });
 
   document.getElementById('clearLog')?.addEventListener('click', () => {
