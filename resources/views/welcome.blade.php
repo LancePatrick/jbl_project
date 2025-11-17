@@ -82,13 +82,29 @@
                 x-transition
                 class="absolute left-0 mt-2 bg-emerald-900 text-white rounded-lg shadow-lg w-44 z-50"
               >
-                <li>
-                  <a
-                    href="billiard"
-                    class="block px-4 py-2 hover:bg-emerald-700"
-                    >Billiards</a
-                  >
-                </li>
+                @auth
+                    @if (auth()->user()->role_id == 3)
+                        <li>
+                            <a href="teller-billiard" class="block px-4 py-2 hover:bg-emerald-700">
+                                Billiards
+                            </a>
+                        </li>
+                    @else
+                        <li>
+                            <a href="billiard" class="block px-4 py-2 hover:bg-emerald-700">
+                                Billiards
+                            </a>
+                        </li>
+                    @endif
+                @endauth
+
+                @guest
+                    <li>
+                        <a href="billiard" class="block px-4 py-2 hover:bg-emerald-700">
+                            Billiards
+                        </a>
+                    </li>
+                @endguest
                 <li>
                   <a href="horse" class="block px-4 py-2 hover:bg-emerald-700"
                     >Horse Racing</a
