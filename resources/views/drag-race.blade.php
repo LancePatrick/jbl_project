@@ -27,38 +27,38 @@
 
   <!-- PAGE GRID -->
   <div
-    class="w-full max-w-screen-2xl 2xl:max-w-[1500px] mx-auto grid gap-4 justify-center
+    class="w-full max-w-[430px] md:max-w-screen-2xl mx-auto grid gap-4 justify-center
            px-2 sm:px-[var(--gutter,12px)] py-3 sm:py-[18px]"
   >
 
     <!-- MAIN PANEL -->
     <section
-      class="w-full max-w-[380px] sm:max-w-none mx-auto
-             rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)]
+      class="w-full max-w-full md:max-w-none mx-auto
+             rounded-[18px] border border-[rgb(230_237_255_/_0.70)] bg-[rgba(19,28,56,0.96)]
              p-2.5 sm:p-4 lg:p-5 backdrop-blur-[10px]
-             shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
+             shadow-[inset_1px_1px_0_rgba(255,255,255,.12),inset_-3px_-3px_0_rgba(0,0,0,.35),_0_10px_30px_rgba(0,0,0,.25)]"
       style="--side:clamp(300px,32vw,420px);"
     >
-      <div class="flex items-center justify-between gap-3 border-b border-[rgb(208_219_255_/_0.35)] pb-2">
+      <div class="flex items-center justify-between gap-3 border-b border-[rgb(220_230_255_/_0.70)] pb-2">
         <div class="flex gap-1 overflow-auto px-1 sm:px-2">
           <button
             data-tab="odds"
-            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)]
+            class="rounded-[12px] border border-[rgb(210_225_255_/_0.9)]
                    bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]
                    px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
-                   shadow-[0_6px_14px_rgba(64,120,255,.25)] whitespace-nowrap"
+                   shadow-[0_6px_14px_rgba(64,120,255,.35)] whitespace-nowrap"
           >ODDS</button>
 
-          <a
-            href="#historySection"
-            class="rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0e1934]
+          <button
+            data-tab="total"
+            class="rounded-[12px] border border-[rgb(210_225_255_/_0.9)] bg-[#152347]
                    px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
                    whitespace-nowrap"
-          >HISTORY</a>
+          >TOTAL</button>
         </div>
 
         @if ($roleId === 1)
-        <label class="flex items-center gap-2 text-[11px] sm:text-[12.5px] text-[#bcd1ff]">
+        <label class="flex items-center gap-2 text-[11px] sm:text-[12.5px] text-[#d6e2ff]">
           <input id="toggleVideo" type="checkbox" class="size-[14px] sm:size-[16px]" checked>
           <span>Show Video</span>
         </label>
@@ -70,11 +70,11 @@
         <div
           data-video
           class="relative aspect-[16/9] overflow-hidden rounded-[16px]
-                 border border-[rgb(200_214_255_/_0.45)] bg-black
-                 shadow-[0_18px_40px_rgba(0,0,0,.45),0_6px_14px_rgba(0,0,0,.25),inset_0_0_0_1px_rgba(255,255,255,.05)]"
+                 border border-[rgb(210_225_255_/_0.8)] bg-black
+                 shadow-[0_18px_40px_rgba(0,0,0,.45),0_6px_14px_rgba(0,0,0,.25),inset_0_0_0_1px_rgba(255,255,255,.08)]"
         >
           <div class="pointer-events-none absolute inset-0 rounded-[16px]
-                      shadow-[inset_0_0_0_4px_#2a3d6a,inset_0_0_0_6px_rgba(255,255,255,.06)]"></div>
+                      shadow-[inset_0_0_0_4px_#2a3d6a,inset_0_0_0_6px_rgba(255,255,255,.10)]"></div>
           <iframe
             id="yt"
             class="absolute inset-0 size-full border-0"
@@ -92,112 +92,220 @@
           class="flex max-h-[unset] md:max-h-[60svh] lg:max-h-[calc(100svh-140px)] xl:max-h-[calc(100svh-160px)]
                  lg:sticky lg:top-16 xl:top-20
                  flex-col gap-2 overflow-auto rounded-[14px]
-                 border border-[rgb(208_219_255_/_0.35)] bg-[#0d1529] p-2"
+                 border border-[rgb(230_237_255_/_0.90)] bg-[rgba(21,32,68,0.98)] p-2"
         >
 
           <!-- ODDS VIEW -->
           <div id="oddsView" class="grid gap-2">
             <div class="grid grid-cols-2 gap-2">
               <!-- RED CARD -->
-              <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-2.5 sm:p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
-                <div class="flex items-center justify-between gap-2 min-w-0">
-                  <div class="grid size-[30px] sm:size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">R</div>
-                  <div id="nameRed" class="text-[11px] sm:text-[13px] opacity-90 truncate">Rider Red</div>
-                </div>
-                <div
-                  id="amtRed"
-                  class="mt-1 leading-[1.05] text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black tracking-[.5px]"
-                >
-                  0
-                </div>
-                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
-                  PAYOUT =
-                  <span id="oddsRed" class="ml-1">1.76</span>
-                </div>
-                <div class="mt-1.5 sm:mt-2 grid gap-2">
-                  <button
-                    data-bet="red"
-                    class="h-[38px] sm:h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white text-[11px] sm:text-[13px] shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
-                  >BET</button>
+              <div
+                class="relative rounded-[26px] border border-white/15
+                       bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,.25),transparent_55%),linear-gradient(180deg,#f97366_0%,#b91c1c_55%,#7f1d1d_100%)]
+                       p-3 sm:p-4 text-white shadow-[0_16px_40px_rgba(0,0,0,.55)]"
+              >
+                <!-- top chip -->
+                <div class="flex items-start justify-between">
+                  <div
+                    class="grid size-[30px] sm:size-[34px] place-items-center
+                           rounded-full border-2 border-white/80 bg-black/25 font-black
+                           shadow-[0_4px_10px_rgba(0,0,0,.45)]"
+                  >
+                    R
+                  </div>
                 </div>
 
-                {{-- CURRENT BET / POTENTIAL PAYOUT (RED) --}}
-                <div class="mt-2 hidden md:block rounded-[14px] border border-white/25 bg-black/20 px-3 py-1.5 text-[12px]">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="opacity-80">Current bet</span>
-                    <span id="curBetRed" class="font-extrabold text-[#ffe95b] text-right truncate">—</span>
+                <!-- name + amount -->
+                <div class="mt-5 text-center">
+                  <div
+                    id="nameRed"
+                    class="text-[11px] sm:text-[13px] font-semibold tracking-wide"
+                  >
+                    Rider Red
                   </div>
-                  <div class="mt-1 flex items-center justify-between gap-2">
-                    <span class="opacity-80">Potential payout</span>
-                    <span id="potPayRed" class="font-extrabold text-[#35f7a4] text-right truncate">—</span>
+                  <div
+                    id="amtRed"
+                    class="mt-1 text-[26px] sm:text-[32px] leading-none font-black tracking-[.08em]"
+                  >
+                    0
+                  </div>
+                </div>
+
+                <!-- payout pill -->
+                <div class="mt-3 flex justify-center">
+                  <div
+                    class="inline-flex items-center rounded-full border border-white/65
+                           bg-black/25 px-4 py-1.5 text-[11px] sm:text-[12px] font-semibold
+                           shadow-[0_6px_14px_rgba(0,0,0,.45)]"
+                  >
+                    PAYOUT =
+                    <span id="oddsRed" class="ml-1">1.76</span>
+                  </div>
+                </div>
+
+                <!-- choose button -->
+                <div class="mt-3">
+                  <button
+                    data-bet="red"
+                    class="h-[36px] sm:h-[40px] w-full rounded-full border border-white/70
+                           bg-white/10 text-[11px] sm:text-[13px] font-black uppercase
+                           tracking-[0.22em]
+                           shadow-[0_8px_18px_rgba(0,0,0,.55)]
+                           hover:bg-white/18 active:scale-[.98] transition"
+                  >
+                    CHOOSE
+                  </button>
+                </div>
+
+                <!-- current / potential bottom -->
+                <div
+                  class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
+                >
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <span class="opacity-90">Current bet</span>
+                      <span
+                        id="curBetRed"
+                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
+                      >
+                        —
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="opacity-90">Potential payout</span>
+                      <span
+                        id="potPayRed"
+                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
+                      >
+                        —
+                      </span>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#facc15]"></span>
+                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#22c55e]"></span>
                   </div>
                 </div>
               </div>
 
               <!-- BLUE CARD -->
-              <div class="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-2.5 sm:p-3 text-white shadow-[0_10px_30px_rgba(0,0,0,.35),inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46)]">
-                <div class="flex items-center justify-between gap-2 min-w-0">
-                  <div class="grid size-[30px] sm:size-[34px] place-items-center rounded-full border-2 border-white/35 bg-black/20 font-black shrink-0">B</div>
-                  <div id="nameBlue" class="text-[11px] sm:text-[13px] opacity-90 truncate">Rider Blue</div>
-                </div>
-                <div
-                  id="amtBlue"
-                  class="mt-1 leading-[1.05] text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black tracking-[.5px]"
-                >
-                  0
-                </div>
-                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-white/30 bg-black/20 px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
-                  PAYOUT =
-                  <span id="oddsBlue" class="ml-1">1.47</span>
-                </div>
-                <div class="mt-1.5 sm:mt-2 grid gap-2">
-                  <button
-                    data-bet="blue"
-                    class="h-[38px] sm:h-[42px] rounded-[12px] border border-white/40 bg-black/20 font-black text-white text-[11px] sm:text-[13px] shadow-[inset_0_1px_0_rgba(0,0,0,.3)]"
-                  >BET</button>
+              <div
+                class="relative rounded-[26px] border border-white/15
+                       bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,.25),transparent_55%),linear-gradient(180deg,#60a5fa_0%,#1d4ed8_55%,#1e3a8a_100%)]
+                       p-3 sm:p-4 text-white shadow-[0_16px_40px_rgba(0,0,0,.55)]"
+              >
+                <!-- top chip -->
+                <div class="flex items-start justify-between">
+                  <div
+                    class="grid size-[30px] sm:size-[34px] place-items-center
+                           rounded-full border-2 border-white/80 bg-black/25 font-black
+                           shadow-[0_4px_10px_rgba(0,0,0,.45)]"
+                  >
+                    B
+                  </div>
                 </div>
 
-                {{-- CURRENT BET / POTENTIAL PAYOUT (BLUE) --}}
-                <div class="mt-2 hidden md:block rounded-[14px] border border-white/25 bg-black/20 px-3 py-1.5 text-[12px]">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="opacity-80">Current bet</span>
-                    <span id="curBetBlue" class="font-extrabold text-[#ffe95b] text-right truncate">—</span>
+                <!-- name + amount -->
+                <div class="mt-5 text-center">
+                  <div
+                    id="nameBlue"
+                    class="text-[11px] sm:text-[13px] font-semibold tracking-wide"
+                  >
+                    Rider Blue
                   </div>
-                  <div class="mt-1 flex items-center justify-between gap-2">
-                    <span class="opacity-80">Potential payout</span>
-                    <span id="potPayBlue" class="font-extrabold text-[#35f7a4] text-right truncate">—</span>
+                  <div
+                    id="amtBlue"
+                    class="mt-1 text-[26px] sm:text-[32px] leading-none font-black tracking-[.08em]"
+                  >
+                    0
+                  </div>
+                </div>
+
+                <!-- payout pill -->
+                <div class="mt-3 flex justify-center">
+                  <div
+                    class="inline-flex items-center rounded-full border border-white/65
+                           bg-black/25 px-4 py-1.5 text-[11px] sm:text-[12px] font-semibold
+                           shadow-[0_6px_14px_rgba(0,0,0,.45)]"
+                  >
+                    PAYOUT =
+                    <span id="oddsBlue" class="ml-1">1.47</span>
+                  </div>
+                </div>
+
+                <!-- choose button -->
+                <div class="mt-3">
+                  <button
+                    data-bet="blue"
+                    class="h-[36px] sm:h-[40px] w-full rounded-full border border-white/70
+                           bg-white/10 text-[11px] sm:text-[13px] font-black uppercase
+                           tracking-[0.22em]
+                           shadow-[0_8px_18px_rgba(0,0,0,.55)]
+                           hover:bg-white/18 active:scale-[.98] transition"
+                  >
+                    CHOOSE
+                  </button>
+                </div>
+
+                <!-- current / potential bottom -->
+                <div
+                  class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
+                >
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <span class="opacity-90">Current bet</span>
+                      <span
+                        id="curBetBlue"
+                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
+                      >
+                        —
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="opacity-90">Potential payout</span>
+                      <span
+                        id="potPayBlue"
+                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
+                      >
+                        —
+                      </span>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#facc15]"></span>
+                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#22c55e]"></span>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- AMOUNT INPUT -->
-            <div class="grid gap-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1730] p-2">
+            <div class="grid gap-2 rounded-[14px] border border-[rgb(210_225_255_/_0.80)] bg-[#182750] p-2">
               <input
                 id="amount"
                 type="number"
                 min="1"
                 placeholder="Enter amount"
-                class="h-[40px] sm:h-[44px] w-full rounded-[12px] border border-[rgb(150_170_220_/_0.45)] bg-[#0a1122] px-3 font-extrabold text-[#e9f3ff] text-[12px] sm:text-[13px] outline-none"
+                class="h-[40px] sm:h-[44px] w-full rounded-[12px] border border-[rgb(198_213_255_/_0.85)] bg-[#121f42] px-3 font-extrabold text-[#e9f3ff] text-[12px] sm:text-[13px] outline-none"
               />
               <div class="grid grid-cols-2 gap-2">
-                <button id="reset" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] text-[12px]">Reset</button>
-                <button id="maxAmt" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] text-[12px]">Max</button>
+                <button id="reset" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] text-[12px]">Reset</button>
+                <button id="maxAmt" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] text-[12px]">Max</button>
               </div>
             </div>
 
             <!-- CHIPS -->
             <div id="chips" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0f5c30] bg-[linear-gradient(180deg,#2a9d55,#187d3e)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦100</button>
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#163f8f] bg-[linear-gradient(180deg,#2f7cff,#1a4fb5)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦200</button>
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0b0c0f] bg-[linear-gradient(180deg,#2c2f35,#15171b)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦500</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0f5c30] bg-[linear-gradient(180deg,#38b46a,#1c7b40)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦100</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#163f8f] bg-[linear-gradient(180deg,#4c8cff,#1f55c0)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦200</button>
+              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0b0c0f] bg-[linear-gradient(180deg,#3a3f47,#17191f)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦500</button>
               <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#a76407] bg-[linear-gradient(180deg,#ffb23a,#d48112)] font-black text-[#1b1203] text-[12px]">♦1000</button>
             </div>
 
             <!-- LAST BET -->
             <div
               id="lastBet"
-              class="mt-1.5 sm:mt-2 rounded-[14px] border border-[rgb(150_170_220_/_0.45)] bg-[#0e1426] px-3 py-2 text-[11.5px] sm:text-[12.5px] text-[#bcd1ff]"
+              class="mt-1.5 sm:mt-2 rounded-[14px] border border-[rgb(210_225_255_/_0.80)] bg-[#16244a] px-3 py-2 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]"
             >
               <div class="mb-1 font-semibold uppercase tracking-wide opacity-90">Current Bet</div>
               <div class="flex flex-wrap gap-x-4 gap-y-1 font-bold">
@@ -253,37 +361,52 @@
 
     <!-- RESULTS / ROADMAP -->
     <section
-      class="w-full max-w-[380px] sm:max-w-none mx-auto
-             rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.85)]
+      class="w-full max-w-full md:max-w-none mx-auto
+             rounded-[18px] border border-[rgb(230_237_255_/_0.70)] bg-[rgba(19,28,56,0.96)]
              p-2.5 sm:p-4 lg:p-5 backdrop-blur-[10px]
-             shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
+             shadow-[inset_1px_1px_0_rgba(255,255,255,.12),inset_-3px_-3px_0_rgba(0,0,0,.35),_0_10px_30px_rgba(0,0,0,.25)]"
     >
-      <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[#0e1426]/80 px-3 py-1 text-[11px] sm:text-[12px] text-[#bcd1ff] backdrop-blur">
+      <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[#151f39]/80 px-3 py-1 text-[11px] sm:text-[12px] text-[#d6e2ff] backdrop-blur">
         Results / Roadmap
       </h2>
 
-      <div class="grid gap-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-2.5 sm:p-3">
-        <div class="flex flex-wrap items-center justify-between gap-2">
+      <div class="grid gap-3 rounded-[14px] border border-[rgb(225_234_255_/_0.70)] bg-[#151f39] p-2.5 sm:p-3">
+        <div class="flex flex-col gap-2">
           <h3 class="m-0 text-[13px] sm:text-[14px]">Roadmap • Results</h3>
 
           @if ($roleId === 1)
-          <div class="flex gap-2 overflow-auto pb-1">
-            <button id="winRed" class="h-9 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[11px] sm:text-[12px] text-[#ffecec]">
+          <!-- MOBILE-FRIENDLY CONTROLS -->
+          <div class="flex flex-wrap gap-1.5 sm:gap-2">
+            <button id="winRed"
+              class="h-8 sm:h-9 rounded-[12px] border border-[#3a1a1f]
+                     bg-[linear-gradient(180deg,#9a1616,#4b0a0a)]
+                     px-2.5 sm:px-3 text-[10px] sm:text-[12px] text-[#ffecec]">
               Record: Red Wins
             </button>
-            <button id="winBlue" class="h-9 rounded-[12px] border border-[#1f2b50] bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)] px-3 text-[11px] sm:text-[12px] text-[#e6f0ff]">
+            <button id="winBlue"
+              class="h-8 sm:h-9 rounded-[12px] border border-[#1f2b50]
+                     bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)]
+                     px-2.5 sm:px-3 text-[10px] sm:text-[12px] text-[#e6f0ff]">
               Record: Blue Wins
             </button>
-            <button id="undo" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+            <button id="undo"
+              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
+                     bg-[#141f40] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
               Undo
             </button>
-            <button id="startRound" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+            <button id="startRound"
+              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
+                     bg-[#141f40] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
               Start Round
             </button>
-            <button id="resetRound" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+            <button id="resetRound"
+              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
+                     bg-[#141f40] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
               Reset Round
             </button>
-            <button id="clearLog" class="h-9 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[rgba(12,22,48,.6)] px-3 text-[11px] sm:text-[12px]">
+            <button id="clearLog"
+              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
+                     bg-[rgba(20,31,64,.8)] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
               Clear Log
             </button>
           </div>
@@ -293,24 +416,39 @@
         <div class="grid gap-3 md:grid-cols-2">
           <div>
             <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Bead Road</div>
-            <div
-              id="bead"
-              class="grid max-h-[calc(6*14px+12px)] grid-rows-[repeat(6,14px)] auto-cols-[14px] auto-flow-col gap-0 overflow-auto rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33] p-1.5 md:max-h-[calc(6*18px+16px)] md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
-            ></div>
+            <!-- wrapper: scaled down on mobile -->
+            <div class="w-full overflow-hidden rounded-[12px] border border-[rgb(210_222_255_/_0.85)] bg-[#1a2648] px-1.5 py-1">
+              <div class="origin-left scale-[1] sm:scale-100">
+                <div
+                  id="bead"
+                  class="grid auto-flow-col gap-0
+                         grid-rows-[repeat(6,10px)] auto-cols-[10px]
+                         sm:grid-rows-[repeat(6,14px)] sm:auto-cols-[14px]
+                         md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
+                ></div>
+              </div>
+            </div>
           </div>
           <div>
             <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Big Road</div>
-            <div
-              id="big"
-              class="grid max-h-[calc(6*14px+12px)] grid-rows-[repeat(6,14px)] auto-cols-[14px] auto-flow-col gap-0 overflow-auto rounded-[12px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33] p-1.5 md:max-h-[calc(6*18px+16px)] md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
-            ></div>
+            <div class="w-full overflow-hidden rounded-[12px] border border-[rgb(210_222_255_/_0.85)] bg-[#1a2648] px-1.5 py-1">
+              <div class="origin-left scale-[1] sm:scale-100">
+                <div
+                  id="big"
+                  class="grid auto-flow-col gap-0
+                         grid-rows-[repeat(6,10px)] auto-cols-[10px]
+                         sm:grid-rows-[repeat(6,14px)] sm:auto-cols-[14px]
+                         md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
+                ></div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="overflow-auto">
           <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
             <thead>
-              <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#bcd1ff]">
+              <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
                 <th>Time</th>
                 <th>Winner</th>
                 <th>Pot</th>
@@ -320,24 +458,24 @@
             </thead>
             <tbody
               id="logBody"
-              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(200_214_255_/_0.45)] [&>tr]:bg-[#0f1a33] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
+              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(210_222_255_/_0.85)] [&>tr]:bg-[#1a2648] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
             ></tbody>
           </table>
 
-          <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#bcd1ff]">
-            <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+          <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
+            <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               « First
             </button>
-            <button id="prevPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="prevPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               ‹ Prev
             </button>
             <span class="font-extrabold">
               <span id="pageNow">1</span> / <span id="pageTotal">1</span>
             </span>
-            <button id="nextPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="nextPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               Next ›
             </button>
-            <button id="lastPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="lastPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               Last »
             </button>
           </div>
@@ -348,39 +486,39 @@
     <!-- BET HISTORY -->
     <section
       id="historySection"
-      class="w-full max-w-[380px] sm:max-w-none mx-auto
-             rounded-[18px] border border-[rgb(217_226_255_/_0.25)] bg-[rgba(11,18,34,0.88)]
+      class="w-full max-w-full md:max-w-none mx-auto
+             rounded-[18px] border border-[rgb(230_237_255_/_0.70)] bg-[rgba(19,28,56,0.96)]
              p-2.5 sm:p-4 lg:p-5 backdrop-blur-[10px]
-             shadow-[inset_1px_1px_0_rgba(255,255,255,.10),inset_-3px_-3px_0_rgba(0,0,0,.46),_0_10px_30px_rgba(0,0,0,.25)]"
+             shadow-[inset_1px_1px_0_rgba(255,255,255,.12),inset_-3px_-3px_0_rgba(0,0,0,.35),_0_10px_30px_rgba(0,0,0,.25)]"
     >
       <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
-        <h2 class="m-0 text-[13px] sm:text-[14px] font-bold text-[#bcd1ff]">Bet History</h2>
+        <h2 class="m-0 text-[13px] sm:text-[14px] font-bold text-[#d6e2ff]">Bet History</h2>
         <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <label class="text-[11px] sm:text-[12px] text-[#bcd1ff]/90">
+          <label class="text-[11px] sm:text-[12px] text-[#d6e2ff]/90">
             Side
             <select
               id="hf-side"
-              class="ml-1 rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1 text-[11px] sm:text-[12px]"
+              class="ml-1 rounded-[10px] border border-[rgb(200_214_255_/_0.85)] bg-[#1a2648] px-2 py-1 text-[11px] sm:text-[12px]"
             >
               <option value="all">All</option>
               <option value="red">Red</option>
               <option value="blue">Blue</option>
             </select>
           </label>
-          <label class="text-[11px] sm:text-[12px] text-[#bcd1ff]/90">
+          <label class="text-[11px] sm:text-[12px] text-[#d6e2ff]/90">
             Min ₱
             <input
               id="hf-min"
               type="number"
               min="0"
               value="0"
-              class="ml-1 w-[80px] sm:w-[90px] rounded-[10px] border border-[rgb(150_170_220_/_0.45)] bg-[#0f1a33] px-2 py-1 text-[11px] sm:text-[12px]"
+              class="ml-1 w-[80px] sm:w-[90px] rounded-[10px] border border-[rgb(200_214_255_/_0.85)] bg-[#1a2648] px-2 py-1 text-[11px] sm:text-[12px]"
             />
           </label>
-          <button id="hf-apply" class="h-8 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+          <button id="hf-apply" class="h-8 rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-3 text-[11px] sm:text-[12px]">
             Apply
           </button>
-          <button id="hf-reset" class="h-8 rounded-[12px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-3 text-[11px] sm:text-[12px]">
+          <button id="hf-reset" class="h-8 rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-3 text-[11px] sm:text-[12px]">
             Reset
           </button>
           <button
@@ -392,11 +530,11 @@
         </div>
       </div>
 
-      <div class="mt-2.5 sm:mt-3 rounded-[14px] border border-[rgb(217_226_255_/_0.25)] bg-[#0e1426] p-2">
-        <div class="overflow-auto rounded-[10px] border border-[rgb(200_214_255_/_0.45)] bg-[#0f1a33]">
+      <div class="mt-2.5 sm:mt-3 rounded-[14px] border border-[rgb(225_234_255_/_0.70)] bg-[#151f39] p-2">
+        <div class="overflow-auto rounded-[10px] border border-[rgb(210_222_255_/_0.9)] bg-[#1a2648]">
           <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
-            <thead class="sticky top-0 bg-[#0f1a33]">
-              <tr class="[&>th]:px-3 [&>th]:py-2 [&>th]:text-left text-[#bcd1ff]">
+            <thead class="sticky top-0 bg-[#1a2648]">
+              <tr class="[&>th]:px-3 [&>th]:py-2 [&>th]:text-left text-[#d2e0ff]">
                 <th>Time</th>
                 <th>Side</th>
                 <th>Amount</th>
@@ -408,24 +546,24 @@
           </table>
         </div>
 
-        <div class="mt-2 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between text-[11.5px] sm:text-[12.5px] text-[#bcd1ff]">
+        <div class="mt-2 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between text-[11.5px] sm:text-[12.5px] text-[#d6e2ff]">
           <div>
             Total: <span id="hf-count">0</span> bets • Sum ₱<span id="hf-sum">0</span>
           </div>
           <div class="flex items-center gap-1.5 sm:gap-2">
-            <button id="hf-first" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="hf-first" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               « First
             </button>
-            <button id="hf-prev" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="hf-prev" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               ‹ Prev
             </button>
             <span class="font-extrabold">
               <span id="hf-page-now">1</span> / <span id="hf-page-total">1</span>
             </span>
-            <button id="hf-next" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="hf-next" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               Next ›
             </button>
-            <button id="hf-last" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(150_170_220_/_0.6)] bg-[#0c1630] px-2">
+            <button id="hf-last" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[#141f40] px-2">
               Last »
             </button>
           </div>
@@ -519,8 +657,8 @@
 
   /* CORE STATE – default odds 1.76 / 1.47 */
   const state = { red: 0, blue: 0, oddsRed: 1.76, oddsBlue: 1.47, market: '—' };
-  const el = id => document.getElementById(id);
-  const fmt = n => Number(n).toLocaleString('en-PH', { maximumFractionDigits: 0 });
+  const el  = id => document.getElementById(id);
+  const fmt = n  => Number(n).toLocaleString('en-PH', { maximumFractionDigits: 0 });
 
   const PAGE_SIZE = 5;
   let curPage = 1;
@@ -529,7 +667,7 @@
 
   /* odds helpers */
   function smoothOdds(tR, tB, rate = 0.25) {
-    state.oddsRed = +(state.oddsRed + (tR - state.oddsRed) * rate).toFixed(2);
+    state.oddsRed  = +(state.oddsRed  + (tR - state.oddsRed)  * rate).toFixed(2);
     state.oddsBlue = +(state.oddsBlue + (tB - state.oddsBlue) * rate).toFixed(2);
   }
   function recalcOdds() {
@@ -615,23 +753,23 @@
     const r = pot ? state.red / pot * 100 : 0;
     const b = 100 - r;
 
-    if (el('tR')) el('tR').textContent = fmt(state.red);
-    if (el('tB')) el('tB').textContent = fmt(state.blue);
+    if (el('tR')) el('tR').textContent   = fmt(state.red);
+    if (el('tB')) el('tB').textContent   = fmt(state.blue);
     if (el('pot')) el('pot').textContent = fmt(pot);
 
-    el('amtRed').textContent = fmt(state.red);
+    el('amtRed').textContent  = fmt(state.red);
     el('amtBlue').textContent = fmt(state.blue);
     el('oddsRed').textContent = state.oddsRed.toFixed(2);
-    el('oddsBlue').textContent = state.oddsBlue.toFixed(2);
+    el('oddsBlue').textContent= state.oddsBlue.toFixed(2);
 
     if (el('payoutR')) el('payoutR').textContent = '× ' + state.oddsRed.toFixed(2);
     if (el('payoutB')) el('payoutB').textContent = '× ' + state.oddsBlue.toFixed(2);
 
-    if (el('shareRed')) el('shareRed').textContent = (r || 0).toFixed(1) + '%';
+    if (el('shareRed'))  el('shareRed').textContent  = (r || 0).toFixed(1) + '%';
     if (el('shareBlue')) el('shareBlue').textContent = (b || 0).toFixed(1) + '%';
-    if (el('txRed')) el('txRed').textContent = state.oddsRed.toFixed(2);
-    if (el('txBlue')) el('txBlue').textContent = state.oddsBlue.toFixed(2);
-    if (el('totalRed')) el('totalRed').textContent = fmt(state.red);
+    if (el('txRed'))     el('txRed').textContent     = state.oddsRed.toFixed(2);
+    if (el('txBlue'))    el('txBlue').textContent    = state.oddsBlue.toFixed(2);
+    if (el('totalRed'))  el('totalRed').textContent  = fmt(state.red);
     if (el('totalBlue')) el('totalBlue').textContent = fmt(state.blue);
 
     checkMilestones(pot);
@@ -659,7 +797,7 @@
       const lg = JSON.parse(localStorage.getItem('dr_logs')    || 'null');
       const hi = JSON.parse(localStorage.getItem('dr_history') || 'null');
       if (s) Object.assign(state, s);
-      if (Array.isArray(q)) seq.push(...q);
+      if (Array.isArray(q))  seq.push(...q);
       if (Array.isArray(lg)) logs = lg;
       if (Array.isArray(hi)) history = hi;
     } catch {}
@@ -668,7 +806,7 @@
   /* chips add to amount */
   document.querySelectorAll('#chips button').forEach(b => {
     b.addEventListener('click', () => {
-      const amt = Number(b.textContent.replace(/[^\d]/g, '')) || 0;
+      const amt   = Number(b.textContent.replace(/[^\d]/g, '')) || 0;
       const input = el('amount');
       input.value = Number(input.value || 0) + amt;
       updateCurrentBetPanels();
@@ -688,7 +826,7 @@
     el('rc-odds').textContent = Number(odds).toFixed(2);
     el('rc-win').textContent  = Number(win).toLocaleString('en-PH');
 
-    const qrBox = el('rc-qr');
+    const qrBox  = el('rc-qr');
     qrBox.innerHTML = '';
     const payload = JSON.stringify({
       ref,
@@ -718,9 +856,9 @@
 
   /* bet history (per bet) */
   function addToHistory({ side, amount, odds }) {
-    const ts = Date.now();
+    const ts      = Date.now();
     const timeStr = new Date(ts).toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit' });
-    const est = Math.round(amount * odds);
+    const est     = Math.round(amount * odds);
     history.unshift({
       ts,
       timeStr,
@@ -771,19 +909,19 @@
     const f = getHFFilters();
     return history.filter(h => {
       const sideOk = f.side === 'all' || h.side.toLowerCase() === f.side;
-      const amtOk = h.amount >= f.min;
+      const amtOk  = h.amount >= f.min;
       return sideOk && amtOk;
     });
   }
 
   function renderHistoryTable() {
-    const list = filterHistory();
+    const list  = filterHistory();
     const tbody = el('hf-body');
     if (!tbody) return;
     const total = list.length;
     const pages = Math.max(1, Math.ceil(total / HF_PAGE.size));
     if (HF_PAGE.now > pages) HF_PAGE.now = pages;
-    const start = (HF_PAGE.now - 1) * HF_PAGE.size;
+    const start    = (HF_PAGE.now - 1) * HF_PAGE.size;
     const pageList = list.slice(start, start + HF_PAGE.size);
     tbody.innerHTML = '';
     if (!pageList.length) {
@@ -803,9 +941,9 @@
         tbody.appendChild(tr);
       });
     }
-    el('hf-page-now').textContent = String(HF_PAGE.now);
+    el('hf-page-now').textContent   = String(HF_PAGE.now);
     el('hf-page-total').textContent = String(pages);
-    el('hf-count').textContent = String(total);
+    el('hf-count').textContent      = String(total);
     const sum = list.reduce((a, b) => a + b.amount, 0);
     el('hf-sum').textContent = fmt(sum);
   }
@@ -813,7 +951,7 @@
   el('hf-apply')?.addEventListener('click', () => { HF_PAGE.now = 1; renderHistoryTable(); });
   el('hf-reset')?.addEventListener('click', () => {
     if (el('hf-side')) el('hf-side').value = 'all';
-    if (el('hf-min')) el('hf-min').value = 0;
+    if (el('hf-min'))  el('hf-min').value  = 0;
     HF_PAGE.now = 1;
     renderHistoryTable();
   });
@@ -840,20 +978,20 @@
   });
 
   /* bead & big road */
-  const seq = [];
+  const seq  = [];
   const ROWS = 6, COLS = 36;
 
   function cell(div, kind, hollow = false) {
-    div.className = 'flex items-center justify-center rounded-full text-[11px] font-black';
-    div.style.width  = 'calc(14px - 2px)';
-    div.style.height = 'calc(14px - 2px)';
+    div.className = 'w-full h-full flex items-center justify-center rounded-full text-[9px] sm:text-[10px] md:text-[11px] font-black';
     div.style.border = '2px solid #2f477a';
     if (kind === 'red') {
       if (hollow) { div.style.background = 'transparent'; div.style.borderColor = '#ff7a70'; }
-      else { div.style.background = 'radial-gradient(circle at 30% 30%, #ff7a70, #b71c1c)'; }
+      else        { div.style.background = 'radial-gradient(circle at 30% 30%, #ff7a70, #b71c1c)'; }
     } else if (kind === 'blue') {
       if (hollow) { div.style.background = 'transparent'; div.style.borderColor = '#8fb6ff'; }
-      else { div.style.background = 'radial-gradient(circle at 30% 30%, #8fb6ff, #0b3ca8)'; }
+      else        { div.style.background = 'radial-gradient(circle at 30% 30%, #8fb6ff, #0b3ca8)'; }
+    } else {
+      div.style.background = 'transparent';
     }
   }
 
@@ -872,7 +1010,7 @@
     seq.forEach((v, i) => {
       const col = Math.floor(i / ROWS), row = i % ROWS;
       const idx = col * ROWS + row;
-      const d = bead.children[idx];
+      const d   = bead.children[idx];
       if (d) {
         cell(d, v === 'R' ? 'red' : 'blue');
         d.textContent = String(i + 1);
@@ -903,7 +1041,7 @@
         last = v; col++; row = 0;
       }
       const idx = col * ROWS + row;
-      const d = big.children[idx];
+      const d   = big.children[idx];
       if (d) cell(d, v === 'R' ? 'red' : 'blue', false);
     };
     seq.forEach(v => place(v));
@@ -911,10 +1049,10 @@
 
   /* logs under bead/big */
   function addLog(winner) {
-    const pot = state.red + state.blue;
-    const odds = (winner === 'Red' ? state.oddsRed : state.oddsBlue).toFixed(2);
+    const pot    = state.red + state.blue;
+    const odds   = (winner === 'Red' ? state.oddsRed : state.oddsBlue).toFixed(2);
     const payout = (100 * odds).toFixed(0);
-    const time = new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
+    const time   = new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
     logs.unshift({ time, winner, pot, odds, payout });
     renderLog();
     saveAll();
@@ -937,7 +1075,7 @@
         <td>₱${fmt(row.payout)}</td>`;
       tbody.appendChild(tr);
     });
-    el('pageNow').textContent = String(curPage);
+    el('pageNow').textContent   = String(curPage);
     el('pageTotal').textContent = String(totalPages);
   }
 
@@ -971,14 +1109,14 @@
     saveAll();
   }
 
-  document.getElementById('winRed')?.addEventListener('click', () => mark('R'));
+  document.getElementById('winRed') ?.addEventListener('click', () => mark('R'));
   document.getElementById('winBlue')?.addEventListener('click', () => mark('B'));
   document.getElementById('undo')   ?.addEventListener('click', undo);
 
   /* round timer */
   let tHandle = null, tLeft = 0;
   const setTimerText = txt => { const t = el('timer'); if (t) t.textContent = txt; };
-  const formatSecs = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+  const formatSecs   = s   => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 
   function startRound(seconds = 60) {
     clearInterval(tHandle);
@@ -1013,15 +1151,15 @@
       if (active) {
         b.classList.add(
           'bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]',
-          'shadow-[0_6px_14px_rgba(64,120,255,.25)]'
+          'shadow-[0_6px_14px_rgba(64,120,255,.35)]'
         );
-        b.classList.remove('bg-[#0e1934]');
+        b.classList.remove('bg-[#152347]');
       } else {
         b.classList.remove(
           'bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]',
-          'shadow-[0_6px_14px_rgba(64,120,255,.25)]'
+          'shadow-[0_6px_14px_rgba(64,120,255,.35)]'
         );
-        b.classList.add('bg-[#0e1934]');
+        b.classList.add('bg-[#152347]');
       }
     });
     el('oddsView').hidden  = name !== 'odds';
@@ -1033,7 +1171,7 @@
   /* toast */
   function toast(msg, ms = 2200) {
     const t = document.createElement('div');
-    t.className = 'rounded-[12px] border border-[rgb(208_219_255_/_0.35)] bg-[rgba(11,18,34,0.85)] px-3 py-2 backdrop-blur-[8px] translate-y-[10px] opacity-0 transition-all duration-200';
+    t.className = 'rounded-[12px] border border-[rgb(225_234_255_/_0.70)] bg-[rgba(19,28,56,0.96)] px-3 py-2 backdrop-blur-[8px] translate-y-[10px] opacity-0 transition-all duration-200';
     t.textContent = msg;
     el('toast').appendChild(t);
     requestAnimationFrame(() => {
@@ -1116,7 +1254,7 @@
   (function ensureQR() {
     if (window.QRCode) return;
     const s = document.createElement('script');
-    s.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+    s.src   = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
     s.async = true;
     s.onerror = () => console.warn('QRCode lib failed to load — using fallback.');
     document.head.appendChild(s);

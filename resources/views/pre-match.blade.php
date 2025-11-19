@@ -395,22 +395,27 @@
                 <!-- SPORT CARDS -->
                 <div class="flex justify-center space-x-4 my-2 lg:mt-4 lg:-ml-18 lg:scale-80">
                     <!-- Billiards -->
-                    <div class="rounded-xl" :class="sport === 'billiards' ? 'neon neon-slate' : ''">
+                   
+
+
+<div class="rounded-xl" :class="sport === 'billiards' ? 'neon neon-blue' : ''">
                         <button
                             class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='billiards'" :aria-pressed="sport === 'billiards'">
-                            <img src="images/billiardscard.png" alt="Billiards"
-                                class="no-drag block w-full h-full object-contain" draggable="false"
-                                ondragstart="return false;">
+                            <img src="images/billi.gif" alt="Motor"
+                                class="no-drag block w-full h-full object-contain -translate-y-2 2xl:-translate-y-5"
+                                draggable="false" ondragstart="return false;">
                         </button>
                     </div>
+
+
 
                     <!-- Motor -->
                     <div class="rounded-xl" :class="sport === 'motor' ? 'neon neon-blue' : ''">
                         <button
                             class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='motor'" :aria-pressed="sport === 'motor'">
-                            <img src="images/motorcard.png" alt="Motor"
+                            <img src="images/racegif.gif" alt="Motor"
                                 class="no-drag block w-full h-full object-contain -translate-y-2 2xl:-translate-y-5"
                                 draggable="false" ondragstart="return false;">
                         </button>
@@ -421,7 +426,7 @@
                         <button
                             class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='horse'" :aria-pressed="sport === 'horse'">
-                            <img src="images/horsecard.png" alt="Horse"
+                            <img src="images/hogif.gif" alt="Horse"
                                 class="no-drag block w-full h-full object-contain -translate-y-2 2xl:-translate-y-8"
                                 draggable="false" ondragstart="return false;">
                         </button>
