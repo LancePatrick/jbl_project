@@ -159,10 +159,10 @@
               <h1
                 class="text-[25px] font-semibold w-[150px] 2xl:text-8xl 2xl:w-full"
               >
-                Bet. Break. Win Big!
+                Play. Break. Win!
               </h1>
               <p class="break-words text-[10px] 2xl:text-3xl 2xl:py-6">
-                Dive into the ultimate billiards betting experience — where
+                Dive into the ultimate billiards playing experience — where
                 every shot counts and every match could make you a winner.
               </p>
               <div
@@ -178,7 +178,7 @@
                   class="flex bg-yellow-300 px-3 py-1 2xl:py-4 2xl:px-5 items-center gap-1 2xl:gap-2 rounded-full hover:bg-yellow-400 transition-colors duration-200"
                 >
                   <i class="fa-solid fa-sack-dollar"></i>
-                  <a href="" class="text-[8px] 2xl:text-lg">Start Betting</a>
+                  <a href="" class="text-[8px] 2xl:text-lg">Start Playing</a>
                 </div>
               </div>
             </div>
@@ -200,7 +200,7 @@
             Featured Sports
           </h1>
           <h1 class="text-[8px] text-center 2xl:text-3xl 2xl:mt-4">
-            Choose your sport and start betting on your favorite events.
+            Choose your sport and start playing on your favorite events.
           </h1>
         </div>
 
@@ -228,7 +228,7 @@
                   href=""
                   class="absolute bg-yellow-300 text-[8px] 2xl:text-lg rounded-full p-1 font-semibold -translate-y-4 translate-x-18 2xl:translate-x-65 2xl:px-4 hover:bg-yellow-400"
                 >
-                  Bet Now
+                  Play Now
                 </a>
               </div>
             </div>
@@ -252,7 +252,7 @@
                   href=""
                   class="absolute bg-yellow-300 text-[8px] 2xl:text-lg rounded-full p-1 font-semibold -translate-y-4 translate-x-18 2xl:translate-x-65 2xl:px-4 hover:bg-yellow-400"
                 >
-                  Bet Now
+                  Play Now
                 </a>
               </div>
             </div>
@@ -276,7 +276,7 @@
                   href=""
                   class="absolute bg-yellow-300 text-[8px] 2xl:text-lg rounded-full p-1 font-semibold -translate-y-4 translate-x-18 2xl:translate-x-65 2xl:px-4 hover:bg-yellow-400"
                 >
-                  Bet Now
+                  Play Now
                 </a>
               </div>
             </div>
@@ -486,7 +486,7 @@
           <div
             class="flex-col space-y-2 text-[10px] mt-7 2xl:text-x 2xl:mr-40 2xl:text-lg p-4"
           >
-            <div class="flex space-x-2">
+            <!-- <div class="flex space-x-2">
               <h1 class="font-bold text-emerald-500">Email:</h1>
               <h1>Hello@gmail.com</h1>
             </div>
@@ -499,7 +499,7 @@
               <div class="flex-col space-y-1">
                 <h1>Visayas Ave.</h1>
                 <h1>Espana, 1882</h1>
-                <h1>Quezon City</h1>
+                <h1>Quezon City</h1> -->
               </div>
             </div>
           </div>

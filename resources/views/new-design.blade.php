@@ -14,8 +14,8 @@
     }
     @media (max-width: 768px){
       :root{
-        --logro-bubble: 22px;
-        --bead-bubble: 22px;
+        --logro-bubble: 16px;
+        --bead-bubble: 16px;
         --rail-h: calc(var(--logro-bubble) * 6 + (var(--row-gap) * 5));
       }
     }
@@ -530,10 +530,10 @@
   <script>
     // A) CONFIG
     const players = [
-      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
-      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
-      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
-      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
+      "Hagdang Bato","King Focus","LeBron James","Kid Molave",
+      "JBL","Autumn Blaze","Desert Sage","Hidden Hollow",
+      "Pony Punster","Santino","Panday","Hooves of Fury",
+      "Golden Hour","Sun Chaser"
     ];
     const BIGROAD_MAX_ROWS = 6;
     const BEAD_MAX_ROWS    = 6;
