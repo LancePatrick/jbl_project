@@ -34,14 +34,14 @@
                    bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]
                    px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
                    shadow-[0_6px_14px_rgba(64,120,255,.35)] whitespace-nowrap"
-          >TOTALIZATOR</button>
+          >ODDS</button>
 
           <button
             data-tab="total"
             class="rounded-[12px] border border-[rgb(210_225_255_/_0.8)] bg-[rgba(21,35,71,0.75)]
                    px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
                    whitespace-nowrap"
-          >ODDS</button>
+          >TOTAL</button>
         </div>
 
         @if ($roleId === 1)
@@ -53,7 +53,7 @@
       </div>
 
       <div class="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_var(--side)]">
-        <!-- VIDEO (kept link, design similar card style) -->
+        <!-- VIDEO -->
         <div
           data-video
           class="relative aspect-[16/9] overflow-hidden rounded-[16px]
@@ -76,9 +76,8 @@
         <!-- KIOSK SIDE -->
         <div
           id="kioskSide"
-          class="flex max-h-[unset] md:max-h-[60svh] lg:max-h-[calc(100svh-140px)] xl:max-h-[calc(100svh-160px)]
-                 lg:sticky lg:top-16 xl:top-20
-                 flex-col gap-2 overflow-auto rounded-[14px]
+          class="flex flex-col gap-2
+                 rounded-[14px]
                  border border-white/10 bg-gray-900/70 p-2 backdrop-blur-[16px]"
         >
 
@@ -144,29 +143,9 @@
                   </button>
                 </div>
 
-                <!-- current / potential bottom -->
-                <div
-                  class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
-                >
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                      
-                      
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="opacity-90">Potential payout</span>
-                      <span
-                        id="potPayRed"
-                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
-                      >
-                        —
-                      </span>
-                    </div>
-                  </div>
-                  <div class="flex flex-col items-end gap-1">
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#facc15]"></span>
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#22c55e]"></span>
-                  </div>
+                <!-- simple preview: ₱100 = ₱170 -->
+                <div class="mt-3 text-center text-[11px] sm:text-[12px]">
+                  <span id="simRed" class="font-semibold opacity-90">—</span>
                 </div>
               </div>
 
@@ -229,29 +208,9 @@
                   </button>
                 </div>
 
-                <!-- current / potential bottom -->
-                <div
-                  class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
-                >
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                      
-                     
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="opacity-90"></span>
-                      <span
-                        id="potPayBlue"
-                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
-                      >
-                        —
-                      </span>
-                    </div>
-                  </div>
-                  <div class="flex flex-col items-end gap-1">
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#facc15]"></span>
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#22c55e]"></span>
-                  </div>
+                <!-- simple preview: ₱100 = ₱170 -->
+                <div class="mt-3 text-center text-[11px] sm:text-[12px]">
+                  <span id="simBlue" class="font-semibold opacity-90">—</span>
                 </div>
               </div>
             </div>
@@ -397,7 +356,6 @@
         <div class="grid gap-3 md:grid-cols-2">
           <div>
             <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Bead Road</div>
-            <!-- wrapper: scaled down on mobile -->
             <div class="w-full overflow-hidden rounded-[12px] border border-white/10 bg-[rgba(18,29,64,0.80)] px-1.5 py-1 backdrop-blur-[14px]">
               <div class="origin-left scale-[1] sm:scale-100">
                 <div
@@ -426,29 +384,24 @@
           </div>
         </div>
 
-        <!-- FIXED-HEIGHT LOG TABLE CONTAINER -->
-        <div class="flex flex-col h-[260px] sm:h-[280px] md:h-[300px] lg:h-[320px]">
-          <!-- scrollable table area -->
-          <div class="flex-1 overflow-auto">
-            <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
-              <thead>
-                <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
-                  <th>Time</th>
-                  <th>Winner</th>
-                  <th>Pot</th>
-                  <th>Odds</th>
-                  <th>Payout/₱100</th>
-                </tr>
-              </thead>
-              <tbody
-                id="logBody"
-                class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(210_222_255_/_0.80)] [&>tr]:bg-[rgba(18,29,64,0.82)] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
-              ></tbody>
-            </table>
-          </div>
+        <div class="overflow-auto">
+          <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
+            <thead>
+              <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
+                <th>Time</th>
+                <th>Winner</th>
+                <th>Pot</th>
+                <th>Odds</th>
+                <th>Payout/₱100</th>
+              </tr>
+            </thead>
+            <tbody
+              id="logBody"
+              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(210_222_255_/_0.80)] [&>tr]:bg-[rgba(18,29,64,0.82)] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
+            ></tbody>
+          </table>
 
-          <!-- pagination, always visible, hindi na natutulak pababa -->
-          <div class="mt-2 shrink-0 flex items-center justify-end gap-1.5 sm:gap-2 py-1 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
+          <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
             <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
               « First
             </button>
@@ -558,7 +511,7 @@
     </section>
   </div>
 
-  <!-- TOASTS -->
+  <!-- TOASTS (placeholder) -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
   <!-- RECEIPT MODAL -->
@@ -615,7 +568,7 @@
   <script>
   const ROLE_ID = {{ $roleId }};
 
-  /* YouTube embed (keep existing link) */
+  /* YouTube embed */
   (function() {
     const url = 'https://youtu.be/mzBv3fUDxRA?si=0X903bZ6UrB-v6UF';
     const embed = url
@@ -641,7 +594,7 @@
     apply();
   })();
 
-  /* CORE STATE – default odds 1.76 / 1.47 */
+  /* CORE STATE */
   const state = { red: 0, blue: 0, oddsRed: 1.76, oddsBlue: 1.47, market: '—' };
   const el  = id => document.getElementById(id);
   const fmt = n  => Number(n).toLocaleString('en-PH', { maximumFractionDigits: 0 });
@@ -666,28 +619,20 @@
     smoothOdds(tR, tB);
   }
 
-  /* CURRENT BET PANELS (desktop only) */
+  /* SIMPLE PREVIEW UNDER CHOOSE BUTTON (₱100 = ₱170 style) */
   function updateCurrentBetPanels() {
     const input = el('amount');
     if (!input) return;
 
     const amt = Math.max(0, Number(input.value || 0));
 
-    const redName  = (document.getElementById('nameRed')?.textContent  || 'Red').trim();
-    const blueName = (document.getElementById('nameBlue')?.textContent || 'Blue').trim();
-
-    const cbR = document.getElementById('curBetRed');
-    const ppR = document.getElementById('potPayRed');
-    const cbB = document.getElementById('curBetBlue');
-    const ppB = document.getElementById('potPayBlue');
-
-    if (!cbR || !ppR || !cbB || !ppB) return;
+    const simR = document.getElementById('simRed');
+    const simB = document.getElementById('simBlue');
+    if (!simR || !simB) return;
 
     if (!amt) {
-      cbR.textContent = '—';
-      ppR.textContent = '—';
-      cbB.textContent = '—';
-      ppB.textContent = '—';
+      simR.textContent = '—';
+      simB.textContent = '—';
       return;
     }
 
@@ -697,11 +642,8 @@
     const payR = Math.round(amt * oddsR);
     const payB = Math.round(amt * oddsB);
 
-    cbR.textContent = `₱${fmt(amt)} on ${redName} @ ${oddsR.toFixed(2)}x`;
-    ppR.textContent = `₱${fmt(payR)}`;
-
-    cbB.textContent = `₱${fmt(amt)} on ${blueName} @ ${oddsB.toFixed(2)}x`;
-    ppB.textContent = `₱${fmt(payB)}`;
+    simR.textContent = `₱${fmt(amt)} = ₱${fmt(payR)}`;
+    simB.textContent = `₱${fmt(amt)} = ₱${fmt(payB)}`;
   }
 
   /* LAST BET panel */
@@ -730,7 +672,7 @@
     const m = Math.floor(pot / step);
     if (m > lastMilestone) {
       lastMilestone = m;
-      toast(`Pot milestone • Total pot hit ₱${fmt(m * step)}`);
+      // toast disabled
     }
   }
 
@@ -960,12 +902,11 @@
     saveAll();
     renderHistorySidebar();
     renderHistoryTable();
-    toast('Bet history cleared');
   });
 
-  /* ====== LOGROHAN / ROADS (BILLIARD LOGIC, ADAPTED) ====== */
+  /* LOGROHAN / ROADS */
   const seq  = [];
-  const ROWS = 6, COLS = 36;
+  const ROWS = 6;
 
   function cell(div, kind, hollow = false) {
     div.className = 'w-full h-full flex items-center justify-center rounded-full text-[9px] sm:text-[10px] md:text-[11px] font-black';
@@ -981,7 +922,6 @@
     }
   }
 
-  // BILLIARD-STYLE STREAK LOGIC (Strict L Big Road)
   function streakRuns(seqArr){
     const out = [];
     for(const t of seqArr){
@@ -1061,7 +1001,6 @@
     return cols;
   }
 
-  // BEAD ROAD: sequential columns, labelled bubbles — WALANG BLANK CIRCLES
   function renderBead() {
     const bead = el('bead');
     if (!bead) return;
@@ -1087,7 +1026,6 @@
     if (rail) rail.scrollLeft = rail.scrollWidth;
   }
 
-  // BIG ROAD: Strict L algo — WALANG BLANK CIRCLES
   function renderBig() {
     const big = el('big');
     if (!big) return;
@@ -1162,7 +1100,6 @@
     renderBead();
     renderBig();
     addLog(v === 'R' ? 'Red' : 'Blue');
-    toast(`Round result • ${v === 'R' ? 'Red' : 'Blue'} wins`);
   }
   function undo() {
     if (!seq.length) return;
@@ -1178,7 +1115,7 @@
   document.getElementById('winBlue')?.addEventListener('click', () => mark('B'));
   document.getElementById('undo')   ?.addEventListener('click', undo);
 
-  /* round timer */
+  /* round timer (optional label with id="timer" sa ibang lugar kung gusto mo) */
   let tHandle = null, tLeft = 0;
   const setTimerText = txt => { const t = el('timer'); if (t) t.textContent = txt; };
   const formatSecs   = s   => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
@@ -1187,7 +1124,6 @@
     clearInterval(tHandle);
     tLeft = seconds;
     setTimerText(formatSecs(tLeft));
-    toast(`Round started • ${seconds} seconds`);
     tHandle = setInterval(() => {
       tLeft--;
       setTimerText(formatSecs(Math.max(tLeft, 0)));
@@ -1195,7 +1131,6 @@
         clearInterval(tHandle);
         tHandle = null;
         setTimerText('00:00');
-        toast('Round ended • Place bets closed');
       }
     }, 1000);
   }
@@ -1204,7 +1139,6 @@
     tHandle = null;
     tLeft = 0;
     setTimerText('—');
-    toast('Timer reset • Round timer cleared');
   }
   document.getElementById('startRound')?.addEventListener('click', () => startRound(60));
   document.getElementById('resetRound')?.addEventListener('click', resetRound);
@@ -1233,32 +1167,11 @@
   }
   document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
 
-  /* toast */
-  function toast(msg, ms = 2200) {
-    const t = document.createElement('div');
-    t.className = 'rounded-[12px] border border-[rgb(225_234_255_/_0.60)] bg-[rgba(13,22,44,0.86)] px-3 py-2 backdrop-blur-[12px] translate-y-[10px] opacity-0 transition-all duration-200';
-    t.textContent = msg;
-    el('toast').appendChild(t);
-    requestAnimationFrame(() => {
-      t.style.opacity = '1';
-      t.style.transform = 'none';
-    });
-    setTimeout(() => {
-      t.style.opacity = '0';
-      t.style.transform = 'translateY(6px)';
-      setTimeout(() => t.remove(), 200);
-    }, ms);
-  }
+  /* toast – disabled */
+  function toast(msg, ms = 2200) { return; }
 
-  /* side height sync */
-  function syncSideHeight() {
-    const frame = document.querySelector('[data-video]');
-    const side  = el('kioskSide');
-    if (frame && side) {
-      const mobile = matchMedia('(max-width:680px)').matches;
-      side.style.maxHeight = mobile ? 'unset' : (frame.clientHeight + 'px');
-    }
-  }
+  /* side height sync – disabled internal scrollbar */
+  function syncSideHeight() { return; }
   addEventListener('resize', syncSideHeight);
   addEventListener('load', syncSideHeight);
 
@@ -1268,13 +1181,13 @@
       const side = btn.getAttribute('data-bet');
       const val  = Math.max(0, Number(el('amount').value || 0));
       if (!val) return;
-      if (val < 10) { toast('Minimum bet is ₱10'); return; }
+      if (val < 10) { return; } // minimum bet
+
       state[side] += val;
       el('amount').value = '';
       recalcOdds();
       sync();
       updateCurrentBetPanels();
-      toast(`Bet placed • ${side.toUpperCase()} • ₱${fmt(val)}`);
 
       const odds = side === 'red' ? state.oddsRed : state.oddsBlue;
       updateLastBet(side, val, odds);
@@ -1301,7 +1214,6 @@
     el('logBody') && (el('logBody').innerHTML = '');
     curPage = 1;
     renderLog();
-    toast('Logs cleared • History table emptied');
   });
 
   function init() {
