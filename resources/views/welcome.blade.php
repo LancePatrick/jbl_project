@@ -236,7 +236,7 @@ the world.
                 </h1>
                 <p class="mt-1 mr-20 text-[12px] sm:text-[10px] lg:text-[15px] 2xl:text-lg 2xl:pl-2">
                   Experience the thrill of the tracks with live odds and instant
-results.
+results.z
                 </p>
               </div>
 
