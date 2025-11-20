@@ -297,7 +297,7 @@
       <div class="md:hidden space-y-1">
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="flex items-center justify-between">
-            <div class="text-[11px] uppercase tracking-widest text-white/70">Bet %</div>
+            <div class="text-[11px] uppercase tracking-widest text-white/70">Win %</div>
             <div id="pct-total-label-mob" class="text-[11px] text-white/60">Total: ₱0</div>
           </div>
           <div class="relative h-2.5 rounded-full bg-black/40 border border-white/10 overflow-hidden mt-1.5">
@@ -318,17 +318,17 @@
             <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob"></span></div>
             @auth
               @if( auth()->user()->role_id == 2)
-                <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" id="bet-meron-mob">BET</button>
+                <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" id="bet-meron-mob">CHOOSE</button>
               @endif
             @endauth
             <!-- Current bet summary under BET (MOBILE - MERON) -->
             <div class="mt-2 space-y-0.5 text-[11px] text-left">
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Current bet</span>
+                <span class="text-white/60">Current</span>
                 <span id="meron-current-bet-mob" class="font-semibold text-yellow-300">—</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Potential payout</span>
+                <span class="text-white/60">Potential win</span>
                 <span id="meron-current-payout-mob" class="font-semibold text-emerald-300">—</span>
               </div>
             </div>
@@ -340,17 +340,17 @@
             <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob"></span></div>
             @auth
               @if( auth()->user()->role_id == 2)
-                <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" id="bet-wala-mob">BET</button>
+                <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" id="bet-wala-mob">CHOOSE</button>
               @endif
             @endauth
             <!-- Current bet summary under BET (MOBILE - WALA) -->
             <div class="mt-2 space-y-0.5 text-[11px] text-left">
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Current bet</span>
+                <span class="text-white/60">Current</span>
                 <span id="wala-current-bet-mob" class="font-semibold text-yellow-300">—</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Potential payout</span>
+                <span class="text-white/60">Potential win</span>
                 <span id="wala-current-payout-mob" class="font-semibold text-emerald-300">—</span>
               </div>
             </div>
@@ -361,7 +361,7 @@
           @if( auth()->user()->role_id == 2)
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
             <div class="flex items-center justify-between mb-2">
-              <div class="text-[12px] uppercase tracking-widest text-white/70">Bet Amount</div>
+              <div class="text-[12px] uppercase tracking-widest text-white/70">Play Amount</div>
               <div class="text-[12px] text-white/60">min ₱100</div>
             </div>
             <div class="flex items-center gap-2 mb-2">
@@ -597,10 +597,10 @@
       walaOdds=(parseFloat(meronOdds)+0.20).toFixed(2);
     }
     function renderOddsEverywhere(){
-      const m=document.getElementById('meron-odds'); if(m) m.textContent='PAYOUT = '+meronOdds;
-      const w=document.getElementById('wala-odds');  if(w) w.textContent='PAYOUT = '+walaOdds;
-      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent='PAYOUT = '+meronOdds;
-      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent='PAYOUT = '+walaOdds;
+      const m=document.getElementById('meron-odds'); if(m) m.textContent='WINNING = '+meronOdds;
+      const w=document.getElementById('wala-odds');  if(w) w.textContent='WINNING = '+walaOdds;
+      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent='WINNING = '+meronOdds;
+      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent='WINNING = '+walaOdds;
     }
     function renderBalance(){
       const mid=document.getElementById('mid-balance');
