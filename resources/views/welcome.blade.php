@@ -165,7 +165,7 @@
             class="relative rounded-xl bg-emerald-100 w-full sm:w-1/3 aspect-[16/6] lg:h-160 lg:w-120 bg-cover bg-center hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
             style="background-image: url('{{ asset('images/BilliardVisual.png') }}')">
             <div
-              class="absolute inset-0 rounded-xl bg-black/40 hover:bg-black/70 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
+              class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
 
               <div class="mx-1 mt-10 lg:mt-24 2xl:mt-109">
                 <h1 class="font-semibold text-lg sm:text-sm 2xl:text-5xl">
@@ -195,7 +195,7 @@
             class="relative rounded-xl bg-emerald-100 sm:w-1/3 aspect-[16/6] lg:h-160 lg:w-120 bg-cover bg-center hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
             style="background-image: url('{{ asset('images/MotorVisual.png') }}')">
             <div
-              class="absolute inset-0 rounded-xl bg-black/40 hover:bg-black/70 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
+              class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
 
               <!-- Text block -->
               <div class="mx-1 mt-10 lg:mt-24 2xl:mt-109">
@@ -227,7 +227,7 @@ the world.
             class="relative rounded-xl bg-emerald-100 w-full sm:w-1/3 aspect-[16/6] lg:h-160 lg:w-120 bg-cover bg-center hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
             style="background-image: url('{{ asset('images/HorseVisual.png') }}')">
             <div
-              class="absolute inset-0 rounded-xl bg-black/40 hover:bg-black/70 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
+              class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
 
               <!-- Text block -->
               <div class="mx-1 mt-10 lg:mt-24 2xl:mt-109">
