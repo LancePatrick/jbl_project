@@ -36,8 +36,8 @@
           <li><a href="{{ route('dashboard') }}" class="hover:text-emerald-300">Home</a></li>
           <li><a href="{{ route('pre-match') }}" class="hover:text-emerald-300">Pre-Match</a></li>
 
-          <li><a href="#" class="hover:text-emerald-300">About</a></li>
-          <li><a href="#" class="hover:text-emerald-300">Event</a></li>
+            <li><a href="#" class="hover:text-emerald-300">About</a></li>
+          <li><a href="{{ route('event') }}" class="hover:text-emerald-300">Event</a></li>
 
           <!-- Dropdown -->
           <li class="relative items-center">
