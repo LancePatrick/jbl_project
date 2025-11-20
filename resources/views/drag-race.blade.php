@@ -34,14 +34,14 @@
                    bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]
                    px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
                    shadow-[0_6px_14px_rgba(64,120,255,.35)] whitespace-nowrap"
-          >TOTALIZATOR</button>
+          >ODDS</button>
 
           <button
             data-tab="total"
             class="rounded-[12px] border border-[rgb(210_225_255_/_0.8)] bg-[rgba(21,35,71,0.75)]
                    px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
                    whitespace-nowrap"
-          >ODDS</button>
+          >TOTAL</button>
         </div>
 
         @if ($roleId === 1)
@@ -53,7 +53,7 @@
       </div>
 
       <div class="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_var(--side)]">
-        <!-- VIDEO (kept link, design similar card style) -->
+        <!-- VIDEO -->
         <div
           data-video
           class="relative aspect-[16/9] overflow-hidden rounded-[16px]
@@ -76,9 +76,8 @@
         <!-- KIOSK SIDE -->
         <div
           id="kioskSide"
-          class="flex max-h-[unset] md:max-h-[60svh] lg:max-h-[calc(100svh-140px)] xl:max-h-[calc(100svh-160px)]
-                 lg:sticky lg:top-16 xl:top-20
-                 flex-col gap-2 overflow-auto rounded-[14px]
+          class="flex flex-col gap-2
+                 rounded-[14px]
                  border border-white/10 bg-gray-900/70 p-2 backdrop-blur-[16px]"
         >
 
@@ -130,7 +129,7 @@
                   </div>
                 </div>
 
-                <!-- choose button -->
+                <!-- CHOOSE -->
                 <div class="mt-3">
                   <button
                     data-bet="red"
@@ -144,14 +143,19 @@
                   </button>
                 </div>
 
-                <!-- current / potential bottom -->
+                <!-- CURRENT / POTENTIAL -->
                 <div
                   class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
                 >
                   <div class="space-y-1">
                     <div class="flex items-center gap-2">
-                      
-                      
+                      <span class="opacity-90">Current bet</span>
+                      <span
+                        id="curBetRed"
+                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
+                      >
+                        —
+                      </span>
                     </div>
                     <div class="flex items-center gap-2">
                       <span class="opacity-90">Potential payout</span>
@@ -215,7 +219,7 @@
                   </div>
                 </div>
 
-                <!-- choose button -->
+                <!-- CHOOSE -->
                 <div class="mt-3">
                   <button
                     data-bet="blue"
@@ -229,17 +233,22 @@
                   </button>
                 </div>
 
-                <!-- current / potential bottom -->
+                <!-- CURRENT / POTENTIAL -->
                 <div
                   class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
                 >
                   <div class="space-y-1">
                     <div class="flex items-center gap-2">
-                      
-                     
+                      <span class="opacity-90">Current bet</span>
+                      <span
+                        id="curBetBlue"
+                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
+                      >
+                        —
+                      </span>
                     </div>
                     <div class="flex items-center gap-2">
-                      <span class="opacity-90"></span>
+                      <span class="opacity-90">Potential payout</span>
                       <span
                         id="potPayBlue"
                         class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
@@ -397,7 +406,6 @@
         <div class="grid gap-3 md:grid-cols-2">
           <div>
             <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Bead Road</div>
-            <!-- wrapper: scaled down on mobile -->
             <div class="w-full overflow-hidden rounded-[12px] border border-white/10 bg-[rgba(18,29,64,0.80)] px-1.5 py-1 backdrop-blur-[14px]">
               <div class="origin-left scale-[1] sm:scale-100">
                 <div
@@ -426,10 +434,10 @@
           </div>
         </div>
 
-        <!-- FIXED-HEIGHT LOG TABLE CONTAINER -->
-        <div class="flex flex-col h-[260px] sm:h-[280px] md:h-[300px] lg:h-[320px]">
-          <!-- scrollable table area -->
-          <div class="flex-1 overflow-auto">
+        <!-- LOG TABLE – FIXED HEIGHT -->
+        <div class="flex flex-col">
+          <!-- table area with fixed height and inner scroll -->
+          <div class="overflow-x-auto overflow-y-auto max-h-[220px] sm:max-h-[260px] min-h-[150px]">
             <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
               <thead>
                 <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
@@ -447,8 +455,8 @@
             </table>
           </div>
 
-          <!-- pagination, always visible, hindi na natutulak pababa -->
-          <div class="mt-2 shrink-0 flex items-center justify-end gap-1.5 sm:gap-2 py-1 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
+          <!-- pagination (kept the same) -->
+          <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
             <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
               « First
             </button>
@@ -558,7 +566,7 @@
     </section>
   </div>
 
-  <!-- TOASTS -->
+  <!-- TOASTS (kept but unused) -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
   <!-- RECEIPT MODAL -->
@@ -615,7 +623,7 @@
   <script>
   const ROLE_ID = {{ $roleId }};
 
-  /* YouTube embed (keep existing link) */
+  /* YouTube embed */
   (function() {
     const url = 'https://youtu.be/mzBv3fUDxRA?si=0X903bZ6UrB-v6UF';
     const embed = url
@@ -623,7 +631,6 @@
       .replace('watch?v=', 'embed/');
     const iframe = document.getElementById('yt');
     iframe.src = embed + (embed.includes('?') ? '&' : '?') + 'rel=0&modestbranding=1&playsinline=1';
-    iframe.addEventListener('load', syncSideHeight);
   })();
 
   /* toggle video */
@@ -666,7 +673,7 @@
     smoothOdds(tR, tB);
   }
 
-  /* CURRENT BET PANELS (desktop only) */
+  /* CURRENT BET PANELS */
   function updateCurrentBetPanels() {
     const input = el('amount');
     if (!input) return;
@@ -730,7 +737,6 @@
     const m = Math.floor(pot / step);
     if (m > lastMilestone) {
       lastMilestone = m;
-      toast(`Pot milestone • Total pot hit ₱${fmt(m * step)}`);
     }
   }
 
@@ -759,7 +765,6 @@
     if (el('totalBlue')) el('totalBlue').textContent = fmt(state.blue);
 
     checkMilestones(pot);
-    syncSideHeight();
     saveAll();
     renderHistorySidebar();
     renderHistoryTable();
@@ -960,10 +965,9 @@
     saveAll();
     renderHistorySidebar();
     renderHistoryTable();
-    toast('Bet history cleared');
   });
 
-  /* ====== LOGROHAN / ROADS (BILLIARD LOGIC, ADAPTED) ====== */
+  /* ====== LOGROHAN / ROADS ====== */
   const seq  = [];
   const ROWS = 6, COLS = 36;
 
@@ -981,7 +985,6 @@
     }
   }
 
-  // BILLIARD-STYLE STREAK LOGIC (Strict L Big Road)
   function streakRuns(seqArr){
     const out = [];
     for(const t of seqArr){
@@ -1061,7 +1064,6 @@
     return cols;
   }
 
-  // BEAD ROAD: sequential columns, labelled bubbles — WALANG BLANK CIRCLES
   function renderBead() {
     const bead = el('bead');
     if (!bead) return;
@@ -1087,7 +1089,6 @@
     if (rail) rail.scrollLeft = rail.scrollWidth;
   }
 
-  // BIG ROAD: Strict L algo — WALANG BLANK CIRCLES
   function renderBig() {
     const big = el('big');
     if (!big) return;
@@ -1162,7 +1163,6 @@
     renderBead();
     renderBig();
     addLog(v === 'R' ? 'Red' : 'Blue');
-    toast(`Round result • ${v === 'R' ? 'Red' : 'Blue'} wins`);
   }
   function undo() {
     if (!seq.length) return;
@@ -1187,7 +1187,6 @@
     clearInterval(tHandle);
     tLeft = seconds;
     setTimerText(formatSecs(tLeft));
-    toast(`Round started • ${seconds} seconds`);
     tHandle = setInterval(() => {
       tLeft--;
       setTimerText(formatSecs(Math.max(tLeft, 0)));
@@ -1195,7 +1194,6 @@
         clearInterval(tHandle);
         tHandle = null;
         setTimerText('00:00');
-        toast('Round ended • Place bets closed');
       }
     }, 1000);
   }
@@ -1204,7 +1202,6 @@
     tHandle = null;
     tLeft = 0;
     setTimerText('—');
-    toast('Timer reset • Round timer cleared');
   }
   document.getElementById('startRound')?.addEventListener('click', () => startRound(60));
   document.getElementById('resetRound')?.addEventListener('click', resetRound);
@@ -1229,38 +1226,11 @@
     });
     el('oddsView').hidden  = name !== 'odds';
     el('totalView').hidden = name !== 'total';
-    syncSideHeight();
   }
   document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
 
-  /* toast */
-  function toast(msg, ms = 2200) {
-    const t = document.createElement('div');
-    t.className = 'rounded-[12px] border border-[rgb(225_234_255_/_0.60)] bg-[rgba(13,22,44,0.86)] px-3 py-2 backdrop-blur-[12px] translate-y-[10px] opacity-0 transition-all duration-200';
-    t.textContent = msg;
-    el('toast').appendChild(t);
-    requestAnimationFrame(() => {
-      t.style.opacity = '1';
-      t.style.transform = 'none';
-    });
-    setTimeout(() => {
-      t.style.opacity = '0';
-      t.style.transform = 'translateY(6px)';
-      setTimeout(() => t.remove(), 200);
-    }, ms);
-  }
-
-  /* side height sync */
-  function syncSideHeight() {
-    const frame = document.querySelector('[data-video]');
-    const side  = el('kioskSide');
-    if (frame && side) {
-      const mobile = matchMedia('(max-width:680px)').matches;
-      side.style.maxHeight = mobile ? 'unset' : (frame.clientHeight + 'px');
-    }
-  }
-  addEventListener('resize', syncSideHeight);
-  addEventListener('load', syncSideHeight);
+  /* toast – disabled */
+  function toast(msg, ms = 2200) { return; }
 
   /* BET buttons */
   document.querySelectorAll('[data-bet]').forEach(btn => {
@@ -1268,13 +1238,13 @@
       const side = btn.getAttribute('data-bet');
       const val  = Math.max(0, Number(el('amount').value || 0));
       if (!val) return;
-      if (val < 10) { toast('Minimum bet is ₱10'); return; }
+      if (val < 10) { return; } // minimum bet, no toast
+
       state[side] += val;
       el('amount').value = '';
       recalcOdds();
       sync();
       updateCurrentBetPanels();
-      toast(`Bet placed • ${side.toUpperCase()} • ₱${fmt(val)}`);
 
       const odds = side === 'red' ? state.oddsRed : state.oddsBlue;
       updateLastBet(side, val, odds);
@@ -1301,7 +1271,6 @@
     el('logBody') && (el('logBody').innerHTML = '');
     curPage = 1;
     renderLog();
-    toast('Logs cleared • History table emptied');
   });
 
   function init() {
