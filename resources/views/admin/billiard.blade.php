@@ -128,7 +128,7 @@
        MAIN: [video+logro | bets]
   ========================================================= -->
   <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-0 md:p-4">
-    <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
+    <div class="grid gap-6 md:grid-cols-[7fr_5fr] -translate-y-8">
 
       <!-- LEFT: Video + Logrohan -->
       <div class="relative z-10 main-panel mt-2 rounded-lg shadow-lg p-0 md:p-4">
