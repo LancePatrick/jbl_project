@@ -128,11 +128,11 @@
        MAIN: [video+logro | bets]
   ========================================================= -->
   <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-0 md:p-4">
-    <div class="grid gap-6 md:grid-cols-[7fr_5fr] -translate-y-8">
+    <div class="grid gap-1 md:grid-cols-[7fr_5fr] -translate-y-3 lg:scale-100 scale-110">
 
       <!-- LEFT: Video + Logrohan -->
       <div class="relative z-10 main-panel mt-2 rounded-lg shadow-lg p-0 md:p-4">
-        <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
+        <div class="grid grid-cols-3 items-center mb-3 text-xs text-gray-300">
           <div id="event-date" class="text-left"></div>
           <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">—</span></div>
           <div id="event-time" class="text-right"></div>
@@ -294,7 +294,7 @@
       </aside>
 
       <!-- ===================== MOBILE STACK ===================== -->
-      <div class="md:hidden space-y-3">
+      <div class="md:hidden space-y-1">
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="flex items-center justify-between">
             <div class="text-[11px] uppercase tracking-widest text-white/70">Bet %</div>

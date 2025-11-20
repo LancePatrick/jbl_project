@@ -46,8 +46,8 @@
     ========================================================== */
     html, body { margin:0; padding:0; height:100%; overflow-x:hidden; }
     .bg-animated {
-      /* transform: scale(1.1);
-      transform-origin:center; */
+      transform: scale(1.1);
+      transform-origin:center;
       position:fixed; inset:0; width:110%; height:110%;
       background:url('{{ asset('images/betting_background.png') }}') center/cover no-repeat;
       opacity:.85; z-index:-1;  30s infinite alternate ease-in-out; will-change:transform;
