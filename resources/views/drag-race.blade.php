@@ -129,7 +129,7 @@
                   </div>
                 </div>
 
-                <!-- CHOOSE -->
+                <!-- choose button -->
                 <div class="mt-3">
                   <button
                     data-bet="red"
@@ -143,34 +143,9 @@
                   </button>
                 </div>
 
-                <!-- CURRENT / POTENTIAL -->
-                <div
-                  class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
-                >
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                      <span class="opacity-90">Current bet</span>
-                      <span
-                        id="curBetRed"
-                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
-                      >
-                        —
-                      </span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="opacity-90">Potential payout</span>
-                      <span
-                        id="potPayRed"
-                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
-                      >
-                        —
-                      </span>
-                    </div>
-                  </div>
-                  <div class="flex flex-col items-end gap-1">
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#facc15]"></span>
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#22c55e]"></span>
-                  </div>
+                <!-- simple preview: ₱100 = ₱170 -->
+                <div class="mt-3 text-center text-[11px] sm:text-[12px]">
+                  <span id="simRed" class="font-semibold opacity-90">—</span>
                 </div>
               </div>
 
@@ -219,7 +194,7 @@
                   </div>
                 </div>
 
-                <!-- CHOOSE -->
+                <!-- choose button -->
                 <div class="mt-3">
                   <button
                     data-bet="blue"
@@ -233,34 +208,9 @@
                   </button>
                 </div>
 
-                <!-- CURRENT / POTENTIAL -->
-                <div
-                  class="mt-4 flex items-center justify-between text-[10px] sm:text-[11px]"
-                >
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                      <span class="opacity-90">Current bet</span>
-                      <span
-                        id="curBetBlue"
-                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
-                      >
-                        —
-                      </span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                      <span class="opacity-90">Potential payout</span>
-                      <span
-                        id="potPayBlue"
-                        class="text-[11px] sm:text-[12px] font-semibold text-white/95 truncate"
-                      >
-                        —
-                      </span>
-                    </div>
-                  </div>
-                  <div class="flex flex-col items-end gap-1">
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#facc15]"></span>
-                    <span class="inline-block h-1.5 w-5 rounded-full bg-[#22c55e]"></span>
-                  </div>
+                <!-- simple preview: ₱100 = ₱170 -->
+                <div class="mt-3 text-center text-[11px] sm:text-[12px]">
+                  <span id="simBlue" class="font-semibold opacity-90">—</span>
                 </div>
               </div>
             </div>
@@ -434,28 +384,23 @@
           </div>
         </div>
 
-        <!-- LOG TABLE – FIXED HEIGHT -->
-        <div class="flex flex-col">
-          <!-- table area with fixed height and inner scroll -->
-          <div class="overflow-x-auto overflow-y-auto max-h-[220px] sm:max-h-[260px] min-h-[150px]">
-            <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
-              <thead>
-                <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
-                  <th>Time</th>
-                  <th>Winner</th>
-                  <th>Pot</th>
-                  <th>Odds</th>
-                  <th>Payout/₱100</th>
-                </tr>
-              </thead>
-              <tbody
-                id="logBody"
-                class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(210_222_255_/_0.80)] [&>tr]:bg-[rgba(18,29,64,0.82)] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
-              ></tbody>
-            </table>
-          </div>
+        <div class="overflow-auto">
+          <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
+            <thead>
+              <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
+                <th>Time</th>
+                <th>Winner</th>
+                <th>Pot</th>
+                <th>Odds</th>
+                <th>Payout/₱100</th>
+              </tr>
+            </thead>
+            <tbody
+              id="logBody"
+              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(210_222_255_/_0.80)] [&>tr]:bg-[rgba(18,29,64,0.82)] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
+            ></tbody>
+          </table>
 
-          <!-- pagination (kept the same) -->
           <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
             <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
               « First
@@ -566,7 +511,7 @@
     </section>
   </div>
 
-  <!-- TOASTS (kept but unused) -->
+  <!-- TOASTS (placeholder) -->
   <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
 
   <!-- RECEIPT MODAL -->
@@ -631,6 +576,7 @@
       .replace('watch?v=', 'embed/');
     const iframe = document.getElementById('yt');
     iframe.src = embed + (embed.includes('?') ? '&' : '?') + 'rel=0&modestbranding=1&playsinline=1';
+    iframe.addEventListener('load', syncSideHeight);
   })();
 
   /* toggle video */
@@ -648,7 +594,7 @@
     apply();
   })();
 
-  /* CORE STATE – default odds 1.76 / 1.47 */
+  /* CORE STATE */
   const state = { red: 0, blue: 0, oddsRed: 1.76, oddsBlue: 1.47, market: '—' };
   const el  = id => document.getElementById(id);
   const fmt = n  => Number(n).toLocaleString('en-PH', { maximumFractionDigits: 0 });
@@ -673,28 +619,20 @@
     smoothOdds(tR, tB);
   }
 
-  /* CURRENT BET PANELS */
+  /* SIMPLE PREVIEW UNDER CHOOSE BUTTON (₱100 = ₱170 style) */
   function updateCurrentBetPanels() {
     const input = el('amount');
     if (!input) return;
 
     const amt = Math.max(0, Number(input.value || 0));
 
-    const redName  = (document.getElementById('nameRed')?.textContent  || 'Red').trim();
-    const blueName = (document.getElementById('nameBlue')?.textContent || 'Blue').trim();
-
-    const cbR = document.getElementById('curBetRed');
-    const ppR = document.getElementById('potPayRed');
-    const cbB = document.getElementById('curBetBlue');
-    const ppB = document.getElementById('potPayBlue');
-
-    if (!cbR || !ppR || !cbB || !ppB) return;
+    const simR = document.getElementById('simRed');
+    const simB = document.getElementById('simBlue');
+    if (!simR || !simB) return;
 
     if (!amt) {
-      cbR.textContent = '—';
-      ppR.textContent = '—';
-      cbB.textContent = '—';
-      ppB.textContent = '—';
+      simR.textContent = '—';
+      simB.textContent = '—';
       return;
     }
 
@@ -704,11 +642,8 @@
     const payR = Math.round(amt * oddsR);
     const payB = Math.round(amt * oddsB);
 
-    cbR.textContent = `₱${fmt(amt)} on ${redName} @ ${oddsR.toFixed(2)}x`;
-    ppR.textContent = `₱${fmt(payR)}`;
-
-    cbB.textContent = `₱${fmt(amt)} on ${blueName} @ ${oddsB.toFixed(2)}x`;
-    ppB.textContent = `₱${fmt(payB)}`;
+    simR.textContent = `₱${fmt(amt)} = ₱${fmt(payR)}`;
+    simB.textContent = `₱${fmt(amt)} = ₱${fmt(payB)}`;
   }
 
   /* LAST BET panel */
@@ -737,6 +672,7 @@
     const m = Math.floor(pot / step);
     if (m > lastMilestone) {
       lastMilestone = m;
+      // toast disabled
     }
   }
 
@@ -765,6 +701,7 @@
     if (el('totalBlue')) el('totalBlue').textContent = fmt(state.blue);
 
     checkMilestones(pot);
+    syncSideHeight();
     saveAll();
     renderHistorySidebar();
     renderHistoryTable();
@@ -967,9 +904,9 @@
     renderHistoryTable();
   });
 
-  /* ====== LOGROHAN / ROADS ====== */
+  /* LOGROHAN / ROADS */
   const seq  = [];
-  const ROWS = 6, COLS = 36;
+  const ROWS = 6;
 
   function cell(div, kind, hollow = false) {
     div.className = 'w-full h-full flex items-center justify-center rounded-full text-[9px] sm:text-[10px] md:text-[11px] font-black';
@@ -1178,7 +1115,7 @@
   document.getElementById('winBlue')?.addEventListener('click', () => mark('B'));
   document.getElementById('undo')   ?.addEventListener('click', undo);
 
-  /* round timer */
+  /* round timer (optional label with id="timer" sa ibang lugar kung gusto mo) */
   let tHandle = null, tLeft = 0;
   const setTimerText = txt => { const t = el('timer'); if (t) t.textContent = txt; };
   const formatSecs   = s   => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
@@ -1226,11 +1163,17 @@
     });
     el('oddsView').hidden  = name !== 'odds';
     el('totalView').hidden = name !== 'total';
+    syncSideHeight();
   }
   document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
 
   /* toast – disabled */
   function toast(msg, ms = 2200) { return; }
+
+  /* side height sync – disabled internal scrollbar */
+  function syncSideHeight() { return; }
+  addEventListener('resize', syncSideHeight);
+  addEventListener('load', syncSideHeight);
 
   /* BET buttons */
   document.querySelectorAll('[data-bet]').forEach(btn => {
@@ -1238,7 +1181,7 @@
       const side = btn.getAttribute('data-bet');
       const val  = Math.max(0, Number(el('amount').value || 0));
       if (!val) return;
-      if (val < 10) { return; } // minimum bet, no toast
+      if (val < 10) { return; } // minimum bet
 
       state[side] += val;
       el('amount').value = '';
