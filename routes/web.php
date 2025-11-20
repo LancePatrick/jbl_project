@@ -31,6 +31,10 @@ Route::view('horse', 'admin.horse')
 Route::view('pre-match', 'pre-match')
     ->name('pre-match');
 
+Route::view('admin/test-drag-race', 'admin.test-drag-race')
+    ->middleware(['auth', 'verified'])
+    ->name('admin.test-drag-race');
+
 /**
  * EVENT PAGE – nasa resources/views/admin/event.blade.php
  */
