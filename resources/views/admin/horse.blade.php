@@ -20,9 +20,9 @@
         --bead-bubble: 22px;
         --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
       }
-    } -->
+    }
 
-    <!-- .main-panel{ min-width:0; }
+    .main-panel{ min-width:0; }
 
     /* ===== LOGRO ===== */
     .logro-zone{ min-width:0; }
@@ -121,8 +121,8 @@
     .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
     .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
 
-    .video-shell{ contain: layout paint; } -->
-  </style>
+    .video-shell{ contain: layout paint; }
+  </style> -->
 
   <!-- ========================================================
        MAIN: [video+logro | bets]
@@ -262,7 +262,13 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <input type="number" id="bet-amount-desktop" class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]" placeholder="Enter amount" inputmode="numeric" />
+              <input
+                type="number"
+                id="bet-amount-desktop"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
               <div class="balance-pill text-yellow-300">
                 <span id="mid-balance" class="amount text-base">5,000</span>
               </div>
@@ -365,7 +371,13 @@
               <div class="text-[12px] text-white/60">min ₱100</div>
             </div>
             <div class="flex items-center gap-2 mb-2">
-              <input type="number" id="bet-amount-mob" class="bet-input p-2 text-sm text-white bg-black/30 w-full" placeholder="Enter amount" inputmode="numeric" />
+              <input
+                type="number"
+                id="bet-amount-mob"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-full"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
               <div class="balance-pill text-yellow-300 shrink-0">
                 <span id="mid-balance" class="amount text-sm">5,000</span>
               </div>
@@ -407,6 +419,9 @@
 
     </div>
   </main>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- ========================================================
        SCRIPT: betting + roads + helpers
@@ -465,12 +480,28 @@
       el.addEventListener('mouseleave',()=>{ el.style.transform='rotateX(0) rotateY(0) translateY(0)'; });
     }
 
-    // Pick the visible "Enter amount" input; also update both for consistency
+    // ✅ Pick the *visible* "Enter amount" input (desktop vs mobile)
     function getBetInput(){
-      return document.querySelector('#bet-amount-mob') ||
-             document.querySelector('#bet-amount-desktop') ||
-             document.querySelector('#bet-amount');
+      const candidates = [
+        document.getElementById('bet-amount-desktop'),
+        document.getElementById('bet-amount-mob'),
+        document.getElementById('bet-amount')
+      ];
+
+      // Prefer yung nakikita sa screen (may size & hindi display:none)
+      for (const el of candidates) {
+        if (!el) continue;
+        const style = window.getComputedStyle(el);
+        if (style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0) {
+          return el;
+        }
+      }
+
+      // Fallback: first existing element
+      return candidates.find(Boolean) || null;
     }
+
+    // Keep both inputs in sync when using chips
     function setBetAmount(val){
       const mob = document.getElementById('bet-amount-mob');
       const desk = document.getElementById('bet-amount-desktop');
@@ -657,7 +688,6 @@
         maximumFractionDigits: 2
       });
 
-      // ✅ Current bet: amount + odds lang
       const labelText = `${amtStr} @ ${odds}x`;
 
       if(labelDesktop) labelDesktop.textContent = labelText;
@@ -767,17 +797,27 @@
       }
       renderHeaderHistory();
     }
+
     function placeBet(betType){
       const input = getBetInput();
       let betAmount = input ? parseFloat(input.value) : NaN;
-      if(isNaN(betAmount)||betAmount<=0){
-        alert('Please enter a valid bet amount greater than 0.');
+
+      if(isNaN(betAmount) || betAmount <= 0){
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid amount',
+          text: 'Please enter a valid bet amount greater than 0.'
+        });
         return;
       }
 
       const balanceBefore=currentBalance;
       if(!adjustBalance(-betAmount)){
-        alert('Insufficient balance.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Insufficient balance',
+          text: 'You do not have enough balance for this bet.'
+        });
         return;
       }
 
@@ -811,7 +851,7 @@
       const totalWinnings = betAmount * parseFloat(odds);
       const playerName = chosenPlayer || (betType==='MERON' ? 'Red' : 'Blue');
 
-      // 🔹 Update per-card current bet display
+      // 🔹 Update per-card current bet display (reflect sa bet card)
       updateSideCurrentBet(betType, playerName, betAmount, odds, totalWinnings);
 
       const matchId=document.getElementById('match-no')?.textContent||'—';
@@ -822,12 +862,22 @@
         time, balanceBefore, balanceAfter:currentBalance, status:'PENDING'
       });
 
-      alert(
-        `You placed a bet of ₱${betAmount.toLocaleString('en-PH')} on ${playerName} (${betType}).\n` +
-        `Possible payout: ₱${totalWinnings.toFixed(2)}.\n` +
-        `New Balance: ₱${currentBalance.toLocaleString('en-PH')}.`
-      );
+      // OPTIONAL: SweetAlert summary (enable if gusto mo)
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Bet placed!',
+        html: `
+          You placed a bet of <b>₱${betAmount.toLocaleString('en-PH')}</b> on
+          <b>${playerName} (${betType})</b>.<br/>
+          Possible payout: <b>₱${totalWinnings.toFixed(2)}</b>.<br/>
+          New Balance: <b>₱${currentBalance.toLocaleString('en-PH')}</b>.
+        `,
+        confirmButtonText: 'OK'
+      });
+      
     }
+
     function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
     function undoResult(){ results.pop(); renderAllRoads(results); }
     function clearResults(){ results=[]; renderAllRoads(results); }
@@ -875,7 +925,7 @@
       if(cc) cc.addEventListener('click',  clearResults);
 
       results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
-      renderAllRoads(results); 
+      renderAllRoads(results);
       renderBalance();
 
       const hBtn=document.getElementById('header-history-btn');
