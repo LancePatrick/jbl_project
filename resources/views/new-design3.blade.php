@@ -275,7 +275,7 @@
 
             <!-- top orange header -->
             <div class="bg-amber-500/95 text-center font-semibold tracking-[0.18em] uppercase py-1">
-              BETTING CONSOLE
+              PLAYING CONSOLE
             </div>
 
             <!-- amount + quick chips -->
@@ -286,10 +286,8 @@
                   type="number"
                   inputmode="numeric"
                   class="flex-1 px-2 py-1 rounded border border-amber-300/70 bg-amber-100/10 text-xs text-white placeholder:text-amber-100/60"
-                  placeholder="Enter Amount To Bet" />
+                  placeholder="Enter Amount" />
                 <div class="text-[11px] whitespace-nowrap">
-                  <span class="text-amber-200/90 font-semibold">SB:</span>
-                  <span id="odds-sb" class="font-bold text-amber-100">400</span>
                 </div>
               </div>
 
@@ -319,7 +317,7 @@
 
               <!-- last row: BET ON DRAW -->
               <div class="grid grid-cols-3 text-center text-[11px] border-t border-gray-300/60">
-                <div class="bg-emerald-700 py-1 font-semibold text-black">BET ON DRAW</div>
+                <div class="bg-emerald-700 py-1 font-semibold text-black">PLAY ON DRAW</div>
                 <div class="flex items-center justify-center bg-emerald-500 text-black font-semibold">
                   1-8
                 </div>
@@ -602,7 +600,7 @@
       ODDS_ROWS.forEach(label=>{
         const idSafe = safeOddsId(label);
         const row = document.createElement('div');
-        row.className = "grid grid-cols-[1.5fr,1.2fr,1.5fr] text-center text-[11px]";
+        row.className = "grid grid-cols-3 text-center text-[11px]";
         row.innerHTML = `
           <div class="flex items-center justify-center gap-1 bg-white py-1">
             <button type="button"
