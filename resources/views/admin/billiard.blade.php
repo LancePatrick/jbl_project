@@ -420,6 +420,9 @@
     </div>
   </main>
 
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- ========================================================
        SCRIPT: betting + roads + helpers
   ========================================================= -->
@@ -800,13 +803,21 @@
       let betAmount = input ? parseFloat(input.value) : NaN;
 
       if(isNaN(betAmount) || betAmount <= 0){
-        alert('Please enter a valid bet amount greater than 0.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid amount',
+          text: 'Please enter a valid bet amount greater than 0.'
+        });
         return;
       }
 
       const balanceBefore=currentBalance;
       if(!adjustBalance(-betAmount)){
-        alert('Insufficient balance.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Insufficient balance',
+          text: 'You do not have enough balance for this bet.'
+        });
         return;
       }
 
@@ -851,11 +862,20 @@
         time, balanceBefore, balanceAfter:currentBalance, status:'PENDING'
       });
 
-      alert(
-        `You placed a bet of ₱${betAmount.toLocaleString('en-PH')} on ${playerName} (${betType}).\n` +
-        `Possible payout: ₱${totalWinnings.toFixed(2)}.\n` +
-        `New Balance: ₱${currentBalance.toLocaleString('en-PH')}.`
-      );
+      // OPTIONAL: SweetAlert summary (enable if gusto mo)
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Bet placed!',
+        html: `
+          You placed a bet of <b>₱${betAmount.toLocaleString('en-PH')}</b> on
+          <b>${playerName} (${betType})</b>.<br/>
+          Possible payout: <b>₱${totalWinnings.toFixed(2)}</b>.<br/>
+          New Balance: <b>₱${currentBalance.toLocaleString('en-PH')}</b>.
+        `,
+        confirmButtonText: 'OK'
+      });
+      
     }
 
     function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
