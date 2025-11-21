@@ -36,7 +36,7 @@
           <li><a href="{{ route('dashboard') }}" class="hover:text-emerald-300">Home</a></li>
           <li><a href="{{ route('pre-match') }}" class="hover:text-emerald-300">Pre-Match</a></li>
 
-            <li><a href="#" class="hover:text-emerald-300">About</a></li>
+          <li><a href="#" class="hover:text-emerald-300">About</a></li>
           <li><a href="{{ route('event') }}" class="hover:text-emerald-300">Event</a></li>
 
           <!-- Dropdown -->
@@ -118,30 +118,30 @@
       </nav>
 
       <div class="w-full flex">
-        <div class="flex text-white my-8 2xl:my-13 bg-emerald-100/10 rounded-lg mx-3 2xl:mx-15 2xl:py-4">
-          <div class="flex flex-col mx-4 2xl:mx-10 w-full 2xl:w-1/2">
-            <h1 class="text-[25px] font-semibold w-[150px] 2xl:text-8xl 2xl:w-full">
+        <div class="flex text-white my-8 2xl:my-13 bg-emerald-100/10 rounded-lg mx-3 lg:mx-18 2xl:mx-15 2xl:py-4">
+          <div class="flex flex-col gap-2  md:my-auto mx-4 2xl:mx-10 w-full 2xl:w-1/2">
+            <h1 class="text-[25px] font-semibold w-[150px] md:w-full md:text-4xl lg:text-7xl 2xl:text-8xl 2xl:w-full">
               Bet. Break. Win Big!
             </h1>
-            <p class="break-words text-[10px] 2xl:text-3xl 2xl:py-6">
-              Dive into the ultimate billiards betting experience — where
+            <p class="break-words text-[10px] md:mr-40 md:text-sm lg:mr-4 lg:text-2xl 2xl:text-3xl 2xl:py-6">
+              Dive into the ultimate billiard playing experience — where
               every shot counts and every match could make you a winner.
             </p>
-            <div class="flex space-x-2 my-2 text-[10px] 2xl:text-xl 2xl:translate-y-26 font-semibold text-black">
+            <div class="flex space-x-2 my-2 text-[10px] lg:my-4 2xl:text-xl 2xl:translate-y-2 font-semibold text-black">
               <div
                 class="flex bg-emerald-400 px-3 py-1 2xl:py-4 2xl:px-5 items-center gap-1 2xl:gap-2 rounded-full hover:bg-emerald-500 transition-colors duration-200">
-                <i class="fa-solid fa-star"></i>
-                <a href="" class="text-[8px] 2xl:text-lg">Join now</a>
+                <i class="fa-solid fa-star lg:text-2xl"></i>
+                <a href="" class="text-[8px] md:text-sm lg:text-2xl 2xl:text-lg text-center">Join now</a>
               </div>
               <div
                 class="flex bg-yellow-300 px-3 py-1 2xl:py-4 2xl:px-5 items-center gap-1 2xl:gap-2 rounded-full hover:bg-yellow-400 transition-colors duration-200">
-                <i class="fa-solid fa-sack-dollar"></i>
-                <a href="" class="text-[8px] 2xl:text-lg">Start Betting</a>
+                <i class="fa-solid fa-sack-dollar lg:text-2xl"></i>
+                <a href="" class="text-[8px] md:text-sm lg:text-2xl 2xl:text-lg text-center">Start Playing</a>
               </div>
             </div>
           </div>
           <img src="{{ asset('images/peoples.png') }}"
-            class="h-40 w-40 translate-y-2 -translate-x-2 2xl:h-140 2xl:w-180 2xl:translate-y-1" alt="" />
+            class="h-40 w-40 translate-y-2 -translate-x-2 lg:h-80 lg:w-110 2xl:h-140 2xl:w-180 2xl:translate-y-1" alt="" />
         </div>
       </div>
 
@@ -149,158 +149,159 @@
       <div data-aos="fade-down"
         class="flex flex-col text-white items-center justify-center mx-8 my-6 2xl:my-[150px] 2xl:mx-44 px-4"
         data-aos-once="true">
-        <h1 class="text-lg font-bold xl:text-sm 2xl:text-4xl text-center">
+        <h1 class="text-lg font-bold md:text-2xl xl:text-sm 2xl:text-4xl text-center">
           Featured Sports
         </h1>
-        <h1 class="text-[8px] text-center 2xl:text-3xl 2xl:mt-4">
-          Choose your sport and start betting on your favorite events.
+        <h1 class="text-[8px] text-center md:text-lg 2xl:text-3xl 2xl:mt-4">
+          Choose your sport and start playing on your favorite events.
         </h1>
       </div>
 
       <div data-aos="fade-up">
         <!-- Cards Container -->
-        <div class="flex flex-col mx-4 gap-4 sm:flex-row sm:justify-center sm:items-stretch sm:gap-4">
+        <div class="flex flex-col mx-4 gap-4
+           sm:flex-row sm:justify-center sm:items-stretch sm:gap-4
+           md:flex-col md:items-center md:gap-3
+           lg:flex-col lg:justify-center lg:items-stretch lg:gap-4 lg:scale-90
+           xl:flex-row xl:justify-center xl:items-stretch xl:gap-4
+           ">
           <!-- Card 1 -->
-          <div
-            class="relative rounded-xl bg-emerald-100 w-full sm:w-1/3 aspect-[16/6] lg:h-160 lg:w-120 bg-cover bg-center hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
+          <div class="relative rounded-xl bg-emerald-100
+             w-full sm:w-1/3 md:w-full
+             aspect-[16/6] md:aspect-[16/4]
+             lg:aspect-[16/4] lg:w-full
+             xl:h-160 xl:w-120
+             bg-cover bg-center
+             hover:scale-105 transform transition duration-300
+             hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
             style="background-image: url('{{ asset('images/BilliardVisual.png') }}')">
-            <div
-              class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
-
-              <div class="mx-1 mt-10 lg:mt-24 2xl:mt-109">
-                <h1 class="font-semibold text-lg sm:text-sm 2xl:text-5xl">
+            <div class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60
+               duration-300 transition-colors flex flex-col
+               p-2 2xl:p-4 text-white">
+              <div class="mx-1 mt-10 md:mt-24 lg:mt-24 2xl:mt-110">
+                <h1 class="font-semibold text-base sm:text-sm md:text-xl lg:text-4xl 2xl:text-5xl">
                   Billiards
                 </h1>
-                <p class="mt-1 mr-20 text-[12px] sm:text-[10px] lg:text-[15px] 2xl:text-lg 2xl:pl-2">
+                <p class="mt-1 mr-20
+                   text-[11px] sm:text-[9px] md:text-[11px]
+                   lg:text-2xl 2xl:text-lg 2xl:pl-2">
                   Aim for precision and predict the winners in every cue match.
                 </p>
               </div>
 
-
-              <!-- Button block (bottom-right, moved up with mb-10) -->
-              <div class=" mb-40 pr-3 -top-4 flex justify-end 2xl:mb-10 2xl:pr-6">
+              <!-- Button block -->
+              <div class="mb-40 pr-3 -top-4 flex justify-end 2xl:mb-10 2xl:pr-6">
                 <a href="" class="absolute bottom-2 right-4 2xl:bottom-10 2xl:right-8
-             inline-block text-black font-bold bg-yellow-300
-             text-[12 px] sm:text-[10px] 2xl:text-lg rounded-full
-             px-3 py-1 hover:bg-yellow-400">
-                  Bet Now
+                   inline-block text-black font-bold bg-yellow-300
+                   text-[12px] sm:text-[10px] md:text-[12px] lg:text-3xl 2xl:text-lg
+                   rounded-full px-3 py-1 hover:bg-yellow-400">
+                  Play Now
                 </a>
               </div>
-
             </div>
           </div>
 
           <!-- Card 2 -->
-          <div
-            class="relative rounded-xl bg-emerald-100 sm:w-1/3 aspect-[16/6] lg:h-160 lg:w-120 bg-cover bg-center hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
-            style="background-image: url('{{ asset('images/MotorVisual.png') }}')">
-            <div
-              class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
-
+          <div class="relative rounded-xl bg-emerald-100
+             w-full sm:w-1/3 md:w-full
+             aspect-[16/6] md:aspect-[16/4]
+             lg:aspect-[16/4] lg:w-full
+             xl:h-160 xl:w-120
+             bg-cover bg-center
+             hover:scale-105 transform transition duration-300
+             hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
+            style="background-image: url('{{ asset('images/motorVisual.png') }}')">
+            <div class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60
+               duration-300 transition-colors flex flex-col
+               p-2 2xl:p-4 text-white">
               <!-- Text block -->
-              <div class="mx-1 mt-10 lg:mt-24 2xl:mt-109">
-                <h1 class="font-semibold text-lg sm:text-sm 2xl:text-5xl">
+              <div class="mx-1 mt-10 md:mt-24 lg:mt-28 2xl:mt-110">
+                <h1 class="font-semibold text-base sm:text-sm md:text-xl lg:text-4xl 2xl:text-5xl">
                   Motorcycle Racing
                 </h1>
-                <p class="mt-1 mr-20 text-[12px] sm:text-[10px] lg:text-[15px] 2xl:text-lg 2xl:pl-2">
-                  Bet on the fastest machines and top drivers from leagues around
-the world.
-
+                <p class="mt-1 mr-20
+                   text-[11px] sm:text-[9px] md:text-[11px]
+                   lg:text-2xl 2xl:text-lg 2xl:pl-2">
+                  Choose between the fastest machines and top drivers from leagues around
+                  the world.
                 </p>
               </div>
 
-              <!-- Button block (bottom-right, moved up with mb-10) -->
-              <div class=" mb-40 pr-3 -top-4 flex justify-end 2xl:mb-10 2xl:pr-6">
+              <!-- Button block -->
+              <div class="mb-40 pr-3 -top-4 flex justify-end 2xl:mb-10 2xl:pr-6">
                 <a href="" class="absolute bottom-2 right-4 2xl:bottom-10 2xl:right-8
-             inline-block text-black font-bold bg-yellow-300
-             text-[12 px] sm:text-[10px] 2xl:text-lg rounded-full
-             px-3 py-1 hover:bg-yellow-400">
-                  Bet Now
+                   inline-block text-black font-bold bg-yellow-300
+                   text-[12px] sm:text-[10px] md:text-[12px] lg:text-3xl 2xl:text-lg
+                   rounded-full px-3 py-1 hover:bg-yellow-400">
+                  Play Now
                 </a>
               </div>
-
             </div>
           </div>
 
           <!-- Card 3 -->
-          <div
-            class="relative rounded-xl bg-emerald-100 w-full sm:w-1/3 aspect-[16/6] lg:h-160 lg:w-120 bg-cover bg-center hover:scale-105 transform transition duration-300 hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
-            style="background-image: url('{{ asset('images/HorseVisual.png') }}')">
-            <div
-              class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60 duration-300 transition-colors flex flex-col p-2 2xl:p-4 text-white">
-
+          <div class="relative rounded-xl bg-emerald-100
+             w-full sm:w-1/3 md:w-full
+             aspect-[16/6] md:aspect-[16/4]
+             lg:aspect-[16/4] lg:w-full
+             xl:h-160 xl:w-120
+             bg-cover bg-center
+             hover:scale-105 transform transition duration-300
+             hover:shadow-[0_0_20px_3px_rgba(16,185,129,0.8)]"
+            style="background-image: url('{{ asset('images/horseVisual.png') }}')">
+            <div class="absolute inset-0 rounded-xl bg-black/75 hover:bg-black/60
+               duration-300 transition-colors flex flex-col
+               p-2 2xl:p-4 text-white">
               <!-- Text block -->
-              <div class="mx-1 mt-10 lg:mt-24 2xl:mt-109">
-                <h1 class="font-semibold text-lg sm:text-sm 2xl:text-5xl">
+              <div class="mx-1 mt-10  md:mt-24 2xl:mt-110">
+                <h1 class="font-semibold text-base sm:text-sm md:text-xl lg:text-4xl 2xl:text-5xl">
                   Horse Racing
                 </h1>
-                <p class="mt-1 mr-20 text-[12px] sm:text-[10px] lg:text-[15px] 2xl:text-lg 2xl:pl-2">
+                <p class="mt-1 mr-20
+                   text-[11px] sm:text-[9px] md:text-[11px]
+                   lg:text-2xl 2xl:text-lg 2xl:pl-2">
                   Experience the thrill of the tracks with live odds and instant
-results.z
+                  results
                 </p>
               </div>
 
-              <!-- Button block (bottom-right, moved up with mb-10) -->
-              <div class=" mb-40 pr-3 -top-4 flex justify-end 2xl:mb-10 2xl:pr-6">
-                <a href="" class="absolute bottom-2 right-4 2xl:bottom-10 2xl:right-8
-             inline-block text-black font-bold bg-yellow-300
-             text-[12 px] sm:text-[10px] 2xl:text-lg rounded-full
-             px-3 py-1 hover:bg-yellow-400">
-                  Bet Now
-                </a>
-              </div>
-
+              <!-- Button block -->
+              <a href="" class="absolute bottom-2 right-4 2xl:bottom-10 2xl:right-8
+                 inline-block text-black font-bold bg-yellow-300
+                 text-[12px] sm:text-[10px] md:text-[12px] lg:text-3xl 2xl:text-[20px]
+                 rounded-full px-3 py-1 hover:bg-yellow-400">
+               Play Now
+              </a>
             </div>
           </div>
         </div>
       </div>
 
 
-      <!-- Banner -->
-      <div class="flex justify-center my-10">
-        <div class="relative text-center">
-          <img src="{{ asset('images/addbanner.png') }}" alt=""
-            class="w-[320px] h-20 rounded-lg 2xl:w-[800px] 2xl:h-40 object-cover" />
-          <div class="absolute inset-0 bg-black/40 rounded-lg"></div>
 
-          <a href=""
-            class="absolute top-3 left-3 text-gray-50 font-semibold py-1 px-2 rounded-full text-[14px] 2xl:text-3xl drop-shadow-lg">
-            Billiard League is back!
-          </a>
-
-          <a href=""
-            class="absolute top-8 left-3 text-gray-50 font-semibold py-1 px-2 rounded-full text-[9px] 2xl:text-lg 2xl:translate-y-6 2xl:translate-x-1 drop-shadow-lg">
-            10% Cashback up to 1000!
-          </a>
-
-          <a href=""
-            class="absolute top-14 left-3 bg-yellow-300 font-bold py-1 px-2 rounded-full text-[9px] 2xl:text-sm 2xl:translate-y-14 2xl:translate-x-4 shadow-md hover:bg-yellow-400 transition">
-            Deposit now
-          </a>
-        </div>
-      </div>
+  
 
       <!-- Discover / How it works -->
       <div data-aos="fade-down"
         class="flex flex-col text-white items-center justify-center mx-8 mt-10 2xl:mt-[100px] 2xl:mx-44 px-4"
         data-aos-once="true">
-        <h1 class="text-lg font-bold xl:text-sm 2xl:text-4xl text-center">
+        <h1 class="text-lg font-bold xl:text-sm  md:text-2xl 2xl:text-4xl text-center">
           Discover the Playing Experience
         </h1>
-        <h1 class="text-[8px] text-center 2xl:text-3xl 2xl:mt-4">
+        <h1 class="text-[8px] text-center md:text-sm 2xl:text-3xl 2xl:mt-4">
           From playing your numbers to exploring jackpots and playing
           responsibly, here's everything you need to know.Learn how it works,
           see today's biggest prizes, and enjoy the excitement responsibly.
         </h1>
       </div>
 
-      <div class="mt-5 2xl:-mt-[300px] 2xl:scale-[0.7] w-full overflow-x-hidden text-white">
-        <div data-aos="fade-right" class="flex justify-between gap-4 px-8 my-8 2xl:my-80 2xl:mx-20 2xl:px-2">
+      <div class="mt-5 2xl:-mt-[300px] 2xl:scale-[0.7] w-full overflow-x-hidden text-white items-center">
+        <div data-aos="fade-right" class="flex justify-between gap-4 px-8 my-8 lg:my-28 2xl:my-80 2xl:mx-20 2xl:px-2">
           <div class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[500px]">
-            <h1 class="text-xs font-bold 2xl:text-6xl 2xl:mt-5 2xl:mb-4">
+            <h1 class="text-xs font-bold md:text-2xl lg:text-4xl 2xl:text-6xl 2xl:mt-5 2xl:mb-4">
               How It Works
             </h1>
-            <p class="text-[8px] 2xl:text-3xl">
+            <p class="text-[8px] md:text-sm lg:text-lg lg:my-2 2xl:text-3xl">
               Playing the lottery has never been simpler. Pick your favorite
               numbers, purchase your ticket online, and tune in for the draw.
               Winners are automatically notified, making your experience
@@ -308,22 +309,22 @@ results.z
             </p>
           </div>
 
-          <div class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[450px] overflow-hidden">
+          <div class="p-2 h-[100px] w-1/2 rounded-2xl md:h-[160px] lg:h-[250px] 2xl:h-[450px] overflow-hidden">
             <img src="{{ asset('images/week.png') }}" alt="" class="object-cover w-full h-full rounded-2xl shadow-xl" />
           </div>
         </div>
 
-        <div data-aos="fade-right" class="flex justify-between gap-4 px-8 my-8 2xl:my-80 2xl:mx-20 2xl:px-2">
-          <div class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[450px] overflow-hidden">
+        <div data-aos="fade-right" class="flex justify-between gap-4 px-8 my-8 lg:my-28 2xl:my-80 2xl:mx-20 2xl:px-2">
+          <div class="p-2 h-[100px] w-1/2 rounded-2xl md:h-[160px] lg:h-[250px] 2xl:h-[450px] overflow-hidden">
             <img src="{{ asset('images/motor.png') }}" alt=""
               class="object-cover w-full h-full rounded-2xl shadow-xl" />
           </div>
 
-          <div class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[500px]">
-            <h1 class="text-xs font-bold 2xl:text-6xl 2xl:mt-5 2xl:mb-4">
+          <div class="p-2 h-[100px] w-1/2 rounded-2xl md:h-[160px] 2xl:h-[500px]">
+            <h1 class="text-xs font-bold md:text-2xl lg:text-4xl 2xl:text-6xl 2xl:mt-5 2xl:mb-4">
               Current Jackpots
             </h1>
-            <p class="text-[8px] 2xl:text-3xl">
+            <p class="text-[8px] md:text-sm lg:text-lg lg:my-2 2xl:text-3xl">
               Explore the latest jackpots and see which games are offering the
               biggest prizes today. From local draws to international
               lotteries, there's a chance for everyone to win big
@@ -331,19 +332,20 @@ results.z
           </div>
         </div>
 
-        <div data-aos="fade-right" class="flex justify-between gap-4 px-8 my-8 2xl:mt-40 2xl:mx-20 2xl:px-2">
+        <div data-aos="fade-right" class="flex justify-between gap-4 px-8 my-8 lg:my-28 2xl:mt-40 2xl:mx-20 2xl:px-2">
           <div class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[500px]">
-            <h1 class="text-xs font-bold 2xl:text-6xl 2xl:mt-5 2xl:mb-4">
+            <h1 class="text-xs font-bold md:text-2xl lg:text-4xl 2xl:text-6xl 2xl:mt-5 2xl:mb-4">
               Responsible Gaming
             </h1>
-            <p class="text-[8px] 2xl:text-3xl">
+
+            <p class="text-[8px] md:text-sm lg:text-lg lg:my-2 2xl:text-3xl">
               Your fun is important, but safety comes first. Set limits, play
               responsibly, and enjoy the excitement of the lottery without
               overextending yourself.
             </p>
           </div>
 
-          <div class="p-2 h-[100px] w-1/2 rounded-2xl 2xl:h-[450px] overflow-hidden">
+          <div class="p-2 h-[100px] w-1/2 rounded-2xl md:h-[160px] lg:h-[250px] 2xl:h-[450px] overflow-hidden">
             <img src="{{ asset('images/payout2.png') }}" alt=""
               class="object-cover w-full h-full rounded-2xl shadow-xl" />
           </div>
@@ -351,95 +353,111 @@ results.z
       </div>
 
       <!-- News -->
-      <h1 class="font-semibold text-emerald-100 my-2 ml-4 2xl:text-3xl 2xl:ml-55 2xl:mb-6" data-aos="fade-up"
-        data-aos-once="true">Sports News</h1>
+      <div data-aos="fade-down"
+        class="flex flex-col text-white items-center justify-center my-4 mx-8 mt-10 lg:my-12 2xl:mt-[100px] 2xl:mx-44 px-4"
+        data-aos-once="true">
+        <h1 class="text-lg font-bold xl:text-sm  md:text-2xl 2xl:text-4xl text-center">
+          Sports News
+        </h1>
+        <h1 class="text-[8px] text-center md:text-sm lg:text-xl 2xl:text-3xl 2xl:mt-4">
+          From race starts to final breaks—see what’s shaping the lines.
+        </h1>
+      </div>
       <div class="mx-auto" data-aos="fade-down" data-aos-once="true">
-        <div class="flex space-x-3 2xl:justify-center">
-          <div class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90">
+        <div class="flex flex-wrap justify-center gap-4 lg:gap-20 lg:mb-8">
+          <div
+            class="flex flex-col bg-slate-800 rounded-xl overflow-hidden w-25 h-35 text-xs md:w-52 md:h-40 lg:scale-120 2xl:w-1/4 2xl:h-90">
             <img src="{{ asset('images/news1.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
-            <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
+            <h1 class="font-semibold text-[9px] px-1 text-white 2xl:text-xl text-center">
               What is the best way to play Billiards?
             </h1>
-            <p class="line-clamp-3 text-[7px] mt-1 px-1 text-emerald-900 2xl:text-sm">
+            <p class="line-clamp-3 text-[7px] mt-1 px-1 text-white 2xl:text-sm">
               The best way to play Super Ace is to start with small bets...
             </p>
-            <p class="text-center text-[9px] text-emerald-700 2xl:text-sm 2xl:my-2">Read More</p>
+            <a
+              class="block w-full text-center mx-auto text-[9px] text-white 2xl:text-sm 2xl:my-2 hover:underline hover:underline-offset-2 hover:text-green-400">
+              Read More
+            </a>
           </div>
 
-          <div class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90 2xl:h-90">
+          <div
+            class="flex flex-col bg-slate-800 rounded-xl w-25 overflow-hidden h-35 text-xs md:w-52 md:h-40 lg:scale-120 2xl:w-1/4 2xl:h-90">
             <img src="{{ asset('images/horsenews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
-            <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
+            <h1 class="font-semibold text-[9px] px-1 text-white 2xl:text-xl text-center">
               What is the best way to play Billiards?
             </h1>
-            <p class="line-clamp-3 text-[7px] mt-1 px-1 text-emerald-900 2xl:text-sm">
+            <p class="line-clamp-3 text-[7px] mt-1 px-1 text-white 2xl:text-sm">
               The best way to play Super Ace is to start with small bets...
             </p>
-            <p class="text-center text-[9px] text-emerald-700 2xl:text-sm 2xl:my-2">Read More</p>
+            <a
+              class="block w-full text-center mx-auto text-[9px] text-white 2xl:text-sm 2xl:my-2 hover:underline hover:underline-offset-2 hover:text-green-400">
+              Read More
+            </a>
           </div>
 
-          <div class="flex-col bg-emerald-100 rounded-xl w-25 overflow-hidden h-35 text-xs 2xl:w-1/4 2xl:h-90">
+          <div
+            class="flex flex-col bg-slate-800 rounded-xl w-25 overflow-hidden h-35 text-xs md:w-52 md:h-40 lg:scale-120 2xl:w-1/4 2xl:h-90">
             <img src="{{ asset('images/motornews.jpg') }}" class="w-full aspect-[16/9] object-cover block" alt="" />
-            <h1 class="font-semibold text-[9px] px-1 text-emerald-950 2xl:text-xl">
+            <h1 class="font-semibold text-[9px] px-1 text-white 2xl:text-xl text-center">
               What is the best way to play Billiards?
             </h1>
-            <p class="line-clamp-3 text-[7px] mt-1 px-1 text-emerald-900 2xl:text-sm">
+            <p class="line-clamp-3 text-[7px] mt-1 px-1 text-white 2xl:text-sm">
               The best way to play Super Ace is to start with small bets...
             </p>
-            <p class="text-center text-[9px] text-emerald-700 2xl:text-sm 2xl:my-2">Read More</p>
+            <a
+              class="block w-full text-center mx-auto text-[9px] text-white 2xl:text-sm 2xl:my-2 hover:underline hover:underline-offset-2 hover:text-green-400">
+              Read More
+            </a>
           </div>
         </div>
+
+        <footer
+          class="flex bg-white/80 text-slate-950 dark:bg-slate-900/80 dark:text-slate-50 mx-4 md:mx-4 xl:mx-20 my-4 p-4 gap-3 rounded-lg lg:h-70 lg:gap-5">
+          <div class="flex flex-col gap-1 w-1/2 lg:gap-2">
+            <h1 class="font-bold text-xs lg:text-xl">We make playing easy, try all our games and play now!</h1>
+            <h1 class="text-xs lg:text-sm">For our latest news, sign up to our newsletter.</h1>
+            <input type="text" class="p-1 border-b border-slate-900 dark:border-slate-200"
+              placeholder="Email Address" />
+            <div class="flex gap-2">
+              <a href=""><i class="fa-brands fa-facebook hover:text-emerald"></i></a>
+              <a href=""><i class="fa-brands fa-instagram hover:text-emerald"></i></a>
+              <a href=""><i class="fa-brands fa-square-x-twitter hover:text-emerald"></i></a>
+              <a href=""><i class="fa-brands fa-youtube hover:text-emerald"></i></a>
+            </div>
+            <h1 class="text-[10px]">BK2025. All rights reserved, 2025</h1>
+          </div>
+          <div class="flex flex-col w-1/3 text-[8px] gap-2 lg:gap-4 lg:mt-4 font-semibold  lg:text-[12px]">
+            <a href="" class="hover:underline underline-offset-2">Get in touch</a>
+            <a href="" class="hover:underline underline-offset-2">Join our team</a>
+            <a href="" class="hover:underline underline-offset-2">About</a>
+            <a href="" class="hover:underline underline-offset-2">FAQ</a>
+            <a href="" class="hover:underline underline-offset-2">Terms of Use</a>
+            <a href="" class="hover:underline underline-offset-2">Privacy</a>
+          </div>
+          <div class="flex flex-col w-1/3 text-[8px] gap-2 lg:gap-4 lg:mt-4 font-semibold  lg:text-[12px]">
+            <a href="" class="hover:underline underline-offset-2">Billiard Club</a>
+            <a href="" class="hover:underline underline-offset-2">Promotions</a>
+            <a href="" class="hover:underline underline-offset-2">Playing</a>
+            <a href="" class="hover:underline underline-offset-2">Terms of Service</a>
+          </div>
+
+
+        </footer>
+        <footer class="flex justify-center items-center text-sm text-gray-300 py-4">
+          <span class="flex items-center justify-center space-x-1">
+            <span>&copy;</span>
+            <span id="year"></span>
+            <span>BK</span>
+          </span>
+        </footer>
       </div>
     </div>
 
-    <!--Footer-->
-    <div class="flex-col">
-      <div
-        class="flex bg-emerald-950/60 space-x-4 mx-4 2xl:mx-24 rounded-xl p-3 text-white border border-emerald-500 my-8">
-        <div class="flex-col space-y-2 p-4">
-          <h1 class="font-bold text-lg text-emerald-100 2xl:text-4xl">
-            Let's Talk
-          </h1>
-          <p class="text-[8px] 2xl:text-xl 2xl:w-1/2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
-            Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
-            Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris
-            massa.
-          </p>
-          <p
-            class="bg-yellow-300 font-semibold text-black text-sm rounded-full px-2 w-12 text-center 2xl:text-xl 2xl:px-7 2xl:w-fit">
-            FAQs
-          </p>
-        </div>
-        <div class="flex-col space-y-2 text-[10px] mt-7 2xl:text-x 2xl:mr-40 2xl:text-lg p-4">
-          <div class="flex space-x-2">
-            <h1 class="font-bold text-emerald-500">Email:</h1>
-            <h1>Hello@gmail.com</h1>
-          </div>
-          <div class="flex space-x-2">
-            <h1 class="font-bold text-emerald-500">Phone:</h1>
-            <h1>09123456789</h1>
-          </div>
-          <div class="flex space-x-2">
-            <h1 class="font-bold text-emerald-500">Address:</h1>
-            <div class="flex-col space-y-1">
-              <h1>Visayas Ave.</h1>
-              <h1>Espana, 1882</h1>
-              <h1>Quezon City</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <footer class="flex justify-center items-center text-sm text-gray-300 py-4">
-        <span class="flex items-center justify-center space-x-1">
-          <span>&copy;</span>
-          <span id="year"></span>
-          <span>GJL/JBL | BilarPH</span>
-        </span>
-      </footer>
-    </div>
+
   </div>
-  h
+
+
+
   <script>
     AOS.init();
     // Auto set current year
