@@ -85,11 +85,6 @@
                     BK2025
                 </h1>
 
-                <p class="mt-4 text-base sm:text-lg md:text-xl text-slate-300 leading-relaxed">
-                    High-stakes. High energy.
-                </p>
-                <p class="text-amber-300 text-base sm:text-lg md:text-xl font-semibold mt-1">
-                    All in, every round.
                 </p>
 
                 <p class="mt-6 text-[12px] sm:text-sm text-slate-500 max-w-sm mx-auto">
@@ -98,7 +93,7 @@
 
                 <div class="hidden md:block mt-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_30px_80px_rgba(0,0,0,.7)] p-4">
                     <p class="text-[12px] leading-relaxed text-slate-300">
-                        “BK2025 Arena” is for authorized players only. By continuing, you agree to monitoring and fair play enforcement.
+                        “BK2025 Arena” is for authorized players only. This site is for testing and for entertainment only. 
                     </p>
                 </div>
             </div>

@@ -78,6 +78,13 @@
                 /* month navigation for calendar */
                 monthOffset: 0, // 0 = current month, +1 next month, etc.
 
+                /* links papunta sa laro */
+                playLinks: {
+                    billiards: "{{ route('billiard') }}",
+                    motor: "{{ route('drag.race') }}",
+                    horse: "{{ route('horse') }}",
+                },
+
                 events: [
                     // BILLIARDS
                     {
@@ -247,6 +254,14 @@
                         .sort((a, b) => new Date(a.date) - new Date(b.date));
                 },
 
+                /* play button helpers */
+                get playHref() {
+                    return this.playLinks[this.sport] ?? '#';
+                },
+                get playLabel() {
+                    return 'Play ' + this.sportLabel(this.sport);
+                },
+
                 /* --- UI HELPERS --- */
                 changeMonth(delta) {
                     this.monthOffset += delta;
@@ -306,7 +321,7 @@
 </head>
 
 <body
-    class="overflow-x-hidden bg-[linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('images/loginPicture2.png')] bg-cover bg-center bg-no-repeat [min-height:100dvh]"
+    class="overflow-x-hidden bg-[linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('{{ asset('images/loginPicture2.png') }}')] bg-cover bg-center bg-no-repeat [min-height:100dvh]"
     x-data="app()">
 
     @php
@@ -317,7 +332,7 @@
     <nav
         class="inset-x-0 z-50 border-b border-amber-400/20 bg-black/60 backdrop-blur-xl shadow-[0_8px_30px_rgba(251,191,36,.08)]">
         <div class="mx-auto max-w-7xl flex items-center justify-between px-4 py-3">
-            <a href="/" class="flex items-center gap-2 group">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2 group">
                 <span
                     class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-black font-extrabold text-lg shadow-[0_0_25px_rgba(251,191,36,.35)] ring-1 ring-amber-400/30">
                     B
@@ -328,7 +343,7 @@
             </a>
 
             <div class="flex items-center gap-4">
-                <a href="/" class="text-sm font-semibold hover:text-amber-300 transition">
+                <a href="{{ route('dashboard') }}" class="text-sm font-semibold hover:text-amber-300 transition">
                     <i class="fa-solid fa-house text-amber-300 mr-1"></i>
                     <span class="text-white">Home</span>
                 </a>
@@ -379,8 +394,8 @@
     <div class="overflow-x-hidden bg-gradient-to-b from-slate-950/70 via-slate-800/70 to-slate-700/30 min-h-full">
         <div class="w-full 2xl:max-w-screen-2xl 2xl:mx-auto 2xl:flex 2xl:gap-4">
             <!-- MAIN -->
-            <main class="flex-1">
-                <!-- SPORT CARDS (as filters) -->
+            <main class="flex-1 pb-16">
+                <!-- SPORT CARDS (filters) -->
                 <div class="flex justify-center space-x-4 my-3 lg:mt-4 lg:-ml-18 lg:scale-80">
                     <!-- Billiards -->
                     <div class="rounded-xl" :class="sport === 'billiards' ? 'neon neon-blue' : ''">
@@ -409,33 +424,39 @@
                         <button
                             class="no-drag-btn relative grid place-items-center rounded-xl overflow-hidden h-12 w-26 bg-slate-400 transition leading-none 2xl:h-50 2xl:w-105"
                             @click="sport='horse'" :aria-pressed="sport === 'horse'">
-                              <img src="{{ asset('images/hogif.gif') }}" alt="Drag Race"
+                            <img src="{{ asset('images/hogif.gif') }}" alt="Horse Racing"
                                  class="no-drag block w-full h-full object-contain -translate-y-2 2xl:-translate-y-8"
                                  draggable="false" ondragstart="return false;">
                         </button>
                     </div>
                 </div>
 
-                <!-- HEADER: title + new event button -->
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 xl:px-16 mt-1 mb-3 gap-2">
-                    <div>
-                        <p class="text-[11px] text-amber-300 uppercase tracking-[0.22em] mb-1">
-                            Events Overview
-                        </p>
-                        <h1 class="font-bold text-lg text-white sm:text-2xl lg:text-3xl">
-                            <span x-text="sportLabel(sport)"></span> Events Calendar
-                        </h1>
-                        <p class="text-[11px] sm:text-xs text-slate-300 mt-1 max-w-xl">
-                            Track upcoming tournaments, race nights, and special events. Choose a sport above,
-                            browse the calendar, then tap an event to view or manage markets.
-                        </p>
+                <!-- HEADER: title + play button + new event -->
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between px-4 xl:px-16 mt-1 mb-3 gap-3">
+                    <div class="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-4">
+                        <div>
+                            <p class="text-[11px] text-amber-300 uppercase tracking-[0.22em] mb-1">
+                                Events Overview
+                            </p>
+                            <h1 class="font-bold text-lg text-white sm:text-2xl lg:text-3xl">
+                                <span x-text="sportLabel(sport)"></span> Events Calendar
+                            </h1>
+                        </div>
+
+                        <!-- PLAY BUTTON – may href per sport, design gaya ng New Event -->
+                        <a :href="playHref"
+                           class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-950 shadow-[0_8px_22px_rgba(251,191,36,.35)] hover:brightness-110 active:brightness-95 transition">
+                            <i class="fa-solid fa-play text-xs"></i>
+                            <span class="tracking-[0.18em]" x-text="playLabel.toUpperCase()"></span>
+                        </a>
                     </div>
 
                     <div class="flex items-center gap-2">
                         <button
                             class="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-600/60 bg-slate-900/70 px-3 py-1.5 text-[11px] sm:text-xs text-slate-200 hover:bg-slate-800/70 transition">
                             <i class="fa-regular fa-calendar-check text-emerald-300"></i>
-                            This Month: <span class="font-semibold" x-text="monthLabel"></span>
+                            This Month:
+                            <span class="font-semibold" x-text="monthLabel"></span>
                         </button>
                         <button
                             class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 px-4 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-950 shadow-[0_8px_22px_rgba(251,191,36,.35)] hover:brightness-105 active:brightness-95 transition">
@@ -630,8 +651,8 @@
                     </div>
                 </div>
             </main>
-
-           
+        </div>
+    </div>
 
     <footer class="fixed inset-x-0 bottom-0 z-40">
         <div class="border-t border-white/10 bg-black/60 backdrop-blur-xl">

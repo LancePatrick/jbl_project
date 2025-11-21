@@ -148,7 +148,7 @@
             <iframe
               id="youtube-video-main"
               class="absolute inset-0 w-full h-full rounded-lg relative z-20 border-4 border-transparent"
-              src="https://www.youtube.com/embed/rUC_nHCOUW4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              src="https://www.youtube.com/embed/lefHUxQurhU?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen></iframe>
@@ -198,9 +198,25 @@
               <div id="pct-total-label" class="text-center text-white/50">Total: ₱0</div>
               <div id="pct-blue-label" class="text-right">Blue 50%</div>
             </div>
+
+            <!-- View switcher: Totalizator / Odds -->
+            <div class="mt-2 flex gap-2 text-[11px]">
+              <button
+                id="btn-view-totalizator"
+                type="button"
+                class="flex-1 py-1 rounded-full bg-emerald-600 text-black font-semibold tracking-wide">
+                Totalizator
+              </button>
+              <button
+                id="btn-view-odds"
+                type="button"
+                class="flex-1 py-1 rounded-full bg-gray-700/80 text-white/70 font-semibold tracking-wide">
+                Odds
+              </button>
+            </div>
           </div>
 
-          <!-- Cards -->
+          <!-- Cards (TOTALIZATOR VIEW) -->
           <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-0">
             <div class="bet-card red tilt text-center">
               <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
@@ -247,6 +263,109 @@
                     <span class="text-white/60">Potential win</span>
                     <span id="wala-current-payout" class="font-semibold text-emerald-300">—</span>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ODDS CONSOLE (ODDS VIEW) -->
+          <div
+            id="odds-console"
+            class="hidden mt-2 bg-gray-900/80 border border-white/10 rounded-xl text-[11px] overflow-hidden">
+
+            <!-- top orange header -->
+            <div class="bg-amber-500/95 text-center font-semibold tracking-[0.18em] uppercase py-1">
+              PLAYING CONSOLE
+            </div>
+
+            <!-- amount + quick chips -->
+            <div class="px-2 pt-2 pb-1 space-y-1 bg-gray-950/70">
+              <div class="flex items-center gap-2">
+                <input
+                  id="odds-amount"
+                  type="number"
+                  inputmode="numeric"
+                  class="flex-1 px-2 py-1 rounded border border-amber-300/70 bg-amber-100/10 text-xs text-white placeholder:text-amber-100/60"
+                  placeholder="Enter Amount" />
+                <div class="text-[11px] whitespace-nowrap">
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-1 text-[11px]">
+                <!-- 🔴 UPDATED: hover/click red -->
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="200">200</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="500">500</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="1000">1,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="2000">2,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="3000">3,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="5000">5,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="10000">10,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-red-700/90 text-white font-semibold transition-colors duration-150 hover:bg-red-800 active:bg-red-900"
+                  data-allin="true">All-In</button>
+              </div>
+            </div>
+
+            <!-- main table -->
+            <div class="border-t border-white/10 bg-gray-950/70">
+              <!-- header row (2x MERON, 2x WALA, ODDS sa gitna) -->
+              <div class="grid grid-cols-5 text-center font-semibold text-[11px]">
+                <div class="bg-red-700/95 py-1 text-white">MERON</div>
+                <div class="bg-red-900 py-1 text-white/80">TOTAL</div>
+                <div class="bg-gray-900 py-1 text-white">ODDS</div>
+                <div class="bg-blue-900 py-1 text-white/80">TOTAL</div>
+                <div class="bg-blue-700/95 py-1 text-white">WALA</div>
+              </div>
+
+              <!-- rows: [MERON ctrls] [MERON total] [ODDS] [WALA total] [WALA ctrls] -->
+              <div id="odds-table-rows" class="divide-y divide-gray-300/40 bg-white"></div>
+
+              <!-- last row: BET ON DRAW -->
+              <div class="grid grid-cols-3 text-center text-[11px] border-t border-gray-300/60">
+                <div class="bg-emerald-700 py-1 font-semibold text-black">PLAY ON DRAW</div>
+                <div class="flex items-center justify-center bg-emerald-500 text-black font-semibold">
+                  1-8
+                </div>
+                <div class="flex items-center justify-center gap-1 bg-white py-1">
+                  <button
+                    type="button"
+                    class="w-5 h-5 rounded bg-red-600 text-[10px] leading-none text-white font-bold flex items-center justify-center"
+                    data-odds-btn
+                    data-side="DRAW"
+                    data-odds="1-8"
+                    data-dir="minus">-</button>
+                  <span
+                    id="odds-cell-DRAW-1_8"
+                    class="min-w-[30px] text-center text-xs text-black">0</span>
+                  <button
+                    type="button"
+                    class="w-5 h-5 rounded bg-green-500 text-[10px] leading-none text-black font-bold flex items-center justify-center"
+                    data-odds-btn
+                    data-side="DRAW"
+                    data-odds="1-8"
+                    data-dir="plus">+</button>
                 </div>
               </div>
             </div>
@@ -414,20 +533,26 @@
   <script>
     // A) CONFIG / CONSTANTS
     const players = [
-      "Hagdang Bato","King Focus","LeBron James","Kid Molave",
-      "JBL","Autumn Blaze","Desert Sage","Hidden Hollow",
-      "Pony Punster","Santino","Panday","Hooves of Fury",
-      "Golden Hour","Sun Chaser"
+      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
+      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
+      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
+      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
     ];
     const BIGROAD_MAX_ROWS = 6;
     const BEAD_MAX_ROWS    = 6; // <-- match rows to Logrohan for proportional height
+
+    // ODDS rows (center column) top→bottom
+    const ODDS_ROWS = [
+      "10-10","10-9","10-8","8-6","3-2",
+      "9-10","8-10","6-8","2-3"
+    ];
+    const oddsState = {};
 
     // B) STATE
     let results = [];
     let meronAmount, walaAmount, meronOdds, walaOdds;
     let currentBalance = 500000;
     const betHistory = [];
-    let oddsVisible = false; // 🔹 odds hidden until first bet
 
     // C) UTILS
     function getRandomPlayer(exclude){
@@ -480,14 +605,141 @@
       const active = getBetInput();
       if(active){
         active.focus();
-        // small flash feedback
         active.style.transition = 'box-shadow 120ms ease';
         const prev = active.style.boxShadow;
         active.style.boxShadow = '0 0 0 3px rgba(250,204,21,.45)';
         setTimeout(()=>{ active.style.boxShadow = prev; }, 160);
-        // fire input event in case listeners exist
         active.dispatchEvent(new Event('input', { bubbles:true }));
         active.dispatchEvent(new Event('change', { bubbles:true }));
+      }
+    }
+
+    // helper for odds-console IDs
+    function safeOddsId(label){
+      return label.replace(/[^0-9a-zA-Z]+/g,'_');
+    }
+
+    // build odds-console rows (Meron | Odds | Wala + total columns)
+    function initOddsConsole(){
+      const container = document.getElementById('odds-table-rows');
+      if(!container) return;
+      container.innerHTML = '';
+      ODDS_ROWS.forEach(label=>{
+        const idSafe = safeOddsId(label);
+        const row = document.createElement('div');
+        row.className = "grid grid-cols-5 text-center text-[11px]";
+        row.innerHTML = `
+          <!-- MERON controls (left) -->
+          <div class="flex items-center justify-center gap-1 bg-white py-1">
+            <button type="button"
+              class="w-5 h-5 rounded bg-red-600 text-[10px] leading-none text-white font-bold flex items-center justify-center"
+              data-odds-btn data-side="MERON" data-odds="${label}" data-dir="minus">-</button>
+            <span id="odds-cell-MERON-${idSafe}"
+              class="min-w-[30px] text-center text-xs text-black">0</span>
+            <button type="button"
+              class="w-5 h-5 rounded bg-green-500 text-[10px] leading-none text-black font-bold flex items-center justify-center"
+              data-odds-btn data-side="MERON" data-odds="${label}" data-dir="plus">+</button>
+          </div>
+
+          <!-- MERON TOTAL (katabi ng ODDS) -->
+          <div class="flex items-center justify-center bg-red-50 text-[10px] text-black font-semibold">
+            <span id="odds-total-MERON-${idSafe}" class="min-w-[40px] text-center">0</span>
+          </div>
+
+          <!-- ODDS label -->
+          <div class="flex items-center justify-center bg-gray-200 text-black font-semibold">${label}</div>
+
+          <!-- WALA TOTAL (katabi ng ODDS sa kabila) -->
+          <div class="flex items-center justify-center bg-blue-50 text-[10px] text-black font-semibold">
+            <span id="odds-total-WALA-${idSafe}" class="min-w-[40px] text-center">0</span>
+          </div>
+
+          <!-- WALA controls (right) -->
+          <div class="flex items-center justify-center gap-1 bg-white py-1">
+            <button type="button"
+              class="w-5 h-5 rounded bg-red-600 text-[10px] leading-none text-white font-bold flex items-center justify-center"
+              data-odds-btn data-side="WALA" data-odds="${label}" data-dir="minus">-</button>
+            <span id="odds-cell-WALA-${idSafe}"
+              class="min-w-[30px] text-center text-xs text-black">0</span>
+            <button type="button"
+              class="w-5 h-5 rounded bg-green-500 text-[10px] leading-none text-black font-bold flex items-center justify-center"
+              data-odds-btn data-side="WALA" data-odds="${label}" data-dir="plus">+</button>
+          </div>
+        `;
+        container.appendChild(row);
+        oddsState[`MERON|${label}`] = 0;
+        oddsState[`WALA|${label}`] = 0;
+      });
+
+      // init BET ON DRAW value
+      oddsState[`DRAW|1-8`] = 0;
+
+      container.addEventListener('click', handleOddsTableClick);
+      const wrap = document.getElementById('odds-console');
+      if(wrap) wrap.addEventListener('click', handleOddsTableClick);
+    }
+
+    function handleOddsTableClick(e){
+      const btn = e.target.closest('[data-odds-btn]');
+      if(!btn) return;
+      const side = btn.dataset.side;
+      const label = btn.dataset.odds;
+      const dir = btn.dataset.dir;
+      const key = `${side}|${label}`;
+      const idSafe = safeOddsId(label);
+
+      let step = parseFloat((document.getElementById('odds-amount')?.value || '0'));
+      if(!step || step <= 0) step = 100; // default increment
+      const current = oddsState[key] || 0;
+      let next = current;
+      if(dir === 'plus') next = current + step;
+      else next = Math.max(0, current - step);
+      oddsState[key] = next;
+
+      const id = side === 'DRAW'
+        ? `odds-cell-DRAW-1_8`
+        : `odds-cell-${side}-${idSafe}`;
+      const display = document.getElementById(id);
+      if(display) display.textContent = next.toLocaleString('en-PH');
+
+      // update middle TOTAL columns (pang-kalahatan per odds / side)
+      if(side !== 'DRAW'){
+        const totalSpan = document.getElementById(`odds-total-${side}-${idSafe}`);
+        if(totalSpan) totalSpan.textContent = next.toLocaleString('en-PH');
+      }
+    }
+
+    // toggle desktop view between cards and odds console
+    function setDesktopView(view){
+      const betArea   = document.getElementById('bet-area');
+      const oddsPanel = document.getElementById('odds-console');
+      const totBtn    = document.getElementById('btn-view-totalizator');
+      const oddsBtn   = document.getElementById('btn-view-odds');
+
+      if(view === 'odds'){
+        if(betArea)   betArea.classList.add('hidden');
+        if(oddsPanel) oddsPanel.classList.remove('hidden');
+
+        if(totBtn){
+          totBtn.classList.remove('bg-emerald-600','text-black');
+          totBtn.classList.add('bg-gray-700/80','text-white/70');
+        }
+        if(oddsBtn){
+          oddsBtn.classList.remove('bg-gray-700/80','text-white/70');
+          oddsBtn.classList.add('bg-amber-400','text-black');
+        }
+      } else {
+        if(betArea)   betArea.classList.remove('hidden');
+        if(oddsPanel) oddsPanel.classList.add('hidden');
+
+        if(totBtn){
+          totBtn.classList.add('bg-emerald-600','text-black');
+          totBtn.classList.remove('bg-gray-700/80','text-white/70');
+        }
+        if(oddsBtn){
+          oddsBtn.classList.add('bg-gray-700/80','text-white/70');
+          oddsBtn.classList.remove('bg-amber-400','text-black');
+        }
       }
     }
 
@@ -593,47 +845,15 @@
     }
 
     // F) BETTING / BALANCE / ODDS
-    // 🔹 Odds = 1 / probability (with base pool + house margin)
     function computeOdds(){
-      const basePool = 1000; // para hindi sobrang extreme pag konti pa lang bets
-      const m = (typeof meronAmount === 'number' ? meronAmount : 0);
-      const w = (typeof walaAmount  === 'number' ? walaAmount  : 0);
-
-      const redPool  = m + basePool;
-      const bluePool = w + basePool;
-      const totalPool = redPool + bluePool;
-
-      if(totalPool <= 0){
-        // fallback (shouldn't happen dahil may basePool)
-        meronOdds = '1.80';
-        walaOdds  = '1.80';
-        return;
-      }
-
-      const probMeron = redPool  / totalPool;  // mas malaki pool → mas mataas prob → mas mababa odds
-      const probWala  = bluePool / totalPool;
-
-      const margin = 0.9; // 10% house edge
-
-      let rawMeron = (1 / probMeron) * margin;
-      let rawWala  = (1 / probWala)  * margin;
-
-      // Clamp para di sobrang baba/sobra taas
-      rawMeron = Math.min(Math.max(rawMeron, 1.10), 6.00);
-      rawWala  = Math.min(Math.max(rawWala, 1.10), 6.00);
-
-      meronOdds = rawMeron.toFixed(2);
-      walaOdds  = rawWala.toFixed(2);
+      meronOdds=(Math.random()*(2.0-1.5)+1.5).toFixed(2);
+      walaOdds=(parseFloat(meronOdds)+0.20).toFixed(2);
     }
-
     function renderOddsEverywhere(){
-      const meronText = oddsVisible ? ('WINNING = ' + meronOdds) : '';
-      const walaText  = oddsVisible ? ('WINNING = ' + walaOdds)  : '';
-
-      const m=document.getElementById('meron-odds'); if(m) m.textContent=meronText;
-      const w=document.getElementById('wala-odds');  if(w) w.textContent=walaText;
-      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent=meronText;
-      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent=walaText;
+      const m=document.getElementById('meron-odds'); if(m) m.textContent='WINNING = '+meronOdds;
+      const w=document.getElementById('wala-odds');  if(w) w.textContent='WINNING = '+walaOdds;
+      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent='WINNING = '+meronOdds;
+      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent='WINNING = '+walaOdds;
     }
     function renderBalance(){
       const mid=document.getElementById('mid-balance');
@@ -657,7 +877,6 @@
         maximumFractionDigits: 2
       });
 
-      // ✅ Current bet: amount + odds lang
       const labelText = `${amtStr} @ ${odds}x`;
 
       if(labelDesktop) labelDesktop.textContent = labelText;
@@ -774,39 +993,25 @@
         alert('Please enter a valid bet amount greater than 0.');
         return;
       }
-
-      const balanceBefore=currentBalance;
-      if(!adjustBalance(-betAmount)){
-        alert('Insufficient balance.');
-        return;
-      }
-
-      // 🔹 Update pool amounts muna
+      let odds, chosenPlayer;
       if(betType==='MERON'){
-        meronAmount = (meronAmount || 0) + betAmount;
+        odds=meronOdds; chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
+      } else {
+        odds=walaOdds;  chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
+      }
+      const balanceBefore=currentBalance;
+      if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; }
+
+      if(betType==='MERON'){
+        meronAmount+=betAmount;
         const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
         const elm=document.getElementById('meron-amount-mob'); if(elm) elm.textContent=meronAmount.toLocaleString();
       } else {
-        walaAmount = (walaAmount || 0) + betAmount;
+        walaAmount+=betAmount;
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
         const elm=document.getElementById('wala-amount-mob'); if(elm) elm.textContent=walaAmount.toLocaleString();
       }
       updatePercentBar();
-
-      // 🔹 Recompute odds based on updated pools
-      computeOdds();
-      if(!oddsVisible){ oddsVisible = true; }
-      renderOddsEverywhere();
-
-      // Lock odds for this bet
-      let odds, chosenPlayer;
-      if(betType==='MERON'){
-        odds=meronOdds;
-        chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
-      } else {
-        odds=walaOdds;
-        chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
-      }
 
       const totalWinnings = betAmount * parseFloat(odds);
       const playerName = chosenPlayer || (betType==='MERON' ? 'Red' : 'Blue');
@@ -835,22 +1040,14 @@
     // I) INIT
     window.onload = () => {
       setDateTime(); setRandomMatch();
-
-      // 🔹 STARTING BET = 0 SA LAHAT NG CARD
-      let meronAmountInit = 0;
-      let walaAmountInit  = 0;
-      meronAmount = meronAmountInit;
-      walaAmount  = walaAmountInit;
-
-      // Pre-compute odds (base 50/50) pero hidden pa rin
-      computeOdds();
-      renderOddsEverywhere(); // oddsVisible = false → ribbons are blank
-
+      let meronAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
+      let walaAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
+      meronAmount=meronAmountInit; walaAmount=walaAmountInit;
+      computeOdds(); renderOddsEverywhere();
       const ma=document.getElementById('meron-amount'); if(ma) ma.textContent=meronAmount.toLocaleString();
       const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
       const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
       const wam=document.getElementById('wala-amount-mob'); if(wam) wam.textContent=walaAmount.toLocaleString();
-
       updatePercentBar();
       document.querySelectorAll('.tilt').forEach(attachTilt);
 
@@ -904,6 +1101,35 @@
       const bwm=document.getElementById('bet-wala-mob');
       if(bmm) bmm.addEventListener('click', ()=> placeBet('MERON'));
       if(bwm) bwm.addEventListener('click',  ()=> placeBet('WALA'));
+
+      // init odds-console rows + buttons
+      initOddsConsole();
+
+      // toggle between Totalizator (cards) and Odds console
+      const totBtn = document.getElementById('btn-view-totalizator');
+      const oddsBtn = document.getElementById('btn-view-odds');
+      if(totBtn && oddsBtn){
+        totBtn.addEventListener('click', ()=> setDesktopView('totalizator'));
+        oddsBtn.addEventListener('click', ()=> setDesktopView('odds'));
+        setDesktopView('totalizator'); // default view
+      }
+
+      // quick set amount for odds-console (including All-In)
+      document.querySelectorAll('.odds-quick-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          let val;
+          if(btn.dataset.allin){
+            val = currentBalance;
+          }else{
+            val = parseInt(btn.dataset.val || '0', 10);
+          }
+          const input = document.getElementById('odds-amount');
+          if(input){
+            input.value = val;
+            input.focus();
+          }
+        });
+      });
     };
   </script>
 </body>

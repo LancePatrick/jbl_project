@@ -20,9 +20,9 @@
         --bead-bubble: 22px;
         --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
       }
-    } -->
+    }
 
-    <!-- .main-panel{ min-width:0; }
+    .main-panel{ min-width:0; }
 
     /* ===== LOGRO ===== */
     .logro-zone{ min-width:0; }
@@ -121,18 +121,18 @@
     .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
     .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
 
-    .video-shell{ contain: layout paint; } -->
-  </style>
+    .video-shell{ contain: layout paint; }
+  </style> -->
 
   <!-- ========================================================
        MAIN: [video+logro | bets]
   ========================================================= -->
   <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-0 md:p-4">
-    <div class="grid gap-6 md:grid-cols-[7fr_5fr]">
+    <div class="grid gap-1 md:grid-cols-[7fr_5fr] -translate-y-3 lg:scale-100 scale-110">
 
       <!-- LEFT: Video + Logrohan -->
       <div class="relative z-10 main-panel mt-2 rounded-lg shadow-lg p-0 md:p-4">
-        <div class="grid grid-cols-3 items-center mb-3 text-sm text-gray-300">
+        <div class="grid grid-cols-3 items-center mb-3 text-xs text-gray-300">
           <div id="event-date" class="text-left"></div>
           <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">—</span></div>
           <div id="event-time" class="text-right"></div>
@@ -188,7 +188,7 @@
 
           <!-- Bet Percentage Bar (DESKTOP) -->
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-0">
-            <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Bet Percentage</div>
+            <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Win Percentage</div>
             <div class="relative h-3 rounded-full bg-black/40 border border-white/10 overflow-hidden">
               <div id="pct-red"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:50%"></div>
               <div id="pct-blue" class="absolute right-0 top-0 h-full bg-blue-600/80" style="width:50%"></div>
@@ -210,17 +210,17 @@
                 <div class="mt-2"><span class="odds-ribbon" id="meron-odds"></span></div>
                 @auth
                   @if( auth()->user()->role_id == 2)
-                    <button class="bet-btn red mt-2 w-full px-3 py-2 text-sm" id="bet-meron">BET</button>
+                    <button class="bet-btn red mt-2 w-full px-3 py-2 text-sm" id="bet-meron">CHOOSE</button>
                   @endif
                 @endauth
                 <!-- Current bet summary under BET (DESKTOP - MERON) -->
                 <div class="mt-2 space-y-0.5 text-xs text-left">
                   <div class="flex items-center justify-between">
-                    <span class="text-white/60">Current bet</span>
+                    <span class="text-white/60">Current</span>
                     <span id="meron-current-bet" class="font-semibold text-yellow-300">—</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="text-white/60">Potential payout</span>
+                    <span class="text-white/60">Potential win</span>
                     <span id="meron-current-payout" class="font-semibold text-emerald-300">—</span>
                   </div>
                 </div>
@@ -234,17 +234,17 @@
                 <div class="mt-2"><span class="odds-ribbon" id="wala-odds"></span></div>
                 @auth
                   @if( auth()->user()->role_id == 2)
-                    <button class="bet-btn blue mt-2 w-full px-3 py-2 text-sm" id="bet-wala">BET</button>
+                    <button class="bet-btn blue mt-2 w-full px-3 py-2 text-sm" id="bet-wala">CHOOSE</button>
                   @endif
                 @endauth
                 <!-- Current bet summary under BET (DESKTOP - WALA) -->
                 <div class="mt-2 space-y-0.5 text-xs text-left">
                   <div class="flex items-center justify-between">
-                    <span class="text-white/60">Current bet</span>
+                    <span class="text-white/60">Current</span>
                     <span id="wala-current-bet" class="font-semibold text-yellow-300">—</span>
                   </div>
                   <div class="flex items-center justify-between">
-                    <span class="text-white/60">Potential payout</span>
+                    <span class="text-white/60">Potential win</span>
                     <span id="wala-current-payout" class="font-semibold text-emerald-300">—</span>
                   </div>
                 </div>
@@ -257,12 +257,18 @@
           @auth
             @if( auth()->user()->role_id == 2)
             <div class="flex items-center justify-between mb-2">
-              <div class="text-[15px] uppercase tracking-widest text-white/70">Bet Amount</div>
+              <div class="text-[15px] uppercase tracking-widest text-white/70">Play Amount</div>
               <div class="text-[15px] text-white/60">min ₱100</div>
             </div>
 
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <input type="number" id="bet-amount-desktop" class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]" placeholder="Enter amount" inputmode="numeric" />
+              <input
+                type="number"
+                id="bet-amount-desktop"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
               <div class="balance-pill text-yellow-300">
                 <span id="mid-balance" class="amount text-base">5,000</span>
               </div>
@@ -294,10 +300,10 @@
       </aside>
 
       <!-- ===================== MOBILE STACK ===================== -->
-      <div class="md:hidden space-y-3">
+      <div class="md:hidden space-y-1">
         <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
           <div class="flex items-center justify-between">
-            <div class="text-[11px] uppercase tracking-widest text-white/70">Bet %</div>
+            <div class="text-[11px] uppercase tracking-widest text-white/70">Win %</div>
             <div id="pct-total-label-mob" class="text-[11px] text-white/60">Total: ₱0</div>
           </div>
           <div class="relative h-2.5 rounded-full bg-black/40 border border-white/10 overflow-hidden mt-1.5">
@@ -318,17 +324,17 @@
             <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob"></span></div>
             @auth
               @if( auth()->user()->role_id == 2)
-                <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" id="bet-meron-mob">BET</button>
+                <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" id="bet-meron-mob">CHOOSE</button>
               @endif
             @endauth
             <!-- Current bet summary under BET (MOBILE - MERON) -->
             <div class="mt-2 space-y-0.5 text-[11px] text-left">
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Current bet</span>
+                <span class="text-white/60">Current</span>
                 <span id="meron-current-bet-mob" class="font-semibold text-yellow-300">—</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Potential payout</span>
+                <span class="text-white/60">Potential win</span>
                 <span id="meron-current-payout-mob" class="font-semibold text-emerald-300">—</span>
               </div>
             </div>
@@ -340,17 +346,17 @@
             <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob"></span></div>
             @auth
               @if( auth()->user()->role_id == 2)
-                <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" id="bet-wala-mob">BET</button>
+                <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" id="bet-wala-mob">CHOOSE</button>
               @endif
             @endauth
             <!-- Current bet summary under BET (MOBILE - WALA) -->
             <div class="mt-2 space-y-0.5 text-[11px] text-left">
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Current bet</span>
+                <span class="text-white/60">Current</span>
                 <span id="wala-current-bet-mob" class="font-semibold text-yellow-300">—</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-white/60">Potential payout</span>
+                <span class="text-white/60">Potential win</span>
                 <span id="wala-current-payout-mob" class="font-semibold text-emerald-300">—</span>
               </div>
             </div>
@@ -361,11 +367,17 @@
           @if( auth()->user()->role_id == 2)
           <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
             <div class="flex items-center justify-between mb-2">
-              <div class="text-[12px] uppercase tracking-widest text-white/70">Bet Amount</div>
+              <div class="text-[12px] uppercase tracking-widest text-white/70">Play Amount</div>
               <div class="text-[12px] text-white/60">min ₱100</div>
             </div>
             <div class="flex items-center gap-2 mb-2">
-              <input type="number" id="bet-amount-mob" class="bet-input p-2 text-sm text-white bg-black/30 w-full" placeholder="Enter amount" inputmode="numeric" />
+              <input
+                type="number"
+                id="bet-amount-mob"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-full"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
               <div class="balance-pill text-yellow-300 shrink-0">
                 <span id="mid-balance" class="amount text-sm">5,000</span>
               </div>
@@ -427,6 +439,7 @@
     let meronAmount, walaAmount, meronOdds, walaOdds;
     let currentBalance = 500000;
     const betHistory = [];
+    let oddsVisible = false; // 🔹 odds hidden until first bet
 
     // C) UTILS
     function getRandomPlayer(exclude){
@@ -464,12 +477,28 @@
       el.addEventListener('mouseleave',()=>{ el.style.transform='rotateX(0) rotateY(0) translateY(0)'; });
     }
 
-    // Pick the visible "Enter amount" input; also update both for consistency
+    // ✅ Pick the *visible* "Enter amount" input (desktop vs mobile)
     function getBetInput(){
-      return document.querySelector('#bet-amount-mob') ||
-             document.querySelector('#bet-amount-desktop') ||
-             document.querySelector('#bet-amount');
+      const candidates = [
+        document.getElementById('bet-amount-desktop'),
+        document.getElementById('bet-amount-mob'),
+        document.getElementById('bet-amount')
+      ];
+
+      // Prefer yung nakikita sa screen (may size & hindi display:none)
+      for (const el of candidates) {
+        if (!el) continue;
+        const style = window.getComputedStyle(el);
+        if (style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0) {
+          return el;
+        }
+      }
+
+      // Fallback: first existing element
+      return candidates.find(Boolean) || null;
     }
+
+    // Keep both inputs in sync when using chips
     function setBetAmount(val){
       const mob = document.getElementById('bet-amount-mob');
       const desk = document.getElementById('bet-amount-desktop');
@@ -592,15 +621,47 @@
     }
 
     // F) BETTING / BALANCE / ODDS
+    // 🔹 Odds = 1 / probability (with base pool + house margin)
     function computeOdds(){
-      meronOdds=(Math.random()*(2.0-1.5)+1.5).toFixed(2);
-      walaOdds=(parseFloat(meronOdds)+0.20).toFixed(2);
+      const basePool = 1000; // para hindi sobrang extreme pag konti pa lang bets
+      const m = (typeof meronAmount === 'number' ? meronAmount : 0);
+      const w = (typeof walaAmount  === 'number' ? walaAmount  : 0);
+
+      const redPool  = m + basePool;
+      const bluePool = w + basePool;
+      const totalPool = redPool + bluePool;
+
+      if(totalPool <= 0){
+        // fallback (shouldn't happen dahil may basePool)
+        meronOdds = '1.80';
+        walaOdds  = '1.80';
+        return;
+      }
+
+      const probMeron = redPool  / totalPool;  // mas malaki pool → mas mataas prob → mas mababa odds
+      const probWala  = bluePool / totalPool;
+
+      const margin = 0.9; // 10% house edge
+
+      let rawMeron = (1 / probMeron) * margin;
+      let rawWala  = (1 / probWala)  * margin;
+
+      // Clamp para di sobrang baba/sobra taas
+      rawMeron = Math.min(Math.max(rawMeron, 1.10), 6.00);
+      rawWala  = Math.min(Math.max(rawWala, 1.10), 6.00);
+
+      meronOdds = rawMeron.toFixed(2);
+      walaOdds  = rawWala.toFixed(2);
     }
+
     function renderOddsEverywhere(){
-      const m=document.getElementById('meron-odds'); if(m) m.textContent='PAYOUT = '+meronOdds;
-      const w=document.getElementById('wala-odds');  if(w) w.textContent='PAYOUT = '+walaOdds;
-      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent='PAYOUT = '+meronOdds;
-      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent='PAYOUT = '+walaOdds;
+      const meronText = oddsVisible ? ('WINNING = ' + meronOdds) : '';
+      const walaText  = oddsVisible ? ('WINNING = ' + walaOdds)  : '';
+
+      const m=document.getElementById('meron-odds'); if(m) m.textContent=meronText;
+      const w=document.getElementById('wala-odds');  if(w) w.textContent=walaText;
+      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent=meronText;
+      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent=walaText;
     }
     function renderBalance(){
       const mid=document.getElementById('mid-balance');
@@ -624,7 +685,6 @@
         maximumFractionDigits: 2
       });
 
-      // ✅ Current bet: amount + odds lang
       const labelText = `${amtStr} @ ${odds}x`;
 
       if(labelDesktop) labelDesktop.textContent = labelText;
@@ -734,37 +794,53 @@
       }
       renderHeaderHistory();
     }
+
     function placeBet(betType){
       const input = getBetInput();
       let betAmount = input ? parseFloat(input.value) : NaN;
-      if(isNaN(betAmount)||betAmount<=0){
+
+      if(isNaN(betAmount) || betAmount <= 0){
         alert('Please enter a valid bet amount greater than 0.');
         return;
       }
-      let odds, chosenPlayer;
-      if(betType==='MERON'){
-        odds=meronOdds; chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
-      } else {
-        odds=walaOdds;  chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
-      }
-      const balanceBefore=currentBalance;
-      if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; }
 
+      const balanceBefore=currentBalance;
+      if(!adjustBalance(-betAmount)){
+        alert('Insufficient balance.');
+        return;
+      }
+
+      // 🔹 Update pool amounts muna
       if(betType==='MERON'){
-        meronAmount+=betAmount;
+        meronAmount = (meronAmount || 0) + betAmount;
         const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
         const elm=document.getElementById('meron-amount-mob'); if(elm) elm.textContent=meronAmount.toLocaleString();
       } else {
-        walaAmount+=betAmount;
+        walaAmount = (walaAmount || 0) + betAmount;
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
         const elm=document.getElementById('wala-amount-mob'); if(elm) elm.textContent=walaAmount.toLocaleString();
       }
       updatePercentBar();
 
+      // 🔹 Recompute odds based on updated pools
+      computeOdds();
+      if(!oddsVisible){ oddsVisible = true; }
+      renderOddsEverywhere();
+
+      // Lock odds for this bet
+      let odds, chosenPlayer;
+      if(betType==='MERON'){
+        odds=meronOdds;
+        chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
+      } else {
+        odds=walaOdds;
+        chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
+      }
+
       const totalWinnings = betAmount * parseFloat(odds);
       const playerName = chosenPlayer || (betType==='MERON' ? 'Red' : 'Blue');
 
-      // 🔹 Update per-card current bet display
+      // 🔹 Update per-card current bet display (reflect sa bet card)
       updateSideCurrentBet(betType, playerName, betAmount, odds, totalWinnings);
 
       const matchId=document.getElementById('match-no')?.textContent||'—';
@@ -781,6 +857,7 @@
         `New Balance: ₱${currentBalance.toLocaleString('en-PH')}.`
       );
     }
+
     function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
     function undoResult(){ results.pop(); renderAllRoads(results); }
     function clearResults(){ results=[]; renderAllRoads(results); }
@@ -788,14 +865,22 @@
     // I) INIT
     window.onload = () => {
       setDateTime(); setRandomMatch();
-      let meronAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
-      let walaAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
-      meronAmount=meronAmountInit; walaAmount=walaAmountInit;
-      computeOdds(); renderOddsEverywhere();
+
+      // 🔹 STARTING BET = 0 SA LAHAT NG CARD
+      let meronAmountInit = 0;
+      let walaAmountInit  = 0;
+      meronAmount = meronAmountInit;
+      walaAmount  = walaAmountInit;
+
+      // Pre-compute odds (base 50/50) pero hidden pa rin
+      computeOdds();
+      renderOddsEverywhere(); // oddsVisible = false → ribbons are blank
+
       const ma=document.getElementById('meron-amount'); if(ma) ma.textContent=meronAmount.toLocaleString();
       const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
       const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
       const wam=document.getElementById('wala-amount-mob'); if(wam) wam.textContent=walaAmount.toLocaleString();
+
       updatePercentBar();
       document.querySelectorAll('.tilt').forEach(attachTilt);
 
@@ -820,7 +905,7 @@
       if(cc) cc.addEventListener('click',  clearResults);
 
       results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
-      renderAllRoads(results); 
+      renderAllRoads(results);
       renderBalance();
 
       const hBtn=document.getElementById('header-history-btn');

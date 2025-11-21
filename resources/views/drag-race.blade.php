@@ -56,9 +56,10 @@
         <!-- VIDEO -->
         <div
           data-video
-          class="relative aspect-[16/9] overflow-hidden rounded-[16px]
-                 border border-white/10 bg-black/80
-                 shadow-[0_18px_40px_rgba(0,0,0,.55),0_6px_14px_rgba(0,0,0,.25)]"
+          class="relative w-full max-w-[720px] mx-auto md:mx-0
+                 aspect-[16/9] overflow-hidden rounded-[16px]
+                 border-2 border-yellow-400 bg-black/80
+                 shadow-[0_0_20px_rgba(250,204,21,0.45),0_18px_40px_rgba(0,0,0,.55),0_6px_14px_rgba(0,0,0,.25)]"
         >
           <div class="pointer-events-none absolute inset-0 rounded-[16px]
                       shadow-[inset_0_0_0_3px_rgba(255,255,255,.12),inset_0_0_40px_rgba(15,23,42,.85)]"></div>
