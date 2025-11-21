@@ -124,7 +124,7 @@
               Bet. Break. Win Big!
             </h1>
             <p class="break-words text-[10px] md:mr-40 md:text-sm lg:mr-4 lg:text-2xl 2xl:text-3xl 2xl:py-6">
-              Dive into the ultimate billiards betting experience — where
+              Dive into the ultimate billiard playing experience — where
               every shot counts and every match could make you a winner.
             </p>
             <div class="flex space-x-2 my-2 text-[10px] lg:my-4 2xl:text-xl 2xl:translate-y-2 font-semibold text-black">
@@ -136,7 +136,7 @@
               <div
                 class="flex bg-yellow-300 px-3 py-1 2xl:py-4 2xl:px-5 items-center gap-1 2xl:gap-2 rounded-full hover:bg-yellow-400 transition-colors duration-200">
                 <i class="fa-solid fa-sack-dollar lg:text-2xl"></i>
-                <a href="" class="text-[8px] md:text-sm lg:text-2xl 2xl:text-lg text-center">Start Betting</a>
+                <a href="" class="text-[8px] md:text-sm lg:text-2xl 2xl:text-lg text-center">Start Playing</a>
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@
           Featured Sports
         </h1>
         <h1 class="text-[8px] text-center md:text-lg 2xl:text-3xl 2xl:mt-4">
-          Choose your sport and start betting on your favorite events.
+          Choose your sport and start playing on your favorite events.
         </h1>
       </div>
 
@@ -195,7 +195,7 @@
                    inline-block text-black font-bold bg-yellow-300
                    text-[12px] sm:text-[10px] md:text-[12px] lg:text-3xl 2xl:text-lg
                    rounded-full px-3 py-1 hover:bg-yellow-400">
-                  Bet Now
+                  Play Now
                 </a>
               </div>
             </div>
@@ -222,7 +222,7 @@
                 <p class="mt-1 mr-20
                    text-[11px] sm:text-[9px] md:text-[11px]
                    lg:text-2xl 2xl:text-lg 2xl:pl-2">
-                  Bet on the fastest machines and top drivers from leagues around
+                  Choose between the fastest machines and top drivers from leagues around
                   the world.
                 </p>
               </div>
@@ -233,7 +233,7 @@
                    inline-block text-black font-bold bg-yellow-300
                    text-[12px] sm:text-[10px] md:text-[12px] lg:text-3xl 2xl:text-lg
                    rounded-full px-3 py-1 hover:bg-yellow-400">
-                  Bet Now
+                  Play Now
                 </a>
               </div>
             </div>
@@ -270,7 +270,7 @@
                  inline-block text-black font-bold bg-yellow-300
                  text-[12px] sm:text-[10px] md:text-[12px] lg:text-3xl 2xl:text-[20px]
                  rounded-full px-3 py-1 hover:bg-yellow-400">
-                Bet Now
+               Play Now
               </a>
             </div>
           </div>
@@ -414,7 +414,7 @@
         <footer
           class="flex bg-white/80 text-slate-950 dark:bg-slate-900/80 dark:text-slate-50 mx-4 md:mx-4 xl:mx-20 my-4 p-4 gap-3 rounded-lg lg:h-70 lg:gap-5">
           <div class="flex flex-col gap-1 w-1/2 lg:gap-2">
-            <h1 class="font-bold text-xs lg:text-xl">We make betting easy, try all our games and bet now!</h1>
+            <h1 class="font-bold text-xs lg:text-xl">We make playing easy, try all our games and play now!</h1>
             <h1 class="text-xs lg:text-sm">For our latest news, sign up to our newsletter.</h1>
             <input type="text" class="p-1 border-b border-slate-900 dark:border-slate-200"
               placeholder="Email Address" />
@@ -437,7 +437,7 @@
           <div class="flex flex-col w-1/3 text-[8px] gap-2 lg:gap-4 lg:mt-4 font-semibold  lg:text-[12px]">
             <a href="" class="hover:underline underline-offset-2">Billiard Club</a>
             <a href="" class="hover:underline underline-offset-2">Promotions</a>
-            <a href="" class="hover:underline underline-offset-2">Betting</a>
+            <a href="" class="hover:underline underline-offset-2">Playing</a>
             <a href="" class="hover:underline underline-offset-2">Terms of Service</a>
           </div>
 
