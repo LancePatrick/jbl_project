@@ -1,1243 +1,961 @@
 {{-- resources/views/drag-race.blade.php --}}
 <x-layouts.app :title="__('Drag Race')">
-  <body
-    class="min-h-dvh overflow-x-hidden font-sans text-[13px] text-white bg-black"
-  >
-  {{-- GLOBAL BG SAME AS BILLIARD --}}
+
+  <body class="text-white font-sans bg-black">
   <div class="bg-animated"></div>
 
-  @php
-    /** role_id: 1 = admin, 2 = user */
-    $roleId = auth()->user()->role_id ?? 2;
-  @endphp
+  <!-- ====== STYLE: isolate logrohan & road widths; keep video border steady ====== -->
+  <!-- <style>
+    :root{
+      --logro-bubble: 26px;   /* desktop logro cell size */
+      --logro-step: 3px;      /* faux 3D z-step */
+      --bead-bubble: 26px;    /* mini road dot size */
+      --col-gap: 6px;
+      --row-gap: 6px;         /* vertical gap between rows */
+      /* Make Road same height as Logrohan (8 rows) */
+      --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
+    }
+    @media (max-width: 768px){
+      :root{
+        --logro-bubble: 22px;
+        --bead-bubble: 22px;
+        --rail-h: calc(var(--logro-bubble) * 8 + (var(--row-gap) * 7));
+      }
+    }
 
-  <!-- PAGE GRID -->
-  <div
-    class="relative z-10 w-full max-w-[900px] md:max-w-screen-2xl mx-auto
-           grid gap-4 justify-center
-           px-2 sm:px-[var(--gutter,12px)] py-3 sm:py-[18px]"
-  >
+    .main-panel{ min-width:0; }
 
-    <!-- MAIN PANEL -->
-    <section
-      class="w-full max-w-full md:max-w-none mx-auto
-             rounded-xl border border-white/10 bg-gray-900/60
-             p-2.5 sm:p-4 lg:p-11 backdrop-blur-[1px]
-             shadow-lg"
-      style="--side:clamp(300px,32vw,420px);"
-    >
-      <div class="flex items-center justify-between gap-3 border-b border-white/10 pb-2">
-        <div class="flex gap-1 overflow-auto px-1 sm:px-2">
-          <button
-            data-tab="odds"
-            class="rounded-[12px] border border-[rgb(210_225_255_/_0.9)]
-                   bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]
-                   px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
-                   shadow-[0_6px_14px_rgba(64,120,255,.35)] whitespace-nowrap"
-          >ODDS</button>
+    /* ===== LOGRO ===== */
+    .logro-zone{ min-width:0; }
+    .logro-rail{
+      position:relative;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: stable both-edges;
+      padding-bottom: 2px;
+      height: var(--rail-h);       /* <-- shared height */
+    }
+    .logro-rail::-webkit-scrollbar{ height:8px }
+    .logro-rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:8px }
 
-          <button
-            data-tab="total"
-            class="rounded-[12px] border border-[rgb(210_225_255_/_0.8)] bg-[rgba(21,35,71,0.75)]
-                   px-3 py-1.5 sm:py-2 font-black text-white text-[11px] sm:text-[12px]
-                   whitespace-nowrap"
-          >TOTAL</button>
+    .logro-strip-3d{
+      display:inline-grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      column-gap: var(--col-gap);
+      contain: layout paint;
+      height: 100%;                /* <-- fill rail */
+    }
+    .logro-col{
+      display:grid;
+      grid-auto-rows: var(--logro-bubble);
+      row-gap: var(--row-gap);
+      align-content:start;
+    }
+    .ring-gap{ width: var(--logro-bubble); height: var(--logro-bubble); opacity:.08; border:1px dashed rgba(255,255,255,.18); border-radius:999px; }
+
+    .ring-bubble{
+      width: var(--logro-bubble);
+      height: var(--logro-bubble);
+      border-radius:999px;
+      border:3px solid currentColor;
+      box-shadow:
+        0 2px 0 rgba(0,0,0,.35) inset,
+        0 0 0 2px rgba(255,255,255,.06) inset,
+        0 6px 16px rgba(0,0,0,.45);
+      transform-style: preserve-3d;
+    }
+    .ring-red{ color:#ef4444; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
+    .ring-blue{ color:#3b82f6; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 55%); }
+
+    /* ===== MINI ROAD (BEAD) ===== */
+    .bead-rail{
+      position:relative;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: stable both-edges;
+      padding-bottom: 2px;
+      min-width:0;
+      height: var(--rail-h);       /* <-- shared height */
+    }
+    .bead-rail::-webkit-scrollbar{ height:8px }
+    .bead-rail::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.2); border-radius:8px }
+
+    .bead-strip{
+      display:inline-grid;
+      grid-auto-flow:column;
+      grid-auto-columns:max-content;
+      column-gap:6px;
+      contain: layout paint;
+      height: 100%;                /* <-- fill rail */
+    }
+    .bead-col{
+      display:grid;
+      grid-auto-rows: var(--bead-bubble);
+      row-gap:4px;
+      align-content:start;
+    }
+    .bead,
+    .bead-solid{
+      width: var(--bead-bubble);
+      height: var(--bead-bubble);
+      border-radius: 999px;
+      border:2px solid rgba(255,255,255,.22);
+      display:grid; place-items:center;
+      font-size:10px; line-height:1; font-weight:600;
+      color:#0f172a;
+    }
+    .bead-solid.red{ background:#ef4444; border-color:#ef4444; color:white; }
+    .bead-solid.blue{ background:#3b82f6; border-color:#3b82f6; color:white; }
+
+    /* 3D badge/chips (existing hooks used by JS) */
+    .odds-ribbon{ background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.15); border-radius:8px; padding:.25rem .5rem; display:inline-block; }
+    .bet-card{ background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:.75rem; }
+    .bet-card.red{ box-shadow:0 10px 24px rgba(239,68,68,.15) }
+    .bet-card.blue{ box-shadow:0 10px 24px rgba(59,130,246,.15) }
+    .bet-btn{ border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+    .bet-btn.red:hover{ background:rgba(239,68,68,.25) }
+    .bet-btn.blue:hover{ background:rgba(59,130,246,.25) }
+
+    .name-chip{ display:inline-grid; place-items:center; width:2.2rem; height:2.2rem; border-radius:10px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05); }
+    .amount-3d{ text-shadow: 0 2px 0 rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35); }
+
+    .video-shell{ contain: layout paint; }
+  </style> -->
+
+  <!-- ========================================================
+       MAIN: [video+logro | bets]
+  ========================================================= -->
+  <main class="max-w-screen-2xl 2xl:max-w-[2400px] mx-auto p-0 md:p-4">
+    <div class="grid gap-1 md:grid-cols-[7fr_5fr] -translate-y-3 lg:scale-100 scale-110">
+
+      <!-- LEFT: Video + Logrohan -->
+      <div class="relative z-10 main-panel mt-2 rounded-lg shadow-lg p-0 md:p-4">
+        <div class="grid grid-cols-3 items-center mb-3 text-xs text-gray-300">
+          <div id="event-date" class="text-left"></div>
+          <div class="text-center font-bold text-yellow-400 text-lg">MATCH# <span id="match-no">—</span></div>
+          <div id="event-time" class="text-right"></div>
         </div>
 
-        @if ($roleId === 1)
-        <label class="flex items-center gap-2 text-[11px] sm:text-[12.5px] text-[#d6e2ff]">
-          <input id="toggleVideo" type="checkbox" class="size-[14px] sm:size-[16px]" checked>
-          <span>Show Video</span>
-        </label>
-        @endif
-      </div>
-
-      <div class="grid grid-cols-1 gap-3 md:grid-cols-[minmax(0,1fr)_var(--side)]">
-        <!-- VIDEO -->
-        <div
-          data-video
-          class="relative w-full max-w-[720px] mx-auto md:mx-0
-                 aspect-[16/9] overflow-hidden rounded-[16px]
-                 border-2 border-yellow-400 bg-black/80
-                 shadow-[0_0_20px_rgba(250,204,21,0.45),0_18px_40px_rgba(0,0,0,.55),0_6px_14px_rgba(0,0,0,.25)]"
-        >
-          <div class="pointer-events-none absolute inset-0 rounded-[16px]
-                      shadow-[inset_0_0_0_3px_rgba(255,255,255,.12),inset_0_0_40px_rgba(15,23,42,.85)]"></div>
-          <iframe
-            id="yt"
-            class="absolute inset-0 size-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-          <div id="videoOverlay" class="absolute inset-0 hidden grid place-items-center bg-black/60 text-white text-xs sm:text-sm">
-            Video hidden by admin
+        <div class="mb-3 relative w-full md:max-w-[85%] mx-auto video-shell">
+          <div class="relative aspect-video">
+            <div class="absolute inset-0 rounded-xl overflow-hidden z-10 pointer-events-none select-none">
+              <div class="absolute inset-0 rounded-xl bg-gradient-to-tr from-red-500 via-yellow-500 to-blue-500 animate-[pulse_4s_infinite] mix-blend-overlay opacity-70"></div>
+              <div class="absolute inset-0 rounded-xl border-4 border-transparent bg-gradient-to-tr from-red-500/60 via-yellow-500/60 to-blue-500/60 mix-blend-overlay opacity-50 blur-sm"></div>
+              <div class="absolute inset-0 border-[6px] border-transparent rounded-xl box-content bg-gradient-to-tr from-red-500/20 via-yellow-500/20 to-blue-500/20 mix-blend-overlay animate-[glow-border_2s_ease-in-out_infinite_alternate]"></div>
+            </div>
+            <iframe
+              id="youtube-video-main"
+              class="absolute inset-0 w-full h-full rounded-lg relative z-20 border-4 border-transparent"
+              src="https://www.youtube.com/embed/mzBv3fUDxRA?si=0X903bZ6UrB-v6UF?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
           </div>
         </div>
 
-        <!-- KIOSK SIDE -->
-        <div
-          id="kioskSide"
-          class="flex flex-col gap-2
-                 rounded-[14px]
-                 border border-white/10 bg-gray-900/70 p-2 backdrop-blur-[16px]"
-        >
+        <!-- LOGROHAN (desktop only) -->
+        <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone md:max-w-[85%] mx-auto hidden md:block">
+          <div class="flex items-center justify-between mb-1">
+            <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
+            <div class="flex items-center gap-2 text-[10px]">
+              <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
+              <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
+            </div>
+          </div>
 
-          <!-- ODDS VIEW -->
-          <div id="oddsView" class="grid gap-2">
-            <div class="grid grid-cols-2 gap-2">
-              <!-- RED CARD -->
-              <div
-                class="relative rounded-[26px] border border-transparent
-                       bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,.25),transparent_55%),linear-gradient(180deg,#f97366_0%,#b91c1c_55%,#7f1d1d_100%)]
-                       p-3 sm:p-4 text-white shadow-[0_16px_40px_rgba(0,0,0,.55)]"
-              >
-                <!-- top chip -->
-                <div class="flex items-start justify-between">
-                  <div
-                    class="grid size-[30px] sm:size-[34px] place-items-center
-                           rounded-full border-2 border-transparent bg-black/25 font-black
-                           shadow-[0_4px_10px_rgba(0,0,0,.45)]"
-                  >
-                    R
-                  </div>
-                </div>
-
-                <!-- name + amount -->
-                <div class="mt-5 text-center">
-                  <div
-                    id="nameRed"
-                    class="text-[11px] sm:text-[13px] font-semibold tracking-wide"
-                  >
-                    Rider Red
-                  </div>
-                  <div
-                    id="amtRed"
-                    class="mt-1 text-[26px] sm:text-[32px] leading-none font-black tracking-[.08em]"
-                  >
-                    0
-                  </div>
-                </div>
-
-                <!-- payout pill -->
-                <div class="mt-3 flex justify-center">
-                  <div
-                    class="inline-flex items-center rounded-full border border-transparent
-                           bg-black/25 px-4 py-1.5 text-[11px] sm:text-[12px] font-semibold
-                           shadow-[0_6px_14px_rgba(0,0,0,.45)]"
-                  >
-                    PAYOUT =
-                    <span id="oddsRed" class="ml-1">1.76</span>
-                  </div>
-                </div>
-
-                <!-- choose button -->
-                <div class="mt-3">
-                  <button
-                    data-bet="red"
-                    class="h-[36px] sm:h-[40px] w-full rounded-full border border-transparent
-                           bg-white/10 text-[11px] sm:text-[13px] font-black uppercase
-                           tracking-[0.22em]
-                           shadow-[0_8px_18px_rgba(0,0,0,.55)]
-                           hover:bg-white/18 active:scale-[.98] transition"
-                  >
-                    CHOOSE
-                  </button>
-                </div>
-
-                <!-- simple preview: ₱100 = ₱170 -->
-                <div class="mt-3 text-center text-[11px] sm:text-[12px]">
-                  <span id="simRed" class="font-semibold opacity-90">—</span>
-                </div>
+          @auth
+            @if( auth()->user()->role_id == 1)
+              <div class="flex items-center gap-2 mb-2">
+                <button id="btn-win-meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-xs font-bold hover:bg-red-700">+ Red win</button>
+                <button id="btn-win-wala"  class="px-2 py-1 rounded bg-blue-700/70 border border-white/10 text-xs font-bold hover:bg-blue-700">+ Blue win</button>
+                <button id="btn-undo"      class="px-2 py-1 rounded bg-gray-700/70 border border-white/10 text-xs hover:bg-gray-700">Undo</button>
+                <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70 border border-white/10 text-xs hover:bg-gray-800">Clear</button>
               </div>
+            @endif
+          @endauth
 
-              <!-- BLUE CARD -->
-              <div
-                class="relative rounded-[26px] border border-transparent
-                       bg-[radial-gradient(circle_at_0%_0%,rgba(255,255,255,.25),transparent_55%),linear-gradient(180deg,#60a5fa_0%,#1d4ed8_55%,#1e3a8a_100%)]
-                       p-3 sm:p-4 text-white shadow-[0_16px_40px_rgba(0,0,0,.55)]"
-              >
-                <!-- top chip -->
-                <div class="flex items-start justify-between">
-                  <div
-                    class="grid size-[30px] sm:size-[34px] place-items-center
-                           rounded-full border-2 border-transparent bg-black/25 font-black
-                           shadow-[0_4px_10px_rgba(0,0,0,.45)]"
-                  >
-                    B
+          <div id="logro-rail" class="logro-rail">
+            <div id="logro-strip" class="logro-strip-3d"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Bet cards + Bet Amount -->
+      <aside class="hidden md:block">
+        <div class="sticky mt-4 space-y-3">
+
+          <!-- Bet Percentage Bar (DESKTOP) -->
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 translate-y-0">
+            <div class="text-[11px] uppercase tracking-widest text-white/70 mb-1">Win Percentage</div>
+            <div class="relative h-3 rounded-full bg-black/40 border border-white/10 overflow-hidden">
+              <div id="pct-red"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:50%"></div>
+              <div id="pct-blue" class="absolute right-0 top-0 h-full bg-blue-600/80" style="width:50%"></div>
+            </div>
+            <div class="mt-1 grid grid-cols-3 text-[11px] text-white/70">
+              <div id="pct-red-label"  class="text-left">Red 50%</div>
+              <div id="pct-total-label" class="text-center text-white/50">Total: ₱0</div>
+              <div id="pct-blue-label" class="text-right">Blue 50%</div>
+            </div>
+          </div>
+
+          <!-- Cards -->
+          <div id="bet-area" class="bet-area grid grid-cols-2 gap-3 mt-0 mb-0 translate-y-0">
+            <div class="bet-card red tilt text-center">
+              <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">R</span></div>
+              <div class="mt-2 text-sm font-semibold opacity-90" id="player1-name"></div>
+              <div class="amount-3d text-3xl md:text-4xl mt-1" id="meron-amount"></div>
+              <div class="mt-">
+                <div class="mt-2"><span class="odds-ribbon" id="meron-odds"></span></div>
+                @auth
+                  @if( auth()->user()->role_id == 2)
+                    <button class="bet-btn red mt-2 w-full px-3 py-2 text-sm" id="bet-meron">CHOOSE</button>
+                  @endif
+                @endauth
+                <!-- Current bet summary under BET (DESKTOP - MERON) -->
+                <div class="mt-2 space-y-0.5 text-xs text-left">
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/60">Current</span>
+                    <span id="meron-current-bet" class="font-semibold text-yellow-300">—</span>
                   </div>
-                </div>
-
-                <!-- name + amount -->
-                <div class="mt-5 text-center">
-                  <div
-                    id="nameBlue"
-                    class="text-[11px] sm:text-[13px] font-semibold tracking-wide"
-                  >
-                    Rider Blue
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/60">Potential win</span>
+                    <span id="meron-current-payout" class="font-semibold text-emerald-300">—</span>
                   </div>
-                  <div
-                    id="amtBlue"
-                    class="mt-1 text-[26px] sm:text-[32px] leading-none font-black tracking-[.08em]"
-                  >
-                    0
-                  </div>
-                </div>
-
-                <!-- payout pill -->
-                <div class="mt-3 flex justify-center">
-                  <div
-                    class="inline-flex items-center rounded-full border border-transparent
-                           bg-black/25 px-4 py-1.5 text-[11px] sm:text-[12px] font-semibold
-                           shadow-[0_6px_14px_rgba(0,0,0,.45)]"
-                  >
-                    PAYOUT =
-                    <span id="oddsBlue" class="ml-1">1.47</span>
-                  </div>
-                </div>
-
-                <!-- choose button -->
-                <div class="mt-3">
-                  <button
-                    data-bet="blue"
-                    class="h-[36px] sm:h-[40px] w-full rounded-full border border-transparent
-                           bg-white/10 text-[11px] sm:text-[13px] font-black uppercase
-                           tracking-[0.22em]
-                           shadow-[0_8px_18px_rgba(0,0,0,.55)]
-                           hover:bg-white/18 active:scale-[.98] transition"
-                  >
-                    CHOOSE
-                  </button>
-                </div>
-
-                <!-- simple preview: ₱100 = ₱170 -->
-                <div class="mt-3 text-center text-[11px] sm:text-[12px]">
-                  <span id="simBlue" class="font-semibold opacity-90">—</span>
                 </div>
               </div>
             </div>
+            <div class="bet-card blue tilt text-center">
+              <div class="flex items-center justify-between"><span class="name-chip text-xl md:text-2xl">B</span></div>
+              <div class="mt-2 text-sm font-semibold opacity-90" id="player2-name"></div>
+              <div class="amount-3d text-3xl md:text-4xl mt-1" id="wala-amount"></div>
+              <div class="mt-3">
+                <div class="mt-2"><span class="odds-ribbon" id="wala-odds"></span></div>
+                @auth
+                  @if( auth()->user()->role_id == 2)
+                    <button class="bet-btn blue mt-2 w-full px-3 py-2 text-sm" id="bet-wala">CHOOSE</button>
+                  @endif
+                @endauth
+                <!-- Current bet summary under BET (DESKTOP - WALA) -->
+                <div class="mt-2 space-y-0.5 text-xs text-left">
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/60">Current</span>
+                    <span id="wala-current-bet" class="font-semibold text-yellow-300">—</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-white/60">Potential win</span>
+                    <span id="wala-current-payout" class="font-semibold text-emerald-300">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- AMOUNT INPUT -->
-            <div class="grid gap-2 rounded-[14px] border border-white/10 bg-[rgba(18,29,64,0.72)] p-2 backdrop-blur-[14px]">
+          <!-- Bet Amount + MINI ROAD -->
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2 mb-0 mt-2">
+          @auth
+            @if( auth()->user()->role_id == 2)
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-[15px] uppercase tracking-widest text-white/70">Play Amount</div>
+              <div class="text-[15px] text-white/60">min ₱100</div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 mb-2">
               <input
-                id="amount"
                 type="number"
-                min="1"
+                id="bet-amount-desktop"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-[160px]"
                 placeholder="Enter amount"
-                class="h-[40px] sm:h-[44px] w-full rounded-[12px] border border-[rgb(198_213_255_/_0.85)] bg-[rgba(18,29,64,0.95)] px-3 font-extrabold text-[#e9f3ff] text-[12px] sm:text-[13px] outline-none"
+                inputmode="numeric"
               />
-              <div class="grid grid-cols-2 gap-2">
-                <button id="reset" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] text-[12px]">
-                  Reset
-                </button>
-                <button id="maxAmt" class="h-[38px] sm:h-[42px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] text-[12px]">
-                  Max
-                </button>
+              <div class="balance-pill text-yellow-300">
+                <span id="mid-balance" class="amount text-base">5,000</span>
               </div>
             </div>
 
-            <!-- CHIPS -->
-            <div id="chips" class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0f5c30] bg-[linear-gradient(180deg,#38b46a,#1c7b40)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦100</button>
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#163f8f] bg-[linear-gradient(180deg,#4c8cff,#1f55c0)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦200</button>
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#0b0c0f] bg-[linear-gradient(180deg,#3a3f47,#17191f)] font-black text-[#eef5ff] text-[12px] shadow-[0_1px_0_rgba(0,0,0,.35)]">♦500</button>
-              <button class="h-[38px] sm:h-[44px] rounded-[14px] border border-[#a76407] bg-[linear-gradient(180deg,#ffb23a,#d48112)] font-black text-[#1b1203] text-[12px]">♦1000</button>
+            <div class="grid grid-cols-2 gap-1 mb-2">
+              <button class="chip3d chip-emerald chip-outline text-sm bet-chip" data-val="100" type="button">♦100</button>
+              <button class="chip3d chip-blue chip-outline text-sm bet-chip" data-val="200" type="button">♦200</button>
+              <button class="chip3d chip-black chip-outline text-sm bet-chip" data-val="500" type="button">♦500</button>
+              <button class="chip3d chip-amber chip-outline text-sm bet-chip" data-val="1000" type="button">♦1000</button>
             </div>
+            @endif
+          @endauth
 
-            <!-- LAST BET -->
-            <div
-              id="lastBet"
-              class="mt-1.5 sm:mt-2 rounded-[14px] border border-white/10 bg-[rgba(18,29,64,0.70)] px-3 py-2 text-[11.5px] sm:text-[12.5px] text-[#dce6ff] backdrop-blur-[14px]"
-            >
-              <div class="mb-1 font-semibold uppercase tracking-wide opacity-90">Current Bet</div>
-              <div class="flex flex-wrap gap-x-4 gap-y-1 font-bold">
-                <span>Side:
-                  <span data-lb-side class="ml-1 text-[#ffecec]">—</span>
-                </span>
-                <span>Amount:
-                  <span data-lb-amt>—</span>
-                </span>
-                <span>Est. Winning:
-                  <span data-lb-win>—</span>
-                </span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- TOTAL VIEW -->
-          <div id="totalView" hidden class="grid gap-2">
-            <div class="grid grid-cols-1 gap-1">
-              <div class="rounded-[22px] border border-transparent bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
-                <div class="text-[11px] sm:text-[13px] opacity-90">Total Bets — Red</div>
-                <div id="totalRed" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
-                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-transparent bg-black/20 px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
-                  Pool Share —
-                  <span id="shareRed" class="ml-1">0%</span>
+            <div>
+              <div class="flex items-center justify-between mt-2">
+                <div class="text-[11px] uppercase tracking-widest text-white/70">Road</div>
+                <div class="flex items-center gap-2 text-[10px]">
+                  <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Red</span></div>
+                  <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:12px;height:12px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
                 </div>
               </div>
-              <div class="rounded-[22px] border border-transparent bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3">
-                <div class="text-[11px] sm:text-[13px] opacity-90">Total Bets — Blue</div>
-                <div id="totalBlue" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">0</div>
-                <div class="mt-1.5 sm:mt-2 grid place-items-center rounded-[14px] border border-transparent bg-black/20 px-3 py-1.5 text-[11px] sm:text-[13px] font-black">
-                  Pool Share —
-                  <span id="shareBlue" class="ml-1">0%</span>
-                </div>
-              </div>
-            </div>
-            <div class="grid grid-cols-1 gap-1">
-              <div class="rounded-[22px] border border-transparent bg-[linear-gradient(180deg,#f04e41_0%,_#a02121_100%)] p-3">
-                <div class="text-[11px] sm:text-[13px] opacity-90">Odds (x) — Red</div>
-                <div id="txRed" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.5px]">1.76</div>
-              </div>
-              <div class="rounded-[22px] border border-transparent bg-[linear-gradient(180deg,#4f89ff_0%,_#153b90_100%)] p-3">
-                <div class="text-[11px] sm:text-[13px] opacity-90">Odds (x) — Blue</div>
-                <div id="txBlue" class="mt-1 text-[24px] sm:text-[clamp(28px,6.8vw,38px)] font-black leading-[1.05] tracking-[.2px]">1.47</div>
+              <div id="bead-rail" class="bead-rail">
+                <div id="bead-strip" class="bead-strip"></div>
               </div>
             </div>
           </div>
-
         </div>
-      </div>
-    </section>
+      </aside>
 
-    <!-- RESULTS / ROADMAP -->
-    <section
-      class="w-full max-w-full md:max-w-none mx-auto
-             rounded-xl border border-white/10 bg-gray-900/60
-             p-2.5 sm:p-4 lg:p-5 backdrop-blur-[14px]
-             shadow-lg"
-    >
-      <h2 class="sticky top-2 z-10 mx-1 inline-block rounded-xl bg-[rgba(21,31,57,0.82)] px-3 py-1 text-[11px] sm:text-[12px] text-[#d6e2ff] backdrop-blur">
-        Results / Roadmap
-      </h2>
+      <!-- ===================== MOBILE STACK ===================== -->
+      <div class="md:hidden space-y-1">
+        <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
+          <div class="flex items-center justify-between">
+            <div class="text-[11px] uppercase tracking-widest text-white/70">Win %</div>
+            <div id="pct-total-label-mob" class="text-[11px] text-white/60">Total: ₱0</div>
+          </div>
+          <div class="relative h-2.5 rounded-full bg-black/40 border border-white/10 overflow-hidden mt-1.5">
+            <div id="pct-red-mob"  class="absolute left-0 top-0 h-full bg-red-600/80" style="width:50%"></div>
+            <div id="pct-blue-mob" class="absolute right-0 top-0 h-full bg-blue-600/80" style="width:50%"></div>
+          </div>
+          <div class="mt-1.5 flex items-center justify-between text-[10px] text-white/70">
+            <div id="pct-red-label-mob">Red 50%</div>
+            <div id="pct-blue-label-mob">Blue 50%</div>
+          </div>
+        </div>
 
-      <div class="grid gap-3 rounded-[14px] border border-white/10 bg-[rgba(21,31,57,0.78)] p-2.5 sm:p-3 backdrop-blur-[16px]">
-        <div class="flex flex-col gap-2">
-          <h3 class="m-0 text-[13px] sm:text-[14px]">Roadmap • Results</h3>
+        <div class="bet-area grid grid-cols-2 gap-2">
+          <div class="bet-card red text-center">
+            <div class="name-chip text-lg">R</div>
+            <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player1-name-mob"></div>
+            <div class="amount-3d text-2xl mt-0.5" id="meron-amount-mob"></div>
+            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="meron-odds-mob"></span></div>
+            @auth
+              @if( auth()->user()->role_id == 2)
+                <button class="bet-btn red mt-2 w-full px-3 py-2 text-xs" id="bet-meron-mob">CHOOSE</button>
+              @endif
+            @endauth
+            <!-- Current bet summary under BET (MOBILE - MERON) -->
+            <div class="mt-2 space-y-0.5 text-[11px] text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-white/60">Current</span>
+                <span id="meron-current-bet-mob" class="font-semibold text-yellow-300">—</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-white/60">Potential win</span>
+                <span id="meron-current-payout-mob" class="font-semibold text-emerald-300">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="bet-card blue text-center">
+            <div class="name-chip text-lg">B</div>
+            <div class="mt-1 text-xs font-semibold opacity-90 leading-tight" id="player2-name-mob"></div>
+            <div class="amount-3d text-2xl mt-0.5" id="wala-amount-mob"></div>
+            <div class="mt-1"><span class="odds-ribbon text-[10px] px-1 py-0.5" id="wala-odds-mob"></span></div>
+            @auth
+              @if( auth()->user()->role_id == 2)
+                <button class="bet-btn blue mt-2 w-full px-3 py-2 text-xs" id="bet-wala-mob">CHOOSE</button>
+              @endif
+            @endauth
+            <!-- Current bet summary under BET (MOBILE - WALA) -->
+            <div class="mt-2 space-y-0.5 text-[11px] text-left">
+              <div class="flex items-center justify-between">
+                <span class="text-white/60">Current</span>
+                <span id="wala-current-bet-mob" class="font-semibold text-yellow-300">—</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-white/60">Potential win</span>
+                <span id="wala-current-payout-mob" class="font-semibold text-emerald-300">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          @if ($roleId === 1)
-          <!-- MOBILE-FRIENDLY CONTROLS -->
-          <div class="flex flex-wrap gap-1.5 sm:gap-2">
-            <button id="winRed"
-              class="h-8 sm:h-9 rounded-[12px] border border-[#3a1a1f]
-                     bg-[linear-gradient(180deg,#9a1616,#4b0a0a)]
-                     px-2.5 sm:px-3 text-[10px] sm:text-[12px] text-[#ffecec]">
-              Record: Red Wins
-            </button>
-            <button id="winBlue"
-              class="h-8 sm:h-9 rounded-[12px] border border-[#1f2b50]
-                     bg-[linear-gradient(180deg,#1a4a9e,#0d2b66)]
-                     px-2.5 sm:px-3 text-[10px] sm:text-[12px] text-[#e6f0ff]">
-              Record: Blue Wins
-            </button>
-            <button id="undo"
-              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
-                     bg-[rgba(20,32,70,0.95)] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
-              Undo
-            </button>
-            <button id="startRound"
-              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
-                     bg-[rgba(20,32,70,0.95)] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
-              Start Round
-            </button>
-            <button id="resetRound"
-              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
-                     bg-[rgba(20,32,70,0.95)] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
-              Reset Round
-            </button>
-            <button id="clearLog"
-              class="h-8 sm:h-9 rounded-[12px] border border-[rgb(190_205_255_/_0.9)]
-                     bg-[rgba(24,36,76,.82)] px-2.5 sm:px-3 text-[10px] sm:text-[12px]">
-              Clear Log
-            </button>
+        @auth
+          @if( auth()->user()->role_id == 2)
+          <div class="bg-gray-900/60 border border-white/10 rounded-xl p-2">
+            <div class="flex items-center justify-between mb-2">
+              <div class="text-[12px] uppercase tracking-widest text-white/70">Play Amount</div>
+              <div class="text-[12px] text-white/60">min ₱100</div>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <input
+                type="number"
+                id="bet-amount-mob"
+                class="bet-input p-2 text-sm text-white bg-black/30 w-full"
+                placeholder="Enter amount"
+                inputmode="numeric"
+              />
+              <div class="balance-pill text-yellow-300 shrink-0">
+                <span id="mid-balance" class="amount text-sm">5,000</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-4 gap-1">
+              <button class="chip3d chip-emerald chip-outline text-xs bet-chip" data-val="100" type="button">♦100</button>
+              <button class="chip3d chip-blue chip-outline text-xs bet-chip" data-val="200" type="button">♦200</button>
+              <button class="chip3d chip-black chip-outline text-xs bet-chip" data-val="500" type="button">♦500</button>
+              <button class="chip3d chip-amber chip-outline text-xs bet-chip" data-val="1000" type="button">♦1000</button>
+            </div>
           </div>
           @endif
-        </div>
+        @endauth
 
-        <div class="grid gap-3 md:grid-cols-2">
-          <div>
-            <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Bead Road</div>
-            <div class="w-full overflow-hidden rounded-[12px] border border-white/10 bg-[rgba(18,29,64,0.80)] px-1.5 py-1 backdrop-blur-[14px]">
-              <div class="origin-left scale-[1] sm:scale-100">
-                <div
-                  id="bead"
-                  class="grid auto-flow-col gap-0
-                         grid-rows-[repeat(6,10px)] auto-cols-[10px]
-                         sm:grid-rows-[repeat(6,14px)] sm:auto-cols-[14px]
-                         md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
-                ></div>
-              </div>
+        <div class="bg-gray-900/50 border border-white/10 rounded-lg p-2 logro-zone">
+          <div class="flex items-center justify-between mb-1">
+            <div class="text-[11px] uppercase tracking-widest text-white/70">Logrohan</div>
+            <div class="flex items-center gap-2 text-[10px]">
+              <div class="flex items-center gap-1"><span class="bead red inline-block" style="width:10px;height:10px;border-width:2px"></span><span class="opacity-70">Red</span></div>
+              <div class="flex items-center gap-1"><span class="bead blue inline-block" style="width:10px;height:10px;border-width:2px"></span><span class="opacity-70">Blue</span></div>
             </div>
           </div>
-          <div>
-            <div class="mb-1.5 sm:mb-2 text-[12px] sm:text-[13px]">Big Road</div>
-            <div class="w-full overflow-hidden rounded-[12px] border border-white/10 bg-[rgba(18,29,64,0.80)] px-1.5 py-1 backdrop-blur-[14px]">
-              <div class="origin-left scale-[1] sm:scale-100">
-                <div
-                  id="big"
-                  class="grid auto-flow-col gap-0
-                         grid-rows-[repeat(6,10px)] auto-cols-[10px]
-                         sm:grid-rows-[repeat(6,14px)] sm:auto-cols-[14px]
-                         md:grid-rows-[repeat(6,18px)] md:auto-cols-[18px]"
-                ></div>
+          @auth
+            @if( auth()->user()->role_id == 1)
+              <div class="flex items-center gap-2 mb-2">
+                <button id="btn-win-meron" class="px-2 py-1 rounded bg-red-700/70 border border-white/10 text-[11px] font-bold hover:bg-red-700">+ Red win</button>
+                <button id="btn-win-wala"  class="px-2 py-1 rounded bg-blue-700/70 border border-white/10 text-[11px] font-bold hover:bg-blue-700">+ Blue win</button>
+                <button id="btn-undo"      class="px-2 py-1 rounded bg-gray-700/70 border border-white/10 text-[11px] hover:bg-gray-700">Undo</button>
+                <button id="btn-clear"     class="px-2 py-1 rounded bg-gray-800/70 border border-white/10 text-[11px] hover:bg-gray-800">Clear</button>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="overflow-auto">
-          <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
-            <thead>
-              <tr class="[&>th]:px-2 [&>th]:py-1.5 [&>th]:text-left text-[#d2e0ff]">
-                <th>Time</th>
-                <th>Winner</th>
-                <th>Pot</th>
-                <th>Odds</th>
-                <th>Payout/₱100</th>
-              </tr>
-            </thead>
-            <tbody
-              id="logBody"
-              class="[&>tr]:rounded-[10px] [&>tr]:border [&>tr]:border-[rgb(210_222_255_/_0.80)] [&>tr]:bg-[rgba(18,29,64,0.82)] [&>tr>td]:px-3 [&>tr>td]:py-1.5 [&>tr>td]:whitespace-nowrap"
-            ></tbody>
-          </table>
-
-          <div class="flex items-center justify-end gap-1.5 sm:gap-2 py-2 text-[11.5px] sm:text-[12.5px] text-[#d2e0ff]">
-            <button id="firstPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              « First
-            </button>
-            <button id="prevPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              ‹ Prev
-            </button>
-            <span class="font-extrabold">
-              <span id="pageNow">1</span> / <span id="pageTotal">1</span>
-            </span>
-            <button id="nextPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              Next ›
-            </button>
-            <button id="lastPage" class="h-[30px] sm:h-[34px] rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              Last »
-            </button>
+            @endif
+          @endauth
+          <div id="logro-rail-mob" class="logro-rail">
+            <div id="logro-strip-mob" class="logro-strip-3d"></div>
           </div>
         </div>
       </div>
-    </section>
+      <!-- =================== /MOBILE STACK =================== -->
 
-    <!-- BET HISTORY -->
-    <section
-      id="historySection"
-      class="w-full max-w-full md:max-w-none mx-auto
-             rounded-xl border border-white/10 bg-gray-900/60
-             p-2.5 sm:p-4 lg:p-5 backdrop-blur-[14px]
-             shadow-lg"
-    >
-      <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
-        <h2 class="m-0 text-[13px] sm:text-[14px] font-bold text-[#d6e2ff]">Bet History</h2>
-        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <label class="text-[11px] sm:text-[12px] text-[#d6e2ff]/90">
-            Side
-            <select
-              id="hf-side"
-              class="ml-1 rounded-[10px] border border-[rgb(200_214_255_/_0.85)] bg-[rgba(18,29,64,0.80)] px-2 py-1 text-[11px] sm:text-[12px]"
-            >
-              <option value="all">All</option>
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
-            </select>
-          </label>
-          <label class="text-[11px] sm:text-[12px] text-[#d6e2ff]/90">
-            Min ₱
-            <input
-              id="hf-min"
-              type="number"
-              min="0"
-              value="0"
-              class="ml-1 w-[80px] sm:w-[90px] rounded-[10px] border border-[rgb(200_214_255_/_0.85)] bg-[rgba(18,29,64,0.80)] px-2 py-1 text-[11px] sm:text-[12px]"
-            />
-          </label>
-          <button id="hf-apply" class="h-8 rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-3 text-[11px] sm:text-[12px]">
-            Apply
-          </button>
-          <button id="hf-reset" class="h-8 rounded-[12px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-3 text-[11px] sm:text-[12px]">
-            Reset
-          </button>
-          <button
-            id="hf-clear"
-            class="h-8 rounded-[12px] border border-[#3a1a1f] bg-[linear-gradient(180deg,#9a1616,#4b0a0a)] px-3 text-[11px] sm:text-[12px] text-[#ffecec]"
-          >
-            Clear
-          </button>
-        </div>
-      </div>
-
-      <div class="mt-2.5 sm:mt-3 rounded-[14px] border border-white/10 bg-[rgba(21,31,57,0.78)] p-2 backdrop-blur-[14px]">
-        <div class="overflow-auto rounded-[10px] border border-[rgb(210_222_255_/_0.85)] bg-[rgba(18,29,64,0.85)]">
-          <table class="w-full border-separate border-spacing-0 text-[12px] sm:text-[13px]">
-            <thead class="sticky top-0 bg-[rgba(18,29,64,0.92)] backdrop-blur-[10px]">
-              <tr class="[&>th]:px-3 [&>th]:py-2 [&>th]:text-left text-[#d2e0ff]">
-                <th>Time</th>
-                <th>Side</th>
-                <th>Amount</th>
-                <th>Odds (x)</th>
-                <th>Est. Win</th>
-              </tr>
-            </thead>
-            <tbody id="hf-body" class="[&>tr>td]:px-3 [&>tr>td]:py-2"></tbody>
-          </table>
-        </div>
-
-        <div class="mt-2 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between text-[11.5px] sm:text-[12.5px] text-[#d6e2ff]">
-          <div>
-            Total: <span id="hf-count">0</span> bets • Sum ₱<span id="hf-sum">0</span>
-          </div>
-          <div class="flex items-center gap-1.5 sm:gap-2">
-            <button id="hf-first" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              « First
-            </button>
-            <button id="hf-prev" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              ‹ Prev
-            </button>
-            <span class="font-extrabold">
-              <span id="hf-page-now">1</span> / <span id="hf-page-total">1</span>
-            </span>
-            <button id="hf-next" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              Next ›
-            </button>
-            <button id="hf-last" class="h-[30px] sm:h-[34px] rounded-[10px] border border-[rgb(190_205_255_/_0.9)] bg-[rgba(20,32,70,0.95)] px-2">
-              Last »
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- TOASTS (placeholder) -->
-  <div id="toast" class="fixed bottom-4 right-4 z-[1500] grid gap-2"></div>
-
-  <!-- RECEIPT MODAL -->
-  <div
-    id="receiptModal"
-    class="fixed inset-0 z-[2200] hidden place-items-center bg-[rgba(0,0,0,.45)]"
-    role="dialog"
-    aria-hidden="true"
-  >
-    <div class="w-[min(520px,calc(100%-24px))] rounded-[16px] border border-[rgb(217_226_255_/_0.25)] bg-white text-slate-900 p-4">
-      <div class="flex items-center justify-between">
-        <h2 class="m-0 text-lg font-bold">Bet Receipt</h2>
-        <button id="rc-close" class="rounded-md border px-3 py-1 text-sm">Close</button>
-      </div>
-      <div class="mt-3 grid gap-2">
-        <div class="grid gap-1">
-          <div class="text-xs text-slate-600">Ref</div>
-          <div id="rc-ref" class="font-mono text-sm">—</div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <div class="text-xs text-slate-600">Date</div>
-            <div id="rc-date" class="font-mono text-sm">—</div>
-          </div>
-          <div>
-            <div class="text-xs text-slate-600">Side</div>
-            <div id="rc-side" class="font-bold">—</div>
-          </div>
-        </div>
-        <div class="grid grid-cols-3 gap-3">
-          <div>
-            <div class="text-xs text-slate-600">Amount</div>
-            <div>₱ <span id="rc-amt" class="font-bold">0</span></div>
-          </div>
-          <div>
-            <div class="text-xs text-slate-600">Odds (x)</div>
-            <div><span id="rc-odds" class="font-bold">0.00</span></div>
-          </div>
-          <div>
-            <div class="text-xs text-slate-600">Est. Win</div>
-            <div>₱ <span id="rc-win" class="font-bold">0</span></div>
-          </div>
-        </div>
-        <div class="mt-2 grid place-items-center">
-          <div id="rc-qr" class="size-[160px]"></div>
-        </div>
-      </div>
-      <div class="mt-4 flex justify-end gap-2">
-        <button onclick="window.print()" class="rounded-md border px-3 py-1 text-sm">Print</button>
-      </div>
     </div>
-  </div>
+  </main>
 
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- ========================================================
+       SCRIPT: betting + roads + helpers
+  ========================================================= -->
   <script>
-  const ROLE_ID = {{ $roleId }};
+    // A) CONFIG / CONSTANTS
+    const players = [
+      "Efren Reyes","Earl Strickland","Ronnie O'Sullivan","Shane Van Boening",
+      "Francisco Bustamante","Alex Pagulayan","Jeanette Lee","Karen Corr",
+      "Allison Fisher","Johnny Archer","Mika Immonen","Niels Feijen",
+      "Darren Appleton","Ko Pin-Yi","Wu Jiaqing"
+    ];
+    const BIGROAD_MAX_ROWS = 6;
+    const BEAD_MAX_ROWS    = 6; // <-- match rows to Logrohan for proportional height
 
-  /* YouTube embed */
-  (function() {
-    const url = 'https://youtu.be/mzBv3fUDxRA?si=0X903bZ6UrB-v6UF';
-    const embed = url
-      .replace('https://youtu.be/', 'https://www.youtube.com/embed/')
-      .replace('watch?v=', 'embed/');
-    const iframe = document.getElementById('yt');
-    iframe.src = embed + (embed.includes('?') ? '&' : '?') + 'rel=0&modestbranding=1&playsinline=1';
-    iframe.addEventListener('load', syncSideHeight);
-  })();
+    // B) STATE
+    let results = [];
+    let meronAmount, walaAmount, meronOdds, walaOdds;
+    let currentBalance = 500000;
+    const betHistory = [];
+    let oddsVisible = false; // 🔹 odds hidden until first bet
 
-  /* toggle video */
-  (function() {
-    const chk = document.getElementById('toggleVideo');
-    const frameWrap = document.querySelector('[data-video]');
-    const overlay = document.getElementById('videoOverlay');
-    if (!chk || !frameWrap) return;
-    const apply = () => {
-      const on = chk.checked;
-      frameWrap.querySelector('iframe').style.display = on ? 'block' : 'none';
-      overlay.classList.toggle('hidden', on);
-    };
-    chk.addEventListener('change', apply);
-    apply();
-  })();
-
-  /* CORE STATE */
-  const state = { red: 0, blue: 0, oddsRed: 1.76, oddsBlue: 1.47, market: '—' };
-  const el  = id => document.getElementById(id);
-  const fmt = n  => Number(n).toLocaleString('en-PH', { maximumFractionDigits: 0 });
-
-  const PAGE_SIZE = 5;
-  let curPage = 1;
-  let logs = [];
-  let history = [];
-
-  /* odds helpers */
-  function smoothOdds(tR, tB, rate = 0.25) {
-    state.oddsRed  = +(state.oddsRed  + (tR - state.oddsRed)  * rate).toFixed(2);
-    state.oddsBlue = +(state.oddsBlue + (tB - state.oddsBlue) * rate).toFixed(2);
-  }
-  function recalcOdds() {
-    const pot = state.red + state.blue;
-    if (!pot) return;
-    const rshare = state.red / pot, bshare = state.blue / pot;
-    const base = 1.2, floor = 1.10, cap = 3.50;
-    const tR = Math.min(cap, Math.max(floor, 1 + bshare * base));
-    const tB = Math.min(cap, Math.max(floor, 1 + rshare * base));
-    smoothOdds(tR, tB);
-  }
-
-  /* SIMPLE PREVIEW UNDER CHOOSE BUTTON (₱100 = ₱170 style) */
-  function updateCurrentBetPanels() {
-    const input = el('amount');
-    if (!input) return;
-
-    const amt = Math.max(0, Number(input.value || 0));
-
-    const simR = document.getElementById('simRed');
-    const simB = document.getElementById('simBlue');
-    if (!simR || !simB) return;
-
-    if (!amt) {
-      simR.textContent = '—';
-      simB.textContent = '—';
-      return;
+    // C) UTILS
+    function getRandomPlayer(exclude){
+      let name; do{ name = players[Math.floor(Math.random()*players.length)]; } while(name===exclude);
+      return name;
     }
-
-    const oddsR = state.oddsRed;
-    const oddsB = state.oddsBlue;
-
-    const payR = Math.round(amt * oddsR);
-    const payB = Math.round(amt * oddsB);
-
-    simR.textContent = `₱${fmt(amt)} = ₱${fmt(payR)}`;
-    simB.textContent = `₱${fmt(amt)} = ₱${fmt(payB)}`;
-  }
-
-  /* LAST BET panel */
-  function updateLastBet(side, amount, odds) {
-    const box = document.getElementById('lastBet');
-    if (!box) return;
-    const sEl = box.querySelector('[data-lb-side]');
-    const aEl = box.querySelector('[data-lb-amt]');
-    const wEl = box.querySelector('[data-lb-win]');
-    if (!side || !amount) {
-      sEl.textContent = '—';
-      aEl.textContent = '—';
-      wEl.textContent = '—';
-      return;
+    function setRandomMatch(){
+      const red = getRandomPlayer();
+      const blue = getRandomPlayer(red);
+      const id = Math.floor(Math.random()*900)+100;
+      const p1 = document.getElementById('player1-name'); if(p1) p1.textContent = red;
+      const p2 = document.getElementById('player2-name'); if(p2) p2.textContent = blue;
+      const mn = document.getElementById('match-no');    if(mn) mn.textContent = id;
+      const p1m = document.getElementById('player1-name-mob'); if(p1m) p1m.textContent = red;
+      const p2m = document.getElementById('player2-name-mob'); if(p2m) p2m.textContent = blue;
     }
-    const est = Math.round(amount * odds);
-    sEl.textContent = side.toUpperCase();
-    aEl.textContent = '₱' + fmt(amount);
-    wEl.textContent = '₱' + fmt(est);
-  }
-
-  /* sync UI */
-  let lastMilestone = 0;
-  function checkMilestones(pot) {
-    const step = 1000;
-    const m = Math.floor(pot / step);
-    if (m > lastMilestone) {
-      lastMilestone = m;
-      // toast disabled
+    function setDateTime(){
+      const now=new Date();
+      const optionsDate={month:'2-digit', day:'2-digit', year:'numeric'};
+      const optionsTime={weekday:'short', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true};
+      const d = "EVENT - "+now.toLocaleDateString('en-US',optionsDate);
+      const t = now.toLocaleTimeString('en-US',optionsTime)+" ";
+      const ed = document.getElementById('event-date'); if(ed) ed.textContent = d;
+      const et = document.getElementById('event-time'); if(et) et.textContent = t;
     }
-  }
-
-  function sync() {
-    const pot = state.red + state.blue;
-    const r = pot ? state.red / pot * 100 : 0;
-    const b = 100 - r;
-
-    if (el('tR')) el('tR').textContent   = fmt(state.red);
-    if (el('tB')) el('tB').textContent   = fmt(state.blue);
-    if (el('pot')) el('pot').textContent = fmt(pot);
-
-    el('amtRed').textContent  = fmt(state.red);
-    el('amtBlue').textContent = fmt(state.blue);
-    el('oddsRed').textContent = state.oddsRed.toFixed(2);
-    el('oddsBlue').textContent= state.oddsBlue.toFixed(2);
-
-    if (el('payoutR')) el('payoutR').textContent = '× ' + state.oddsRed.toFixed(2);
-    if (el('payoutB')) el('payoutB').textContent = '× ' + state.oddsBlue.toFixed(2);
-
-    if (el('shareRed'))  el('shareRed').textContent  = (r || 0).toFixed(1) + '%';
-    if (el('shareBlue')) el('shareBlue').textContent = (b || 0).toFixed(1) + '%';
-    if (el('txRed'))     el('txRed').textContent     = state.oddsRed.toFixed(2);
-    if (el('txBlue'))    el('txBlue').textContent    = state.oddsBlue.toFixed(2);
-    if (el('totalRed'))  el('totalRed').textContent  = fmt(state.red);
-    if (el('totalBlue')) el('totalBlue').textContent = fmt(state.blue);
-
-    checkMilestones(pot);
-    syncSideHeight();
-    saveAll();
-    renderHistorySidebar();
-    renderHistoryTable();
-
-    updateCurrentBetPanels();
-  }
-
-  function saveAll() {
-    try {
-      localStorage.setItem('dr_state', JSON.stringify(state));
-      localStorage.setItem('dr_seq', JSON.stringify(seq));
-      localStorage.setItem('dr_logs', JSON.stringify(logs));
-      localStorage.setItem('dr_history', JSON.stringify(history));
-    } catch {}
-  }
-
-  (function restore() {
-    try {
-      const s  = JSON.parse(localStorage.getItem('dr_state')   || 'null');
-      const q  = JSON.parse(localStorage.getItem('dr_seq')     || 'null');
-      const lg = JSON.parse(localStorage.getItem('dr_logs')    || 'null');
-      const hi = JSON.parse(localStorage.getItem('dr_history') || 'null');
-      if (s) Object.assign(state, s);
-      if (Array.isArray(q))  seq.push(...q);
-      if (Array.isArray(lg)) logs = lg;
-      if (Array.isArray(hi)) history = hi;
-    } catch {}
-  })();
-
-  /* chips add to amount */
-  document.querySelectorAll('#chips button').forEach(b => {
-    b.addEventListener('click', () => {
-      const amt   = Number(b.textContent.replace(/[^\d]/g, '')) || 0;
-      const input = el('amount');
-      input.value = Number(input.value || 0) + amt;
-      updateCurrentBetPanels();
-    });
-  });
-
-  /* receipt modal */
-  function showReceipt({ side, amount, odds }) {
-    const ref = 'BK' + Date.now().toString(36).toUpperCase().slice(-6) + '-' +
-                Math.random().toString(36).slice(2, 6).toUpperCase();
-    const win = Math.round(amount * odds);
-
-    el('rc-ref').textContent  = ref;
-    el('rc-date').textContent = new Date().toLocaleString('en-PH', { hour12: false });
-    el('rc-side').textContent = side.toUpperCase();
-    el('rc-amt').textContent  = Number(amount).toLocaleString('en-PH');
-    el('rc-odds').textContent = Number(odds).toFixed(2);
-    el('rc-win').textContent  = Number(win).toLocaleString('en-PH');
-
-    const qrBox  = el('rc-qr');
-    qrBox.innerHTML = '';
-    const payload = JSON.stringify({
-      ref,
-      side: side.toUpperCase(),
-      amount,
-      odds: +Number(odds).toFixed(2),
-      win
-    });
-
-    try {
-      if (window.QRCode)
-        new QRCode(qrBox, { text: payload, width: 160, height: 160, correctLevel: QRCode.CorrectLevel.M });
-      else
-        qrBox.innerHTML = '<div class="text-[12px] text-gray-700">QR unavailable. Ref: ' + ref + '</div>';
-    } catch {
-      qrBox.innerHTML = '<div class="text-[12px] text-gray-700">QR error. Ref: ' + ref + '</div>';
-    }
-
-    const modal = document.getElementById('receiptModal');
-    modal.style.display = 'grid';
-    modal.setAttribute('aria-hidden', 'false');
-    document.getElementById('rc-close').onclick = () => {
-      modal.style.display = 'none';
-      modal.setAttribute('aria-hidden', 'true');
-    };
-  }
-
-  /* bet history (per bet) */
-  function addToHistory({ side, amount, odds }) {
-    const ts      = Date.now();
-    const timeStr = new Date(ts).toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit' });
-    const est     = Math.round(amount * odds);
-    history.unshift({
-      ts,
-      timeStr,
-      side: side === 'red' ? 'Red' : 'Blue',
-      amount,
-      odds: +Number(odds).toFixed(2),
-      est
-    });
-    if (history.length > 1000) history.length = 1000;
-    saveAll();
-    renderHistorySidebar();
-    renderHistoryTable();
-  }
-
-  function renderHistorySidebar() {
-    const tbody = el('betHistory');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    if (history.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center opacity-70 py-3">No bets yet</td></tr>`;
-      return;
-    }
-    history.slice(0, 20).forEach(h => {
-      const pill = h.side === 'Red'
-        ? 'border-[#b71c1c] bg-[#3b1212] text-[#ffecec]'
-        : 'border-[#0b3ca8] bg-[#11244d] text-[#e6f0ff]';
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${h.timeStr}</td>
-        <td><span class="inline-flex items-center justify-center rounded-full border-2 px-2 py-0.5 ${pill}">${h.side}</span></td>
-        <td>₱${fmt(h.amount)}</td>
-        <td>× ${h.odds.toFixed(2)}</td>
-        <td>₱${fmt(h.est)}</td>`;
-      tbody.appendChild(tr);
-    });
-  }
-
-  const HF_PAGE = { size: 12, now: 1 };
-
-  function getHFFilters() {
-    return {
-      side: (el('hf-side')?.value || 'all'),
-      min: Math.max(0, Number(el('hf-min')?.value || 0))
-    };
-  }
-
-  function filterHistory() {
-    const f = getHFFilters();
-    return history.filter(h => {
-      const sideOk = f.side === 'all' || h.side.toLowerCase() === f.side;
-      const amtOk  = h.amount >= f.min;
-      return sideOk && amtOk;
-    });
-  }
-
-  function renderHistoryTable() {
-    const list  = filterHistory();
-    const tbody = el('hf-body');
-    if (!tbody) return;
-    const total = list.length;
-    const pages = Math.max(1, Math.ceil(total / HF_PAGE.size));
-    if (HF_PAGE.now > pages) HF_PAGE.now = pages;
-    const start    = (HF_PAGE.now - 1) * HF_PAGE.size;
-    const pageList = list.slice(start, start + HF_PAGE.size);
-    tbody.innerHTML = '';
-    if (!pageList.length) {
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center opacity-70 py-4">No bets match filters</td></tr>`;
-    } else {
-      pageList.forEach(h => {
-        const pill = h.side === 'Red'
-          ? 'border-[#b71c1c] bg-[#3b1212] text-[#ffecec]'
-          : 'border-[#0b3ca8] bg-[#11244d] text-[#e6f0ff]';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${h.timeStr}</td>
-          <td><span class="inline-flex items-center justify-center rounded-full border-2 px-2 py-0.5 ${pill}">${h.side}</span></td>
-          <td>₱${fmt(h.amount)}</td>
-          <td>× ${h.odds.toFixed(2)}</td>
-          <td>₱${fmt(h.est)}</td>`;
-        tbody.appendChild(tr);
+    setInterval(setDateTime,1000);
+    function attachTilt(el){
+      const damp=6;
+      el.addEventListener('mousemove',(e)=>{
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width; const y=(e.clientY-r.top)/r.height;
+        const rx=(y-0.5)*damp, ry=(0.5-x)*damp;
+        el.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
       });
+      el.addEventListener('mouseleave',()=>{ el.style.transform='rotateX(0) rotateY(0) translateY(0)'; });
     }
-    el('hf-page-now').textContent   = String(HF_PAGE.now);
-    el('hf-page-total').textContent = String(pages);
-    el('hf-count').textContent      = String(total);
-    const sum = list.reduce((a, b) => a + b.amount, 0);
-    el('hf-sum').textContent = fmt(sum);
-  }
 
-  el('hf-apply')?.addEventListener('click', () => { HF_PAGE.now = 1; renderHistoryTable(); });
-  el('hf-reset')?.addEventListener('click', () => {
-    if (el('hf-side')) el('hf-side').value = 'all';
-    if (el('hf-min'))  el('hf-min').value  = 0;
-    HF_PAGE.now = 1;
-    renderHistoryTable();
-  });
-  el('hf-first')?.addEventListener('click', () => { HF_PAGE.now = 1; renderHistoryTable(); });
-  el('hf-prev')?.addEventListener('click', () => {
-    HF_PAGE.now = Math.max(1, HF_PAGE.now - 1);
-    renderHistoryTable();
-  });
-  el('hf-next')?.addEventListener('click', () => {
-    const pages = Math.max(1, Math.ceil(filterHistory().length / HF_PAGE.size));
-    HF_PAGE.now = Math.min(pages, HF_PAGE.now + 1);
-    renderHistoryTable();
-  });
-  el('hf-last')?.addEventListener('click', () => {
-    HF_PAGE.now = Math.max(1, Math.ceil(filterHistory().length / HF_PAGE.size));
-    renderHistoryTable();
-  });
-  el('hf-clear')?.addEventListener('click', () => {
-    history = [];
-    saveAll();
-    renderHistorySidebar();
-    renderHistoryTable();
-  });
+    // ✅ Pick the *visible* "Enter amount" input (desktop vs mobile)
+    function getBetInput(){
+      const candidates = [
+        document.getElementById('bet-amount-desktop'),
+        document.getElementById('bet-amount-mob'),
+        document.getElementById('bet-amount')
+      ];
 
-  /* LOGROHAN / ROADS */
-  const seq  = [];
-  const ROWS = 6;
+      // Prefer yung nakikita sa screen (may size & hindi display:none)
+      for (const el of candidates) {
+        if (!el) continue;
+        const style = window.getComputedStyle(el);
+        if (style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0) {
+          return el;
+        }
+      }
 
-  function cell(div, kind, hollow = false) {
-    div.className = 'w-full h-full flex items-center justify-center rounded-full text-[9px] sm:text-[10px] md:text-[11px] font-black';
-    div.style.border = '2px solid #2f477a';
-    if (kind === 'red') {
-      if (hollow) { div.style.background = 'transparent'; div.style.borderColor = '#ff7a70'; }
-      else        { div.style.background = 'radial-gradient(circle at 30% 30%, #ff7a70, #b71c1c)'; }
-    } else if (kind === 'blue') {
-      if (hollow) { div.style.background = 'transparent'; div.style.borderColor = '#8fb6ff'; }
-      else        { div.style.background = 'radial-gradient(circle at 30% 30%, #8fb6ff, #0b3ca8)'; }
-    } else {
-      div.style.background = 'transparent';
+      // Fallback: first existing element
+      return candidates.find(Boolean) || null;
     }
-  }
 
-  function streakRuns(seqArr){
-    const out = [];
-    for(const t of seqArr){
-      if(!out.length || out[out.length-1].t !== t){
-        out.push({ t, n: 1 });
-      }else{
-        out[out.length-1].n++;
+    // Keep both inputs in sync when using chips
+    function setBetAmount(val){
+      const mob = document.getElementById('bet-amount-mob');
+      const desk = document.getElementById('bet-amount-desktop');
+      if(mob)  mob.value  = val;
+      if(desk) desk.value = val;
+
+      const active = getBetInput();
+      if(active){
+        active.focus();
+        // small flash feedback
+        active.style.transition = 'box-shadow 120ms ease';
+        const prev = active.style.boxShadow;
+        active.style.boxShadow = '0 0 0 3px rgba(250,204,21,.45)';
+        setTimeout(()=>{ active.style.boxShadow = prev; }, 160);
+        // fire input event in case listeners exist
+        active.dispatchEvent(new Event('input', { bubbles:true }));
+        active.dispatchEvent(new Event('change', { bubbles:true }));
       }
     }
-    return out;
-  }
 
-  function buildBigRoadStrictL(seqArr, maxRows = ROWS){
-    const runs = streakRuns(seqArr);
-    const grid = [];
-    let labelNo = 1;
-    let prevRunStartCol = -1;
+    // D) ROAD HELPERS
+    const isEmpty = (grid, c, r) => !(grid[c] && grid[c][r]);
+    const ensureCol = (grid, c) => { if(!grid[c]) grid[c] = []; };
+    function streakRuns(seq){
+      const out = [];
+      for(const t of seq){
+        if(!out.length || out[out.length-1].t!==t) out.push({t, n:1});
+        else out[out.length-1].n++;
+      }
+      return out;
+    }
+    function buildBigRoadStrictL(seq, maxRows = BEAD_MAX_ROWS){
+      const runs = streakRuns(seq);
+      const grid = [];
+      let labelNo = 1;
+      let prevRunStartCol = -1;
+      for(const run of runs){
+        const t = run.t; let col, row;
+        if(prevRunStartCol < 0){ col = 0; row = 0; }
+        else { col = prevRunStartCol + 1; row = 0; while(!isEmpty(grid, col, row)){ col++; ensureCol(grid, col); } }
+        const thisRunStartCol = col;
+        let placed = 0;
+        while(placed < run.n && row < maxRows && isEmpty(grid, col, row)){
+          ensureCol(grid, col); grid[col][row] = { t, label: labelNo++ };
+          placed++; row++;
+        }
+        const lockRow = Math.max(0, row - 1);
+        let remain = run.n - placed; let c = col + 1;
+        while(remain > 0){
+          ensureCol(grid, c);
+          if(isEmpty(grid, c, lockRow)){ grid[c][lockRow] = { t, label: labelNo++ }; remain--; }
+          c++;
+        }
+        prevRunStartCol = thisRunStartCol;
+      }
+      return grid;
+    }
+    function computeColumnsSequential(seq, maxRows){
+      const cols=[]; let col=[]; let labelNo=1;
+      for(const t of seq){
+        col.push({ t, label: labelNo++ });
+        if(col.length === maxRows){ cols.push(col); col=[]; }
+      }
+      if(col.length) cols.push(col);
+      return cols;
+    }
 
-    const isEmpty = (c, r) => !(grid[c] && grid[c][r]);
-    const ensureCol = c => { if(!grid[c]) grid[c] = []; };
+    // E) RENDERERS
+    function renderLogroContinuous(seq, stripId, maxRows = BIGROAD_MAX_ROWS){
+      const grid = buildBigRoadStrictL(seq, maxRows);
+      const strip = document.getElementById(stripId); if(!strip) return;
+      strip.innerHTML='';
+      grid.forEach(col=>{
+        const colDiv=document.createElement('div');
+        colDiv.className='logro-col';
+        colDiv.style.gridTemplateRows=`repeat(${maxRows}, var(--logro-bubble))`;
+        for(let r=0;r<maxRows;r++){
+          const cell = col && col[r];
+          if(cell){
+            const b=document.createElement('div');
+            b.className=`ring-bubble ${cell.t==='R'?'ring-red':'ring-blue'}`;
+            const depth=Math.min(r,maxRows-1);
+            b.style.setProperty('--z',`calc(var(--logro-step) * ${depth})`);
+            b.style.transform=`translateZ(var(--z))`;
+            colDiv.appendChild(b);
+          }else{
+            const gap=document.createElement('div');
+            gap.className='ring-gap';
+            colDiv.appendChild(gap);
+          }
+        }
+        strip.appendChild(colDiv);
+      });
+      const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth;
+    }
 
-    for(const run of runs){
-      const t = run.t;
-      let col, row;
+    function renderRoadStrictL(seq, stripId, maxRows = BEAD_MAX_ROWS){
+      const cols = computeColumnsSequential(seq, maxRows);
+      const strip = document.getElementById(stripId); if(!strip) return;
+      strip.innerHTML='';
+      cols.forEach(col=>{
+        const colDiv=document.createElement('div'); colDiv.className='bead-col';
+        colDiv.style.gridTemplateRows=`repeat(${maxRows}, var(--bead-bubble))`;
+        for(let r=0;r<maxRows;r++){
+          const cell=col[r];
+          const dot=document.createElement('div');
+          if(cell){ dot.className='bead-solid '+(cell.t==='R'?'red':'blue'); dot.textContent=cell.label; }
+          else { dot.className='bead'; dot.style.opacity='0.12'; dot.style.border='1px dashed rgba(255,255,255,.15)'; }
+          colDiv.appendChild(dot);
+        }
+        strip.appendChild(colDiv);
+      });
+      const rail = strip.parentElement; if(rail) rail.scrollLeft = rail.scrollWidth;
+    }
 
-      if(prevRunStartCol < 0){
-        col = 0; row = 0;
+    function renderAllRoads(seq){
+      renderLogroContinuous(seq, 'logro-strip', BIGROAD_MAX_ROWS);
+      renderLogroContinuous(seq, 'logro-strip-mob', BIGROAD_MAX_ROWS);
+      renderRoadStrictL(seq, 'bead-strip', BEAD_MAX_ROWS);
+    }
+
+    // F) BETTING / BALANCE / ODDS
+    // 🔹 Odds = 1 / probability (with base pool + house margin)
+    function computeOdds(){
+      const basePool = 1000; // para hindi sobrang extreme pag konti pa lang bets
+      const m = (typeof meronAmount === 'number' ? meronAmount : 0);
+      const w = (typeof walaAmount  === 'number' ? walaAmount  : 0);
+
+      const redPool  = m + basePool;
+      const bluePool = w + basePool;
+      const totalPool = redPool + bluePool;
+
+      if(totalPool <= 0){
+        // fallback (shouldn't happen dahil may basePool)
+        meronOdds = '1.80';
+        walaOdds  = '1.80';
+        return;
+      }
+
+      const probMeron = redPool  / totalPool;  // mas malaki pool → mas mataas prob → mas mababa odds
+      const probWala  = bluePool / totalPool;
+
+      const margin = 0.9; // 10% house edge
+
+      let rawMeron = (1 / probMeron) * margin;
+      let rawWala  = (1 / probWala)  * margin;
+
+      // Clamp para di sobrang baba/sobra taas
+      rawMeron = Math.min(Math.max(rawMeron, 1.10), 6.00);
+      rawWala  = Math.min(Math.max(rawWala, 1.10), 6.00);
+
+      meronOdds = rawMeron.toFixed(2);
+      walaOdds  = rawWala.toFixed(2);
+    }
+
+    function renderOddsEverywhere(){
+      const meronText = oddsVisible ? ('WINNING = ' + meronOdds) : '';
+      const walaText  = oddsVisible ? ('WINNING = ' + walaOdds)  : '';
+
+      const m=document.getElementById('meron-odds'); if(m) m.textContent=meronText;
+      const w=document.getElementById('wala-odds');  if(w) w.textContent=walaText;
+      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent=meronText;
+      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent=walaText;
+    }
+    function renderBalance(){
+      const mid=document.getElementById('mid-balance');
+      const head=document.getElementById('header-balance');
+      if(mid) mid.textContent=Number(currentBalance).toLocaleString();
+      if(head) head.textContent=Number(currentBalance).toLocaleString();
+    }
+
+    // 🔹 Update current bet display per side (desktop + mobile)
+    function updateSideCurrentBet(side, playerName, betAmount, odds, totalWinnings){
+      const key = side === 'MERON' ? 'meron' : 'wala';
+
+      const labelDesktop = document.getElementById(key + '-current-bet');
+      const payoutDesktop = document.getElementById(key + '-current-payout');
+      const labelMob = document.getElementById(key + '-current-bet-mob');
+      const payoutMob = document.getElementById(key + '-current-payout-mob');
+
+      const amtStr = '₱' + Number(betAmount).toLocaleString('en-PH');
+      const payoutStr = '₱' + Number(totalWinnings).toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      const labelText = `${amtStr} @ ${odds}x`;
+
+      if(labelDesktop) labelDesktop.textContent = labelText;
+      if(payoutDesktop) payoutDesktop.textContent = payoutStr;
+      if(labelMob) labelMob.textContent = labelText;
+      if(payoutMob) payoutMob.textContent = payoutStr;
+    }
+
+    function updatePercentBar(){
+      const red = meronAmount||0;
+      const blue = walaAmount||0;
+      const total = red + blue;
+      let redPct = 50, bluePct = 50;
+      if(total > 0){
+        redPct  = Math.round((red / total) * 100);
+        bluePct = 100 - redPct;
+      }
+
+      const rEl = document.getElementById('pct-red');
+      const bEl = document.getElementById('pct-blue');
+      const rl  = document.getElementById('pct-red-label');
+      const bl  = document.getElementById('pct-blue-label');
+      const tl  = document.getElementById('pct-total-label');
+      if(rEl){ rEl.style.width = redPct + '%'; }
+      if(bEl){ bEl.style.width = bluePct + '%'; }
+      if(rl){ rl.textContent = `Red ${redPct}%`; }
+      if(bl){ bl.textContent = `Blue ${bluePct}%`; }
+      if(tl){ tl.textContent = `Total: ₱${Number(total).toLocaleString('en-PH')}`; }
+
+      const rEm = document.getElementById('pct-red-mob');
+      const bEm = document.getElementById('pct-blue-mob');
+      const rlm = document.getElementById('pct-red-label-mob');
+      const blm = document.getElementById('pct-blue-label-mob');
+      const tlm = document.getElementById('pct-total-label-mob');
+      if(rEm){ rEm.style.width = redPct + '%'; }
+      if(bEm){ bEm.style.width = bluePct + '%'; }
+      if(rlm){ rlm.textContent = `Red ${redPct}%`; }
+      if(blm){ blm.textContent = `Blue ${bluePct}%`; }
+      if(tlm){ tlm.textContent = `Total: ₱${Number(total).toLocaleString('en-PH')}`; }
+    }
+
+    function adjustBalance(delta){
+      const next=currentBalance+delta;
+      if(next<0) return false;
+      currentBalance=next;
+      renderBalance();
+      return true;
+    }
+
+    // G) HISTORY UI
+    function sideBadgeHTML(side){
+      const cls=side==='MERON'?'side-badge side-meron':'side-badge side-wala';
+      return `<span class="side-3d"><span class="${cls}">${side}</span></span>`;
+    }
+    function badgeClassByStatus(s){
+      if(s==='WIN') return 'badge-3d badge-win';
+      if(s==='LOSE') return 'badge-3d badge-lose';
+      return 'badge-3d badge-pending';
+    }
+    function addToHistory(entry){
+      betHistory.unshift(entry);
+      renderHeaderHistory();
+      const dot=document.getElementById('header-history-dot');
+      if(dot) dot.classList.toggle('hidden', betHistory.length===0);
+    }
+    function renderHeaderHistory(){
+      const list=document.getElementById('header-history-list');
+      const empty=document.getElementById('header-history-empty');
+      if(!list||!empty) return;
+      if(betHistory.length===0){
+        empty.classList.remove('hidden'); list.classList.add('hidden'); list.innerHTML=''; return;
+      }
+      empty.classList.add('hidden'); list.classList.remove('hidden');
+      const top=betHistory.slice(0,8);
+      list.innerHTML = top.map(item=>{
+        const sideChip=sideBadgeHTML(item.side);
+        const badge=`<span class="result-3d"><span class="${badgeClassByStatus(item.status)}">${item.status}</span></span>`;
+        return `
+          <div class="py-2 px-2 text-xs">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">${sideChip}</div>
+              <div class="flex items-center gap-2">${badge}<div class="text-white/50">${item.time}</div></div>
+            </div>
+            <div class="text-white/80 mt-1">${item.player} • Match #${item.matchId}</div>
+            <div class="mt-0.5">
+              <span class="font-semibold">${Number(item.amount).toLocaleString()}</span>
+              @ <span class="font-semibold">${item.odds}</span>
+              = <span class="text-yellow-300 font-bold">${Number(item.payout).toLocaleString()}</span>
+            </div>
+            <div class="text-white/50 mt-0.5">Bal: ${Number(item.balanceBefore).toLocaleString()} → <span class="text-white/80 font-semibold">${Number(item.balanceAfter).toLocaleString()}</span></div>
+          </div>`;
+      }).join('');
+    }
+
+    // H) BET ACTIONS
+    function resolveLatestBet(winSide){
+      const idx=betHistory.findIndex(b=>b.status==='PENDING');
+      if(idx===-1) return;
+      const bet=betHistory[idx];
+      if(bet.side===winSide){
+        bet.status='WIN';
+        adjustBalance(parseFloat(bet.payout));
+        bet.balanceAfter=currentBalance;
       } else {
-        col = prevRunStartCol + 1;
-        row = 0;
-        ensureCol(col);
-        while(!isEmpty(col, row)){
-          col++;
-          ensureCol(col);
-        }
+        bet.status='LOSE';
+        bet.balanceAfter=currentBalance;
       }
-
-      const thisRunStartCol = col;
-      let placed = 0;
-
-      while(placed < run.n && row < maxRows && isEmpty(col, row)){
-        ensureCol(col);
-        grid[col][row] = { t, label: labelNo++ };
-        placed++; row++;
-      }
-
-      const lockRow = Math.max(0, row - 1);
-      let remain = run.n - placed;
-      let c = col + 1;
-
-      while(remain > 0){
-        ensureCol(c);
-        if(isEmpty(c, lockRow)){
-          grid[c][lockRow] = { t, label: labelNo++ };
-          remain--;
-        }
-        c++;
-      }
-
-      prevRunStartCol = thisRunStartCol;
+      renderHeaderHistory();
     }
-    return grid;
-  }
 
-  function computeColumnsSequential(seqArr, maxRows = ROWS){
-    const cols = [];
-    let col = [];
-    let labelNo = 1;
-    for(const t of seqArr){
-      col.push({ t, label: labelNo++ });
-      if(col.length === maxRows){
-        cols.push(col);
-        col = [];
+    function placeBet(betType){
+      const input = getBetInput();
+      let betAmount = input ? parseFloat(input.value) : NaN;
+
+      if(isNaN(betAmount) || betAmount <= 0){
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid amount',
+          text: 'Please enter a valid bet amount greater than 0.'
+        });
+        return;
       }
-    }
-    if(col.length) cols.push(col);
-    return cols;
-  }
 
-  function renderBead() {
-    const bead = el('bead');
-    if (!bead) return;
-    bead.innerHTML = '';
-
-    const cols = computeColumnsSequential(seq, ROWS);
-
-    cols.forEach(col => {
-      for (let r = 0; r < ROWS; r++) {
-        const d = document.createElement('div');
-        d.style.gridRow = String(r + 1);
-
-        const cellData = col[r];
-        if (cellData) {
-          cell(d, cellData.t === 'R' ? 'red' : 'blue', false);
-          d.textContent = String(cellData.label);
-        }
-        bead.appendChild(d);
+      const balanceBefore=currentBalance;
+      if(!adjustBalance(-betAmount)){
+        Swal.fire({
+          icon: 'error',
+          title: 'Insufficient balance',
+          text: 'You do not have enough balance for this bet.'
+        });
+        return;
       }
-    });
 
-    const rail = bead.parentElement;
-    if (rail) rail.scrollLeft = rail.scrollWidth;
-  }
-
-  function renderBig() {
-    const big = el('big');
-    if (!big) return;
-    big.innerHTML = '';
-
-    const grid = buildBigRoadStrictL(seq, ROWS);
-
-    grid.forEach(col => {
-      for (let r = 0; r < ROWS; r++) {
-        const d = document.createElement('div');
-        d.style.gridRow = String(r + 1);
-
-        const cellData = col[r];
-        if (cellData) {
-          cell(d, cellData.t === 'R' ? 'red' : 'blue', false);
-        }
-        big.appendChild(d);
-      }
-    });
-
-    const rail = big.parentElement;
-    if (rail) rail.scrollLeft = rail.scrollWidth;
-  }
-
-  /* logs under bead/big */
-  function addLog(winner) {
-    const pot    = state.red + state.blue;
-    const odds   = (winner === 'Red' ? state.oddsRed : state.oddsBlue).toFixed(2);
-    const payout = (100 * odds).toFixed(0);
-    const time   = new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
-    logs.unshift({ time, winner, pot, odds, payout });
-    renderLog();
-    saveAll();
-  }
-
-  function renderLog() {
-    const tbody = el('logBody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    const totalPages = Math.max(1, Math.ceil(logs.length / PAGE_SIZE));
-    if (curPage > totalPages) curPage = totalPages;
-    const start = (curPage - 1) * PAGE_SIZE;
-    logs.slice(start, start + PAGE_SIZE).forEach(row => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${row.time}</td>
-        <td><span class="inline-flex items-center justify-center rounded-full border-2 px-2 py-0.5 ${row.winner === 'Red' ? 'border-[#b71c1c] bg-[#3b1212] text-[#ffecec]' : 'border-[#0b3ca8] bg-[#11244d] text-[#e6f0ff]'}">${row.winner}</span></td>
-        <td>₱${fmt(row.pot)}</td>
-        <td>× ${row.odds}</td>
-        <td>₱${fmt(row.payout)}</td>`;
-      tbody.appendChild(tr);
-    });
-    el('pageNow').textContent   = String(curPage);
-    el('pageTotal').textContent = String(totalPages);
-  }
-
-  document.getElementById('firstPage')?.addEventListener('click', () => { curPage = 1; renderLog(); });
-  document.getElementById('prevPage') ?.addEventListener('click', () => {
-    if (curPage > 1) { curPage--; renderLog(); }
-  });
-  document.getElementById('nextPage') ?.addEventListener('click', () => {
-    const t = Math.max(1, Math.ceil(logs.length / PAGE_SIZE));
-    if (curPage < t) { curPage++; renderLog(); }
-  });
-  document.getElementById('lastPage') ?.addEventListener('click', () => {
-    curPage = Math.max(1, Math.ceil(logs.length / PAGE_SIZE));
-    renderLog();
-  });
-
-  function mark(v) {
-    seq.push(v);
-    renderBead();
-    renderBig();
-    addLog(v === 'R' ? 'Red' : 'Blue');
-  }
-  function undo() {
-    if (!seq.length) return;
-    seq.pop();
-    logs.shift();
-    renderBead();
-    renderBig();
-    renderLog();
-    saveAll();
-  }
-
-  document.getElementById('winRed') ?.addEventListener('click', () => mark('R'));
-  document.getElementById('winBlue')?.addEventListener('click', () => mark('B'));
-  document.getElementById('undo')   ?.addEventListener('click', undo);
-
-  /* round timer (optional label with id="timer" sa ibang lugar kung gusto mo) */
-  let tHandle = null, tLeft = 0;
-  const setTimerText = txt => { const t = el('timer'); if (t) t.textContent = txt; };
-  const formatSecs   = s   => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-
-  function startRound(seconds = 60) {
-    clearInterval(tHandle);
-    tLeft = seconds;
-    setTimerText(formatSecs(tLeft));
-    tHandle = setInterval(() => {
-      tLeft--;
-      setTimerText(formatSecs(Math.max(tLeft, 0)));
-      if (tLeft <= 0) {
-        clearInterval(tHandle);
-        tHandle = null;
-        setTimerText('00:00');
-      }
-    }, 1000);
-  }
-  function resetRound() {
-    clearInterval(tHandle);
-    tHandle = null;
-    tLeft = 0;
-    setTimerText('—');
-  }
-  document.getElementById('startRound')?.addEventListener('click', () => startRound(60));
-  document.getElementById('resetRound')?.addEventListener('click', resetRound);
-
-  /* tabs */
-  function showTab(name) {
-    document.querySelectorAll('[data-tab]').forEach(b => {
-      const active = b.dataset.tab === name;
-      if (active) {
-        b.classList.add(
-          'bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]',
-          'shadow-[0_6px_14px_rgba(64,120,255,.35)]'
-        );
-        b.classList.remove('bg-[rgba(21,35,71,0.75)]');
+      // 🔹 Update pool amounts muna
+      if(betType==='MERON'){
+        meronAmount = (meronAmount || 0) + betAmount;
+        const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
+        const elm=document.getElementById('meron-amount-mob'); if(elm) elm.textContent=meronAmount.toLocaleString();
       } else {
-        b.classList.remove(
-          'bg-[linear-gradient(90deg,#1e3a8a_0%,_#7c0a0a_100%)]',
-          'shadow-[0_6px_14px_rgba(64,120,255,.35)]'
-        );
-        b.classList.add('bg-[rgba(21,35,71,0.75)]');
+        walaAmount = (walaAmount || 0) + betAmount;
+        const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
+        const elm=document.getElementById('wala-amount-mob'); if(elm) elm.textContent=walaAmount.toLocaleString();
       }
-    });
-    el('oddsView').hidden  = name !== 'odds';
-    el('totalView').hidden = name !== 'total';
-    syncSideHeight();
-  }
-  document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+      updatePercentBar();
 
-  /* toast – disabled */
-  function toast(msg, ms = 2200) { return; }
+      // 🔹 Recompute odds based on updated pools
+      computeOdds();
+      if(!oddsVisible){ oddsVisible = true; }
+      renderOddsEverywhere();
 
-  /* side height sync – disabled internal scrollbar */
-  function syncSideHeight() { return; }
-  addEventListener('resize', syncSideHeight);
-  addEventListener('load', syncSideHeight);
+      // Lock odds for this bet
+      let odds, chosenPlayer;
+      if(betType==='MERON'){
+        odds=meronOdds;
+        chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
+      } else {
+        odds=walaOdds;
+        chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
+      }
 
-  /* BET buttons */
-  document.querySelectorAll('[data-bet]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const side = btn.getAttribute('data-bet');
-      const val  = Math.max(0, Number(el('amount').value || 0));
-      if (!val) return;
-      if (val < 10) { return; } // minimum bet
+      const totalWinnings = betAmount * parseFloat(odds);
+      const playerName = chosenPlayer || (betType==='MERON' ? 'Red' : 'Blue');
 
-      state[side] += val;
-      el('amount').value = '';
-      recalcOdds();
-      sync();
-      updateCurrentBetPanels();
+      // 🔹 Update per-card current bet display (reflect sa bet card)
+      updateSideCurrentBet(betType, playerName, betAmount, odds, totalWinnings);
 
-      const odds = side === 'red' ? state.oddsRed : state.oddsBlue;
-      updateLastBet(side, val, odds);
-      addToHistory({ side, amount: val, odds });
+      const matchId=document.getElementById('match-no')?.textContent||'—';
+      const time=new Date().toLocaleString('en-PH',{hour12:true});
+      addToHistory({
+        side:betType, player:playerName,
+        matchId, amount:betAmount, odds:odds, payout:totalWinnings.toFixed(2),
+        time, balanceBefore, balanceAfter:currentBalance, status:'PENDING'
+      });
 
-      if (ROLE_ID === 1) showReceipt({ side, amount: val, odds });
-    });
-  });
+      // OPTIONAL: SweetAlert summary (enable if gusto mo)
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Bet placed!',
+        html: `
+          You placed a bet of <b>₱${betAmount.toLocaleString('en-PH')}</b> on
+          <b>${playerName} (${betType})</b>.<br/>
+          Possible payout: <b>₱${totalWinnings.toFixed(2)}</b>.<br/>
+          New Balance: <b>₱${currentBalance.toLocaleString('en-PH')}</b>.
+        `,
+        confirmButtonText: 'OK'
+      });
+      
+    }
 
-  el('amount')?.addEventListener('input', updateCurrentBetPanels);
+    function pushResult(side){ results.push(side==='MERON'?'R':'B'); renderAllRoads(results); resolveLatestBet(side); }
+    function undoResult(){ results.pop(); renderAllRoads(results); }
+    function clearResults(){ results=[]; renderAllRoads(results); }
 
-  el('reset').addEventListener('click', () => {
-    el('amount').value = '';
-    updateCurrentBetPanels();
-  });
-  el('maxAmt').addEventListener('click', () => {
-    const v = Number(el('amount').value || 0);
-    if (v < 1) el('amount').value = 100;
-    updateCurrentBetPanels();
-  });
+    // I) INIT
+    window.onload = () => {
+      setDateTime(); setRandomMatch();
 
-  document.getElementById('clearLog')?.addEventListener('click', () => {
-    logs = [];
-    el('logBody') && (el('logBody').innerHTML = '');
-    curPage = 1;
-    renderLog();
-  });
+      // 🔹 STARTING BET = 0 SA LAHAT NG CARD
+      let meronAmountInit = 0;
+      let walaAmountInit  = 0;
+      meronAmount = meronAmountInit;
+      walaAmount  = walaAmountInit;
 
-  function init() {
-    renderBead();
-    renderBig();
-    renderLog();
-    renderHistorySidebar();
-    renderHistoryTable();
-    sync();
-  }
-  init();
+      // Pre-compute odds (base 50/50) pero hidden pa rin
+      computeOdds();
+      renderOddsEverywhere(); // oddsVisible = false → ribbons are blank
+
+      const ma=document.getElementById('meron-amount'); if(ma) ma.textContent=meronAmount.toLocaleString();
+      const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
+      const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
+      const wam=document.getElementById('wala-amount-mob'); if(wam) wam.textContent=walaAmount.toLocaleString();
+
+      updatePercentBar();
+      document.querySelectorAll('.tilt').forEach(attachTilt);
+
+      const name='AMOK';
+      const acct=document.getElementById('account-name'); if(acct) acct.textContent=name;
+      const acctm=document.getElementById('account-name-menu'); if(acctm) acctm.textContent=name;
+
+      const btn=document.getElementById('account-btn');
+      const menu=document.getElementById('account-menu');
+      if(btn && menu){
+        btn.addEventListener('click',()=>{ menu.classList.toggle('hidden'); });
+        document.addEventListener('click',(e)=>{ if(!btn.contains(e.target)&&!menu.contains(e.target)) menu.classList.add('hidden'); });
+      }
+
+      const wm=document.getElementById('btn-win-meron');
+      const ww=document.getElementById('btn-win-wala');
+      const uu=document.getElementById('btn-undo');
+      const cc=document.getElementById('btn-clear');
+      if(wm) wm.addEventListener('click', ()=> pushResult('MERON'));
+      if(ww) ww.addEventListener('click',  ()=> pushResult('WALA'));
+      if(uu) uu.addEventListener('click',  undoResult);
+      if(cc) cc.addEventListener('click',  clearResults);
+
+      results=['R','R','R','R','R','R','R','R','R','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R'];
+      renderAllRoads(results);
+      renderBalance();
+
+      const hBtn=document.getElementById('header-history-btn');
+      const hMenu=document.getElementById('header-history-menu');
+      const hClear=document.getElementById('header-history-clear');
+      if(hBtn && hMenu){ hBtn.addEventListener('click',(e)=>{ e.stopPropagation(); hMenu.classList.toggle('hidden'); }); }
+      if(hClear){ hClear.addEventListener('click',()=>{ betHistory.length=0; renderHeaderHistory(); const dot=document.getElementById('header-history-dot'); if(dot) dot.classList.add('hidden'); }); }
+
+      // ✅ Bet chips: set the visible "Enter amount"
+      document.querySelectorAll('.bet-chip').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const raw=parseInt(btn.dataset.val||'0',10);
+          setBetAmount(raw);
+          btn.animate([{transform:'translateY(-3px)'},{transform:'translateY(0)'}],{duration:120});
+        });
+      });
+
+      // Desktop bet buttons
+      const bm=document.getElementById('bet-meron');
+      const bw=document.getElementById('bet-wala');
+      if(bm) bm.addEventListener('click', ()=> placeBet('MERON'));
+      if(bw) bw.addEventListener('click',  ()=> placeBet('WALA'));
+
+      // Mobile bet buttons
+      const bmm=document.getElementById('bet-meron-mob');
+      const bwm=document.getElementById('bet-wala-mob');
+      if(bmm) bmm.addEventListener('click', ()=> placeBet('MERON'));
+      if(bwm) bwm.addEventListener('click',  ()=> placeBet('WALA'));
+    };
   </script>
-
-  <script>
-  (function ensureQR() {
-    if (window.QRCode) return;
-    const s = document.createElement('script');
-    s.src   = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
-    s.async = true;
-    s.onerror = () => console.warn('QRCode lib failed to load — using fallback.');
-    document.head.appendChild(s);
-  })();
-  </script>
-
-  </body>
+</body>
 </x-layouts.app>
