@@ -292,27 +292,54 @@
               </div>
 
               <div class="flex flex-wrap gap-1 text-[11px]">
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="200">200</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="500">500</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="1000">1,000</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="2000">2,000</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="3000">3,000</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="5000">5,000</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold" data-val="10000">10,000</button>
-                <button type="button" class="odds-quick-btn px-2 py-0.5 rounded bg-red-700/90 text-white font-semibold" data-allin="true">All-In</button>
+                <!-- 🔴 UPDATED: hover/click red -->
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="200">200</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="500">500</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="1000">1,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="2000">2,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="3000">3,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="5000">5,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-amber-600/80 text-black font-semibold transition-colors duration-150 hover:bg-red-600 hover:text-white active:bg-red-700"
+                  data-val="10000">10,000</button>
+                <button
+                  type="button"
+                  class="odds-quick-btn px-2 py-0.5 rounded bg-red-700/90 text-white font-semibold transition-colors duration-150 hover:bg-red-800 active:bg-red-900"
+                  data-allin="true">All-In</button>
               </div>
             </div>
 
             <!-- main table -->
             <div class="border-t border-white/10 bg-gray-950/70">
-              <!-- header row -->
-              <div class="grid grid-cols-3 text-center font-semibold text-[11px]">
+              <!-- header row (2x MERON, 2x WALA, ODDS sa gitna) -->
+              <div class="grid grid-cols-5 text-center font-semibold text-[11px]">
                 <div class="bg-red-700/95 py-1 text-white">MERON</div>
+                <div class="bg-red-900 py-1 text-white/80">TOTAL</div>
                 <div class="bg-gray-900 py-1 text-white">ODDS</div>
+                <div class="bg-blue-900 py-1 text-white/80">TOTAL</div>
                 <div class="bg-blue-700/95 py-1 text-white">WALA</div>
               </div>
 
-              <!-- rows: Meron | Odds | Wala -->
+              <!-- rows: [MERON ctrls] [MERON total] [ODDS] [WALA total] [WALA ctrls] -->
               <div id="odds-table-rows" class="divide-y divide-gray-300/40 bg-white"></div>
 
               <!-- last row: BET ON DRAW -->
@@ -592,7 +619,7 @@
       return label.replace(/[^0-9a-zA-Z]+/g,'_');
     }
 
-    // build odds-console rows (Meron | Odds | Wala)
+    // build odds-console rows (Meron | Odds | Wala + total columns)
     function initOddsConsole(){
       const container = document.getElementById('odds-table-rows');
       if(!container) return;
@@ -600,8 +627,9 @@
       ODDS_ROWS.forEach(label=>{
         const idSafe = safeOddsId(label);
         const row = document.createElement('div');
-        row.className = "grid grid-cols-3 text-center text-[11px]";
+        row.className = "grid grid-cols-5 text-center text-[11px]";
         row.innerHTML = `
+          <!-- MERON controls (left) -->
           <div class="flex items-center justify-center gap-1 bg-white py-1">
             <button type="button"
               class="w-5 h-5 rounded bg-red-600 text-[10px] leading-none text-white font-bold flex items-center justify-center"
@@ -612,7 +640,21 @@
               class="w-5 h-5 rounded bg-green-500 text-[10px] leading-none text-black font-bold flex items-center justify-center"
               data-odds-btn data-side="MERON" data-odds="${label}" data-dir="plus">+</button>
           </div>
+
+          <!-- MERON TOTAL (katabi ng ODDS) -->
+          <div class="flex items-center justify-center bg-red-50 text-[10px] text-black font-semibold">
+            <span id="odds-total-MERON-${idSafe}" class="min-w-[40px] text-center">0</span>
+          </div>
+
+          <!-- ODDS label -->
           <div class="flex items-center justify-center bg-gray-200 text-black font-semibold">${label}</div>
+
+          <!-- WALA TOTAL (katabi ng ODDS sa kabila) -->
+          <div class="flex items-center justify-center bg-blue-50 text-[10px] text-black font-semibold">
+            <span id="odds-total-WALA-${idSafe}" class="min-w-[40px] text-center">0</span>
+          </div>
+
+          <!-- WALA controls (right) -->
           <div class="flex items-center justify-center gap-1 bg-white py-1">
             <button type="button"
               class="w-5 h-5 rounded bg-red-600 text-[10px] leading-none text-white font-bold flex items-center justify-center"
@@ -644,6 +686,8 @@
       const label = btn.dataset.odds;
       const dir = btn.dataset.dir;
       const key = `${side}|${label}`;
+      const idSafe = safeOddsId(label);
+
       let step = parseFloat((document.getElementById('odds-amount')?.value || '0'));
       if(!step || step <= 0) step = 100; // default increment
       const current = oddsState[key] || 0;
@@ -652,10 +696,17 @@
       else next = Math.max(0, current - step);
       oddsState[key] = next;
 
-      const idSafe = safeOddsId(label);
-      const id = side === 'DRAW' ? `odds-cell-DRAW-1_8` : `odds-cell-${side}-${idSafe}`;
+      const id = side === 'DRAW'
+        ? `odds-cell-DRAW-1_8`
+        : `odds-cell-${side}-${idSafe}`;
       const display = document.getElementById(id);
       if(display) display.textContent = next.toLocaleString('en-PH');
+
+      // update middle TOTAL columns (pang-kalahatan per odds / side)
+      if(side !== 'DRAW'){
+        const totalSpan = document.getElementById(`odds-total-${side}-${idSafe}`);
+        if(totalSpan) totalSpan.textContent = next.toLocaleString('en-PH');
+      }
     }
 
     // toggle desktop view between cards and odds console
