@@ -427,6 +427,7 @@
     let meronAmount, walaAmount, meronOdds, walaOdds;
     let currentBalance = 500000;
     const betHistory = [];
+    let oddsVisible = false; // 🔹 odds hidden until first bet
 
     // C) UTILS
     function getRandomPlayer(exclude){
@@ -592,15 +593,47 @@
     }
 
     // F) BETTING / BALANCE / ODDS
+    // 🔹 Odds = 1 / probability (with base pool + house margin)
     function computeOdds(){
-      meronOdds=(Math.random()*(2.0-1.5)+1.5).toFixed(2);
-      walaOdds=(parseFloat(meronOdds)+0.20).toFixed(2);
+      const basePool = 1000; // para hindi sobrang extreme pag konti pa lang bets
+      const m = (typeof meronAmount === 'number' ? meronAmount : 0);
+      const w = (typeof walaAmount  === 'number' ? walaAmount  : 0);
+
+      const redPool  = m + basePool;
+      const bluePool = w + basePool;
+      const totalPool = redPool + bluePool;
+
+      if(totalPool <= 0){
+        // fallback (shouldn't happen dahil may basePool)
+        meronOdds = '1.80';
+        walaOdds  = '1.80';
+        return;
+      }
+
+      const probMeron = redPool  / totalPool;  // mas malaki pool → mas mataas prob → mas mababa odds
+      const probWala  = bluePool / totalPool;
+
+      const margin = 0.9; // 10% house edge
+
+      let rawMeron = (1 / probMeron) * margin;
+      let rawWala  = (1 / probWala)  * margin;
+
+      // Clamp para di sobrang baba/sobra taas
+      rawMeron = Math.min(Math.max(rawMeron, 1.10), 6.00);
+      rawWala  = Math.min(Math.max(rawWala, 1.10), 6.00);
+
+      meronOdds = rawMeron.toFixed(2);
+      walaOdds  = rawWala.toFixed(2);
     }
+
     function renderOddsEverywhere(){
-      const m=document.getElementById('meron-odds'); if(m) m.textContent='WINNING = '+meronOdds;
-      const w=document.getElementById('wala-odds');  if(w) w.textContent='WINNING = '+walaOdds;
-      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent='WINNING = '+meronOdds;
-      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent='WINNING = '+walaOdds;
+      const meronText = oddsVisible ? ('WINNING = ' + meronOdds) : '';
+      const walaText  = oddsVisible ? ('WINNING = ' + walaOdds)  : '';
+
+      const m=document.getElementById('meron-odds'); if(m) m.textContent=meronText;
+      const w=document.getElementById('wala-odds');  if(w) w.textContent=walaText;
+      const mm=document.getElementById('meron-odds-mob'); if(mm) mm.textContent=meronText;
+      const ww=document.getElementById('wala-odds-mob');  if(ww) ww.textContent=walaText;
     }
     function renderBalance(){
       const mid=document.getElementById('mid-balance');
@@ -741,25 +774,39 @@
         alert('Please enter a valid bet amount greater than 0.');
         return;
       }
-      let odds, chosenPlayer;
-      if(betType==='MERON'){
-        odds=meronOdds; chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
-      } else {
-        odds=walaOdds;  chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
-      }
-      const balanceBefore=currentBalance;
-      if(!adjustBalance(-betAmount)){ alert('Insufficient balance.'); return; }
 
+      const balanceBefore=currentBalance;
+      if(!adjustBalance(-betAmount)){
+        alert('Insufficient balance.');
+        return;
+      }
+
+      // 🔹 Update pool amounts muna
       if(betType==='MERON'){
-        meronAmount+=betAmount;
+        meronAmount = (meronAmount || 0) + betAmount;
         const el=document.getElementById('meron-amount'); if(el) el.textContent=meronAmount.toLocaleString();
         const elm=document.getElementById('meron-amount-mob'); if(elm) elm.textContent=meronAmount.toLocaleString();
       } else {
-        walaAmount+=betAmount;
+        walaAmount = (walaAmount || 0) + betAmount;
         const el=document.getElementById('wala-amount'); if(el) el.textContent=walaAmount.toLocaleString();
         const elm=document.getElementById('wala-amount-mob'); if(elm) elm.textContent=walaAmount.toLocaleString();
       }
       updatePercentBar();
+
+      // 🔹 Recompute odds based on updated pools
+      computeOdds();
+      if(!oddsVisible){ oddsVisible = true; }
+      renderOddsEverywhere();
+
+      // Lock odds for this bet
+      let odds, chosenPlayer;
+      if(betType==='MERON'){
+        odds=meronOdds;
+        chosenPlayer=(document.getElementById('player1-name')?.textContent || document.getElementById('player1-name-mob')?.textContent);
+      } else {
+        odds=walaOdds;
+        chosenPlayer=(document.getElementById('player2-name')?.textContent || document.getElementById('player2-name-mob')?.textContent);
+      }
 
       const totalWinnings = betAmount * parseFloat(odds);
       const playerName = chosenPlayer || (betType==='MERON' ? 'Red' : 'Blue');
@@ -788,14 +835,22 @@
     // I) INIT
     window.onload = () => {
       setDateTime(); setRandomMatch();
-      let meronAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
-      let walaAmountInit=Math.floor(Math.random()*(50000-10000+1))+10000;
-      meronAmount=meronAmountInit; walaAmount=walaAmountInit;
-      computeOdds(); renderOddsEverywhere();
+
+      // 🔹 STARTING BET = 0 SA LAHAT NG CARD
+      let meronAmountInit = 0;
+      let walaAmountInit  = 0;
+      meronAmount = meronAmountInit;
+      walaAmount  = walaAmountInit;
+
+      // Pre-compute odds (base 50/50) pero hidden pa rin
+      computeOdds();
+      renderOddsEverywhere(); // oddsVisible = false → ribbons are blank
+
       const ma=document.getElementById('meron-amount'); if(ma) ma.textContent=meronAmount.toLocaleString();
       const wa=document.getElementById('wala-amount');  if(wa) wa.textContent=walaAmount.toLocaleString();
       const mam=document.getElementById('meron-amount-mob'); if(mam) mam.textContent=meronAmount.toLocaleString();
       const wam=document.getElementById('wala-amount-mob'); if(wam) wam.textContent=walaAmount.toLocaleString();
+
       updatePercentBar();
       document.querySelectorAll('.tilt').forEach(attachTilt);
 
